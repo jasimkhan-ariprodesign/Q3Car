@@ -1,14 +1,20 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text} from 'react-native';
 import React from 'react';
+
+import {SafeAreaWrapper} from '../../components';
 
 const OnboardingScreen = () => {
   return (
-    <View>
+    <SafeAreaWrapper style={styles.container}>
       <Text>OnboardingScreen</Text>
-    </View>
+    </SafeAreaWrapper>
   );
 };
 
 export default OnboardingScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'red',
+  },
+});

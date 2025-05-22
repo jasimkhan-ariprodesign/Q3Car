@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import {_color} from './colors';
 import {_getStatusBarHeight} from './statusbar-height';
 
+const statusBarHeight = _getStatusBarHeight();
 export const _styles = StyleSheet.create({
   // Layout
   flex: {
@@ -10,7 +11,7 @@ export const _styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: _color.white,
-    paddingTop: _getStatusBarHeight() || 0,
+    paddingTop: statusBarHeight || 0,
   },
 
   // Flexbox Alignment

@@ -1,12 +1,23 @@
-import {ImageBackground, StatusBar, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {_color, _height, _styles, _width} from '../../../misc';
+import {ImageBackground, StyleSheet, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {_getStatusBarHeight, _height, _screen, _styles, _width} from '../../../misc';
 import {_images} from '../../../assets/images';
+import {useNavigation} from '@react-navigation/native';
 
+const statusBarHeight = _getStatusBarHeight();
 const SplashScreen = () => {
+  const navigation = useNavigation<any>();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.replace(_screen.onboardingScreen);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [navigation]);
+
   return (
-    <View style={styles.container}>
-      <ImageBackground source={_images.splash} style={styles.bgImage} />
+    <View style={_styles.flex}>
+      <ImageBackground source={_images.splash} style={styles.bgImg} />
     </View>
   );
 };
@@ -14,12 +25,8 @@ const SplashScreen = () => {
 export default SplashScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: _color.white,
-  },
-  bgImage: {
+  bgImg: {
     width: _width,
-    height: _height,
+    height: _height + statusBarHeight,
   },
 });
