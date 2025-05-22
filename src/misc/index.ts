@@ -4,6 +4,7 @@ import {_getStatusBarHeight} from './statusbar-height';
 import {_isAndroid, _isIOS} from './platform';
 import {_useCustomSafeAreaInsets} from './safe-area-edge';
 import {_screen} from './screens-string';
+import {_height, _width} from './screen-dimensions';
 
 export {
   _isAndroid,
@@ -13,4 +14,6 @@ export {
   _getStatusBarHeight,
   _useCustomSafeAreaInsets,
   _screen,
+  _height,
+  _width,
 };

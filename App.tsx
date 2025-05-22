@@ -1,24 +1,18 @@
-import {StyleSheet, View} from 'react-native';
 import React from 'react';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {StackNavigation} from './src/presentation';
 import {NavigationContainer} from '@react-navigation/native';
 import {AppStatusBar} from './src/common';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <View style={styles.container}>
+    <SafeAreaProvider>
+      <NavigationContainer>
         <AppStatusBar />
         <StackNavigation />
-      </View>
-    </NavigationContainer>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 
 export default App;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
