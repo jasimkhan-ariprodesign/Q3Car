@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {_color, _ms} from '../../../misc';
+import {_fonts} from '../../../assets';
 
 interface ReusableButtonProps {
   title?: string;
@@ -27,7 +28,7 @@ const Button: React.FC<ReusableButtonProps> = ({
   buttonStyle = {},
   textStyle = {},
   isLoading = false,
-  disabled = false,
+  disabled = true,
   children,
 }) => {
   const isButtonDisabled = !clickable || disabled || isLoading;
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
   text: {
     color: _color.black,
     fontSize: _ms(14),
+    fontFamily: _fonts.poppinsRegular,
   },
 });
 
