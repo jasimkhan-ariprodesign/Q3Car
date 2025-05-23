@@ -1,2 +1,4 @@
 import SafeAreaWrapper from './safeArea/safe-area-wrapper';
-export {SafeAreaWrapper};
+import Button from './button/reusable-button';
+
+export {SafeAreaWrapper, Button};

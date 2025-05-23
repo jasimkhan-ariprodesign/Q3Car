@@ -1,3 +1,3 @@
-import {_onboardingDummyData} from './onboarding-static-data';
+import {_onboardingData} from './onboarding-static-data';
 
-export {_onboardingDummyData};
+export {_onboardingData};

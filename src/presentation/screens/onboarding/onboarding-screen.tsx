@@ -1,14 +1,22 @@
-import {StyleSheet, Text} from 'react-native';
+import {Alert, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
-import {SafeAreaWrapper} from '../../components';
+import {Button, SafeAreaWrapper} from '../../components';
 import {_color} from '../../../misc';
-import {_onboardingDummyData} from '../../../constant';
+import {_onboardingData} from '../../../constant';
 
 const OnboardingScreen = () => {
   return (
     <SafeAreaWrapper style={styles.container}>
       <Text>OnboardingScreen </Text>
+
+      <View style={{flexDirection: 'row'}}>
+        <Button
+          title="Skip"
+          textStyle={{fontSize: 30, fontFamily: 'Poppins-Regular'}}
+          // buttonStyle={{backgroundColor: 'red'}}
+        />
+      </View>
     </SafeAreaWrapper>
   );
 };
