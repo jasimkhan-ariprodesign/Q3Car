@@ -1,10 +1,12 @@
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {_color, _ms, _mvs, _styles, _width} from '../../../misc';
 import {_fonts, _images} from '../../../assets';
-import {PrimaryButton, SafeAreaWrapper} from '../../components';
+import {CustomBottomShitModal, PrimaryButton, SafeAreaWrapper} from '../../components';
+import LocationPermissionPopup from './components/location-permission-popup';
 
 const WelcomeScreen = () => {
+  const [showBottomShit, setShowBottomShit] = useState(true);
   return (
     <SafeAreaWrapper style={_styles.flex}>
       <ImageBackground source={_images.welcomeScreen} style={styles.bgImg}>
@@ -22,6 +24,12 @@ const WelcomeScreen = () => {
           <Text style={styles.welDescString}>Have a better sharing experience</Text>
         </View>
       </ImageBackground>
+
+      {showBottomShit && (
+        <CustomBottomShitModal animationValue={0}>
+          <LocationPermissionPopup skipPress={() => setShowBottomShit(false)} />
+        </CustomBottomShitModal>
+      )}
     </SafeAreaWrapper>
   );
 };
