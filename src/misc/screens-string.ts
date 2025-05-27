@@ -6,6 +6,9 @@ export const _screens = {
   // welcome
   splash: 'SplashScreen',
   onboardingScreen: 'OnboardingScreen',
+  userTypeSelectScreen: 'UserTypeSelectScreen',
   welcomeScreen: 'WelcomeScreen',
+
+  // auth
   signupScreen: 'SignupScreen',
 };

@@ -1,12 +1,16 @@
-import {Alert, StyleSheet, Text, View} from 'react-native';
+import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {PrimaryHeader, SafeAreaWrapper} from '../../components';
+import {_color, _ms} from '../../../misc';
 
 const SignupScreen = () => {
   return (
-    <SafeAreaWrapper style={styles.container}>
-      <PrimaryHeader />
-      <Text>SignupScreen</Text>
+    <SafeAreaWrapper>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.contentContainerStyle}>
+        <PrimaryHeader />
+      </ScrollView>
     </SafeAreaWrapper>
   );
 };
@@ -14,7 +18,8 @@ const SignupScreen = () => {
 export default SignupScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
+  contentContainerStyle: {
+    marginHorizontal: _ms(18),
+    backgroundColor: _color.white,
   },
 });

@@ -1,19 +1,22 @@
-import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {TextButton, Icon, SafeAreaWrapper} from '../../components';
-import {_color, _height, _ms, _screens, _strings, _styles, _vs, _width} from '../../../misc';
+import {_color, _height, _ms, _screens, _strings, _styles, _width} from '../../../misc';
 import {_onboardingData} from '../../../constant';
 import {_fonts, _icons} from '../../../assets';
-import JunkFile from '../../../temp/junk-file';
+import NextButtonWithProgressBar from './components/next-button-with-progress-bar';
+console.log('_ms(Math.round(100) ', _ms(Math.round(100)));
 
 const OnboardingScreen = () => {
   const navigation = useNavigation<any>();
   const [curPageIndex, setCurPageIndex] = useState<number>(0);
   const scrollRef = useRef<ScrollView>(null);
+  console.log('index ->', curPageIndex);
 
   const _handleSkipClick = () => {
-    navigation.push(_screens.welcomeScreen);
+    // navigation.push(_screens.welcomeScreen);
+    navigation.push(_screens.userTypeSelectScreen);
   };
 
   const _handleNextClick = () => {
@@ -29,6 +32,7 @@ const OnboardingScreen = () => {
       _handleSkipClick();
     }
   };
+
   return (
     <SafeAreaWrapper style={[_styles.container]}>
       {/* icon, skip, onboarding image */}
@@ -67,13 +71,12 @@ const OnboardingScreen = () => {
           );
         })}
       </ScrollView>
-      <View style={styles.nextBtnParent}>
-        {/* junk file for svg */}
-        {/* <JunkFile /> */}
-        <TouchableOpacity onPress={_handleNextClick} style={styles.nextBtnCont}>
-          <Image source={_icons.arrowRight} style={_styles.size28} />
-        </TouchableOpacity>
-      </View>
+
+      <NextButtonWithProgressBar
+        onPress={_handleNextClick}
+        index={curPageIndex}
+        dataLength={_onboardingData?.length}
+      />
     </SafeAreaWrapper>
   );
 };
@@ -91,7 +94,6 @@ const styles = StyleSheet.create({
     width: _width,
     top: 0,
     paddingHorizontal: _ms(24),
-    paddingTop: _ms(16),
     justifyContent: 'space-between',
   },
   imageCont: {
@@ -110,7 +112,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     gap: _ms(12),
-    backgroundColor: _color.info,
   },
   title: {
     color: _color.black,
@@ -122,18 +123,5 @@ const styles = StyleSheet.create({
     fontSize: _ms(12),
     fontFamily: _fonts.workSansMedium,
     textAlign: 'center',
-  },
-  nextBtnParent: {
-    backgroundColor: _color.orange,
-    alignItems: 'center',
-    paddingVertical: _vs(28),
-  },
-  nextBtnCont: {
-    backgroundColor: _color.primary,
-    width: _ms(80),
-    height: _ms(80),
-    borderRadius: _ms(80),
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

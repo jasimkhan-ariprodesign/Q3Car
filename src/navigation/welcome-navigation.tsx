@@ -1,7 +1,13 @@
 import React from 'react';
 import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
 import {_color, _screens} from '../misc';
-import {OnboardingScreen, SignupScreen, SplashScreen, WelcomeScreen} from '../presentation';
+import {
+  OnboardingScreen,
+  SignupScreen,
+  SplashScreen,
+  UserTypeSelectScreen,
+  WelcomeScreen,
+} from '../presentation';
 
 const WelcomeStack = createStackNavigator();
 
@@ -16,6 +22,7 @@ const WelcomeNavigation = () => {
       }}>
       <WelcomeStack.Screen name={_screens.splash} component={SplashScreen} />
       <WelcomeStack.Screen name={_screens.onboardingScreen} component={OnboardingScreen} />
+      <WelcomeStack.Screen name={_screens.userTypeSelectScreen} component={UserTypeSelectScreen} />
       <WelcomeStack.Screen name={_screens.welcomeScreen} component={WelcomeScreen} />
       <WelcomeStack.Screen name={_screens.signupScreen} component={SignupScreen} />
     </WelcomeStack.Navigator>

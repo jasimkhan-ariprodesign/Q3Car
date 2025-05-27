@@ -19,6 +19,7 @@ export const _color = {
   orange: '#FF9500',
   purple: '#AF52DE',
   pink: '#FF2D55',
+  tomato: '#FF6347',
 
   // State colors
   success: '#28A745',
@@ -46,4 +47,7 @@ export const _color = {
   border: '#DEE2E6',
   borderLight: '#E9ECEF',
   borderDark: '#CED4DA',
+
+  // others
+  B4B4B4: '#B4B4B4',
 };
