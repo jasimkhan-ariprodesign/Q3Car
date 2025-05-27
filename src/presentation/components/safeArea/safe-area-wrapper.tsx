@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {Platform, StyleProp, StyleSheet, ViewStyle} from 'react-native';
 import {SafeAreaView, type Edge} from 'react-native-safe-area-context';
 
 type SafeAreaWrapperProps = {
@@ -9,7 +9,11 @@ type SafeAreaWrapperProps = {
   excludeDefaultEdges?: boolean; // Option to disable all edges
 };
 
-const DEFAULT_EDGES: Edge[] = ['top', 'left', 'right', 'bottom'];
+const DEFAULT_EDGES: Edge[] = Platform.select({
+  android: ['top', 'left', 'right', 'bottom'],
+  ios: ['top', 'left', 'right'],
+  default: ['top', 'left', 'right', 'bottom'],
+});
 
 const SafeAreaWrapper = ({
   children,

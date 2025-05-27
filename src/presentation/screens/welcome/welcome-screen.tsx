@@ -1,14 +1,64 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {_color, _ms, _mvs, _styles, _width} from '../../../misc';
+import {_fonts, _images} from '../../../assets';
+import {PrimaryButton, SafeAreaWrapper} from '../../components';
 
 const WelcomeScreen = () => {
   return (
-    <View>
-      <Text>WelcomeScreen</Text>
-    </View>
+    <SafeAreaWrapper style={_styles.flex}>
+      <ImageBackground source={_images.welcomeScreen} style={styles.bgImg}>
+        <View style={styles.btnCont}>
+          <PrimaryButton title="Create an account" />
+          <PrimaryButton
+            title="Log In"
+            buttonStyle={styles.logInBtn}
+            textStyle={styles.logInBtnString}
+          />
+        </View>
+
+        <View>
+          <Text style={styles.welcomeString}>Welcome</Text>
+          <Text style={styles.welDescString}>Have a better sharing experience</Text>
+        </View>
+      </ImageBackground>
+    </SafeAreaWrapper>
   );
 };
 
 export default WelcomeScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  bgImg: {
+    flex: 1,
+    width: _width,
+    rowGap: _mvs(28),
+    flexDirection: 'column-reverse',
+    paddingBottom: _mvs(40),
+  },
+  welcomeString: {
+    color: _color.primary,
+    fontSize: _ms(20),
+    fontFamily: _fonts.workSansMedium,
+    textAlign: 'center',
+  },
+  welDescString: {
+    color: _color.black,
+    fontSize: _ms(14),
+    fontFamily: _fonts.workSansRegular,
+    textAlign: 'center',
+  },
+  btnCont: {
+    paddingHorizontal: _ms(22),
+    rowGap: _mvs(16),
+  },
+  logInBtn: {
+    backgroundColor: _color.transparent,
+    borderWidth: 1,
+    borderColor: _color.primary,
+    marginHorizontal: 1,
+  },
+  logInBtnString: {
+    color: _color.textPrimary,
+  },
+});

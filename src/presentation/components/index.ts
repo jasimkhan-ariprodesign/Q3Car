@@ -1,5 +1,6 @@
 import SafeAreaWrapper from './safeArea/safe-area-wrapper';
-import Button from './button/reusable-button';
+import TextButton from './buttons/textButton/text-button';
 import Icon from './appIcon/reusable-icon';
+import PrimaryButton from './buttons/primaryButton/primary-button';
 
-export {SafeAreaWrapper, Button, Icon};
+export {SafeAreaWrapper, TextButton, Icon, PrimaryButton};

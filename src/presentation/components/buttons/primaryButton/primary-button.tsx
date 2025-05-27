@@ -7,10 +7,10 @@ import {
   TextStyle,
   ActivityIndicator,
 } from 'react-native';
-import {_color, _ms} from '../../../misc';
-import {_fonts} from '../../../assets';
+import {_color, _ms, _mvs} from '../../../../misc';
+import {_fonts} from '../../../../assets';
 
-interface ReusableButtonProps {
+interface PrimaryButtonProps {
   title?: string;
   onPress?: () => void;
   clickable?: boolean;
@@ -21,14 +21,14 @@ interface ReusableButtonProps {
   children?: React.ReactNode;
 }
 
-const Button: React.FC<ReusableButtonProps> = ({
-  title = 'Button', // Default title
-  onPress = () => console.log('Button pressed'), // Default empty function
-  clickable = true, // Default true
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({
+  title = '',
+  onPress = () => console.log('Primary Button Pressed'),
+  clickable = true,
   buttonStyle = {},
   textStyle = {},
   isLoading = false,
-  disabled = true,
+  disabled = false,
   children,
 }) => {
   const isButtonDisabled = !clickable || disabled || isLoading;
@@ -52,12 +52,15 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: _color.primary,
+    borderRadius: 8,
+    minHeight: _mvs(34),
   },
   text: {
-    color: _color.black,
+    color: _color.white,
     fontSize: _ms(14),
-    fontFamily: _fonts.poppinsRegular,
+    fontFamily: _fonts.workSansMedium,
   },
 });
 
-export default Button;
+export default PrimaryButton;
