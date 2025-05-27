@@ -7,4 +7,5 @@ export const _screens = {
   splash: 'SplashScreen',
   onboardingScreen: 'OnboardingScreen',
   welcomeScreen: 'WelcomeScreen',
+  signupScreen: 'SignupScreen',
 };

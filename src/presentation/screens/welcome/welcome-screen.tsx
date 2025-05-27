@@ -1,17 +1,24 @@
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {_color, _ms, _mvs, _styles, _width} from '../../../misc';
+import {_color, _ms, _mvs, _screens, _styles, _width} from '../../../misc';
 import {_fonts, _images} from '../../../assets';
 import {CustomBottomShitModal, PrimaryButton, SafeAreaWrapper} from '../../components';
 import LocationPermissionPopup from './components/location-permission-popup';
+import {useNavigation} from '@react-navigation/native';
 
 const WelcomeScreen = () => {
+  const navigation = useNavigation<any>();
   const [showBottomShit, setShowBottomShit] = useState(true);
+
+  const _handleCreateAccount = () => {
+    navigation.push(_screens.signupScreen);
+  };
+
   return (
     <SafeAreaWrapper style={_styles.flex}>
       <ImageBackground source={_images.welcomeScreen} style={styles.bgImg}>
         <View style={styles.btnCont}>
-          <PrimaryButton title="Create an account" />
+          <PrimaryButton title="Create an account" onPress={_handleCreateAccount} />
           <PrimaryButton
             title="Log In"
             buttonStyle={styles.logInBtn}
@@ -27,7 +34,7 @@ const WelcomeScreen = () => {
 
       {showBottomShit && (
         <CustomBottomShitModal animationValue={0}>
-          <LocationPermissionPopup skipPress={() => setShowBottomShit(false)} />
+          <LocationPermissionPopup onPress={() => setShowBottomShit(false)} />
         </CustomBottomShitModal>
       )}
     </SafeAreaWrapper>

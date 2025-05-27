@@ -1,10 +1,10 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Alert, Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {_color, _ms, _mvs, _styles} from '../../../../misc';
 import {_fonts, _images} from '../../../../assets';
 import {PrimaryButton, TextButton} from '../../../components';
 
-const LocationPermissionPopup = ({skipPress}: {skipPress: any}) => {
+const LocationPermissionPopup = ({onPress}: {onPress: any}) => {
   return (
     <View style={styles.container}>
       <Image source={_images.location} style={styles.imgStyle} />
@@ -15,9 +15,17 @@ const LocationPermissionPopup = ({skipPress}: {skipPress: any}) => {
         </Text>
       </View>
 
-      <PrimaryButton title="Use my location" />
+      <PrimaryButton
+        title="Use my location"
+        onPress={() => Alert.alert('!', 'you pressed Use my location')}
+      />
 
-      <TextButton title="Skip for now" buttonStyle={styles.skipBtn} onPress={skipPress} />
+      <TextButton
+        title="Skip for now"
+        buttonStyle={styles.skipBtn}
+        onPress={onPress}
+        disabled={false}
+      />
     </View>
   );
 };
