@@ -2,6 +2,7 @@ import {Alert, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {PrimaryHeader, SafeAreaWrapper} from '../../components';
 import {_color, _ms} from '../../../misc';
+import {_fonts} from '../../../assets';
 
 const SignupScreen = () => {
   return (

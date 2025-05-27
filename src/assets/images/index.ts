@@ -5,4 +5,5 @@ export const _images = {
   onboarding3: require('./onboarding3.png'),
   welcomeScreen: require('./welcomeScreen.png'),
   location: require('./location.png'),
+  userType: require('./user-type.png'),
 };
