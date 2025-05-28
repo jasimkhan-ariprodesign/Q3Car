@@ -1,15 +1,15 @@
 import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {StackNavigation} from './src/presentation';
 import {NavigationContainer} from '@react-navigation/native';
 import {AppStatusBar} from './src/common';
+import {RootNavigator} from './src/navigation';
 
 const App = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
         <AppStatusBar />
-        <StackNavigation />
+        <RootNavigator />
       </NavigationContainer>
     </SafeAreaProvider>
   );

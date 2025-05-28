@@ -6,4 +6,5 @@ export const _images = {
   welcomeScreen: require('./welcomeScreen.png'),
   location: require('./location.png'),
   userType: require('./user-type.png'),
+  spWelcomeScreen: require('./spWelcomeScreen.png'),
 };

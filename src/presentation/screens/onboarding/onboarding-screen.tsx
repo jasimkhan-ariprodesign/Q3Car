@@ -6,16 +6,14 @@ import {_color, _height, _ms, _screens, _strings, _styles, _width} from '../../.
 import {_onboardingData} from '../../../constant';
 import {_fonts, _icons} from '../../../assets';
 import NextButtonWithProgressBar from './components/next-button-with-progress-bar';
-console.log('_ms(Math.round(100) ', _ms(Math.round(100)));
 
 const OnboardingScreen = () => {
   const navigation = useNavigation<any>();
   const [curPageIndex, setCurPageIndex] = useState<number>(0);
   const scrollRef = useRef<ScrollView>(null);
-  console.log('index ->', curPageIndex);
+  // console.log('index ->', curPageIndex);
 
   const _handleSkipClick = () => {
-    // navigation.push(_screens.welcomeScreen);
     navigation.push(_screens.userTypeSelectScreen);
   };
 

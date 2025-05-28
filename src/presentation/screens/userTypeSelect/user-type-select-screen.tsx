@@ -4,12 +4,22 @@ import {PrimaryButton, SafeAreaWrapper} from '../../components';
 import {_color, _height, _ms, _mvs, _screens} from '../../../misc';
 import {_fonts, _images} from '../../../assets';
 import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../navigation/types/types';
 
 const UserTypeSelectScreen = () => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  const _handleSkipClick = () => {
-    navigation.push(_screens.welcomeScreen);
+  const _handleFindTowService = () => {
+    navigation.push(_screens.welcomeStack, {
+      screen: _screens.welcomeScreen,
+    });
+  };
+
+  const _handlePublishTowingService = () => {
+    navigation.push(_screens.welcomeStack, {
+      screen: _screens.spWelcomeScreen,
+    });
   };
 
   return (
@@ -20,11 +30,12 @@ const UserTypeSelectScreen = () => {
         <Image source={_images.userType} style={styles.imgStyle} resizeMode="contain" />
 
         <View style={styles.buttonCont}>
-          <PrimaryButton title="Find a Towing Service" />
+          <PrimaryButton title="Find a Towing Service" onPress={_handleFindTowService} />
           <PrimaryButton
             title="Publish a Towing Service"
             buttonStyle={styles.publishBtn}
             textStyle={styles.publishString}
+            onPress={_handlePublishTowingService}
           />
         </View>
       </ScrollView>

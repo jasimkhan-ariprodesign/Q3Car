@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     color: _color.black,
     fontSize: _ms(14),
     fontFamily: _fonts.poppinsRegular,
+    includeFontPadding: false,
   },
 });
 

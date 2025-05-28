@@ -1,6 +1,6 @@
 export const _screens = {
   // navigation stacks
-  stackNavigation: 'StackNavigation',
+  rootNavigator: 'RootNavigator',
   welcomeStack: 'WelcomeStack',
   authStack: 'AuthStack',
 
@@ -9,7 +9,10 @@ export const _screens = {
   onboardingScreen: 'OnboardingScreen',
   userTypeSelectScreen: 'UserTypeSelectScreen',
   welcomeScreen: 'WelcomeScreen',
+  spWelcomeScreen: 'SPWelcomeScreen',
 
   // auth
   signupScreen: 'SignupScreen',
+  loginScreen: 'LoginScreen',
+  spSignupScreen: 'SPSignupScreen',
 } as const;

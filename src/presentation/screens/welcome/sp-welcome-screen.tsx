@@ -1,4 +1,4 @@
-import {ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {_color, _ms, _mvs, _screens, _styles, _width} from '../../../misc';
 import {_fonts, _images} from '../../../assets';
@@ -7,13 +7,13 @@ import LocationPermissionPopup from './components/location-permission-popup';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/types/types';
 
-const WelcomeScreen = () => {
+const SPWelcomeScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [showBottomShit, setShowBottomShit] = useState(true);
+  const [showBottomShit, setShowBottomShit] = useState(false);
 
   const _handleCreateAccountClick = () => {
     navigation.navigate(_screens.authStack, {
-      screen: _screens.signupScreen,
+      screen: _screens.spSignupScreen,
     });
   };
 
@@ -25,7 +25,21 @@ const WelcomeScreen = () => {
 
   return (
     <SafeAreaWrapper style={_styles.flex}>
-      <ImageBackground source={_images.welcomeScreen} style={styles.bgImg}>
+      <View style={_styles.flex}>
+        <Image
+          source={_images.spWelcomeScreen}
+          style={styles.img}
+          resizeMode="cover"
+          accessibilityLabel="Tow Truck & Car"
+          accessibilityRole="image"
+        />
+      </View>
+      <View style={styles.contentCont}>
+        <View>
+          <Text style={styles.welcomeString}>Welcome</Text>
+          <Text style={styles.welDescString}>Have a better sharing experience</Text>
+        </View>
+
         <View style={styles.btnCont}>
           <PrimaryButton title="Create an account" onPress={_handleCreateAccountClick} />
           <PrimaryButton
@@ -35,12 +49,7 @@ const WelcomeScreen = () => {
             onPress={_handleLoginClick}
           />
         </View>
-
-        <View>
-          <Text style={styles.welcomeString}>Welcome</Text>
-          <Text style={styles.welDescString}>Have a better sharing experience</Text>
-        </View>
-      </ImageBackground>
+      </View>
 
       {showBottomShit && (
         <CustomBottomShitModal animationValue={0}>
@@ -51,15 +60,18 @@ const WelcomeScreen = () => {
   );
 };
 
-export default WelcomeScreen;
+export default SPWelcomeScreen;
 
 const styles = StyleSheet.create({
-  bgImg: {
+  contentCont: {
     flex: 1,
-    width: _width,
-    rowGap: _mvs(28),
-    flexDirection: 'column-reverse',
-    paddingBottom: _mvs(40),
+    justifyContent: 'space-around',
+  },
+  img: {
+    width: '100%',
+    height: '100%',
+    borderBottomLeftRadius: _ms(28),
+    borderBottomRightRadius: _ms(28),
   },
   welcomeString: {
     color: _color.primary,

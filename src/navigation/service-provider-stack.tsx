@@ -1,24 +1,24 @@
 import React from 'react';
 import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
 import {_color, _screens} from '../misc';
-import WelcomeStack from './welcome-stack';
-import AuthStack from './auth-stack';
+import {SPStackParamList} from './types/types';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<SPStackParamList>();
 
-const StackNavigation = () => {
+const SPStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={_screens.welcomeStack}
+      // initialRouteName={_screens.signupScreen}
       screenOptions={{
         headerShown: false,
         cardStyle: {backgroundColor: _color?.white},
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
-      <Stack.Screen name={_screens.welcomeStack} component={WelcomeStack} />
-      <Stack.Screen name={_screens.authStack} component={AuthStack} />
+      {/* customer */}
+      {/* <Stack.Screen name={_screens.signupScreen} component={SignupScreen} />
+      <Stack.Screen name={_screens.loginScreen} component={LoginScreen} /> */}
     </Stack.Navigator>
   );
 };
 
-export default StackNavigation;
+export default SPStack;
