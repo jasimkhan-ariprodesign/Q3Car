@@ -1,10 +1,17 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {PrimaryButton, SafeAreaWrapper} from '../../components';
-import {_color, _height, _ms, _mvs} from '../../../misc';
+import {_color, _height, _ms, _mvs, _screens} from '../../../misc';
 import {_fonts, _images} from '../../../assets';
+import {useNavigation} from '@react-navigation/native';
 
 const UserTypeSelectScreen = () => {
+  const navigation = useNavigation<any>();
+
+  const _handleSkipClick = () => {
+    navigation.push(_screens.welcomeScreen);
+  };
+
   return (
     <SafeAreaWrapper>
       <ScrollView contentContainerStyle={styles.contentContainerStyle}>
