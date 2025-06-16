@@ -1,9 +1,18 @@
-import {Button, Image, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {
+  Button,
+  Image,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {_icons, _fonts} from '../../assets';
-import {_color, _styles, _ms, _mvs} from '../../misc';
+import {_color, _styles, _ms, _mvs, _isIOS} from '../../misc';
 import {SafeAreaWrapper, PrimaryHeader, TextButton} from '../../presentation/components';
 import OTPBox from '../components/otp-box';
 
@@ -53,74 +62,81 @@ const SignupScreen = () => {
     console.log('_handleSignup --: ', value);
   };
   return (
-    <SafeAreaWrapper style={styles.container}>
-      <PrimaryHeader />
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.ScrollViewStyle}>
-        <View>
-          <Text style={styles.title}>
-            Hello!{'\n'}Signup to {'\n'}get started
-          </Text>
-        </View>
+    <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+      <SafeAreaWrapper style={styles.container}>
+        <PrimaryHeader />
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.ScrollViewStyle}>
+          <View>
+            <Text style={styles.title}>
+              Hello!{'\n'}Signup to {'\n'}get started
+            </Text>
+          </View>
 
-        <Formik
-          initialValues={initialValues}
-          validationSchema={SignupSchema}
-          onSubmit={_handleSignup}>
-          {({values, errors, touched, handleChange, handleBlur, handleSubmit}) => {
-            console.log('values ->', values);
+          <Formik
+            initialValues={initialValues}
+            validationSchema={SignupSchema}
+            onSubmit={_handleSignup}>
+            {({values, errors, touched, handleChange, handleBlur, handleSubmit}) => {
+              console.log('values ->', values);
 
-            return (
-              <View style={styles.formCont}>
-                {/* full name */}
-                <View>
-                  <TextInput
-                    placeholder="Full Name"
-                    placeholderTextColor={_color.textPrimary}
-                    value={values.fullName}
-                    onChangeText={handleChange('fullName')}
-                    onBlur={handleBlur('fullName')}
-                    style={styles.fullNameInput}
-                  />
-                  {errors.fullName && touched.fullName && typeof errors.fullName === 'string' && (
-                    <Text style={styles.errorString}>{errors.fullName}</Text>
-                  )}
-                </View>
-
-                {/* email */}
-                <View>
-                  <View style={styles.verifyCont}>
-                    <View style={styles.emailCont}>
-                      <TextInput
-                        placeholder="Email"
-                        placeholderTextColor={_color.textPrimary}
-                        value={values.email}
-                        onChangeText={handleChange('email')}
-                        onBlur={handleBlur('email')}
-                        style={styles.emailInput}
-                      />
-                      <Image
-                        source={_icons.checkGreen}
-                        style={_styles.size16}
-                        resizeMode="contain"
-                      />
-                    </View>
-
-                    <TextButton title="Verify" textStyle={styles.verify} />
+              return (
+                <View style={styles.formCont}>
+                  {/* full name */}
+                  <View>
+                    <TextInput
+                      placeholder="Full Name"
+                      placeholderTextColor={_color.textPrimary}
+                      value={values.fullName}
+                      onChangeText={handleChange('fullName')}
+                      onBlur={handleBlur('fullName')}
+                      style={styles.fullNameInput}
+                    />
+                    {errors.fullName && touched.fullName && typeof errors.fullName === 'string' && (
+                      <Text style={styles.errorString}>{errors.fullName}</Text>
+                    )}
                   </View>
-                  {errors.email && touched.email && typeof errors.email === 'string' && (
-                    <Text style={styles.errorString}>{errors.email}</Text>
-                  )}
 
-                  <OTPBox otpInpHeight={authFieldHeight} />
+                  {/* email */}
+                  <View>
+                    <View style={styles.verifyCont}>
+                      <View style={styles.emailCont}>
+                        <TextInput
+                          placeholder="Email"
+                          placeholderTextColor={_color.textPrimary}
+                          value={values.email}
+                          onChangeText={handleChange('email')}
+                          onBlur={handleBlur('email')}
+                          style={styles.emailInput}
+                        />
+                        <Image
+                          source={_icons.checkGreen}
+                          style={_styles.size16}
+                          resizeMode="contain"
+                        />
+                      </View>
+
+                      <TextButton title="Verify" textStyle={styles.verify} />
+                    </View>
+                    {errors.email && touched.email && typeof errors.email === 'string' && (
+                      <Text style={styles.errorString}>{errors.email}</Text>
+                    )}
+                    <View>
+                      <OTPBox otpInpHeight={authFieldHeight} />
+                    </View>
+                  </View>
+
+
+                  {/* phone number */}
+                  
+
+                  <Button title="check" onPress={() => handleSubmit()} />
                 </View>
-
-                <Button title="check" onPress={() => handleSubmit()} />
-              </View>
-            );
-          }}
-        </Formik>
-      </ScrollView>
-    </SafeAreaWrapper>
+              );
+            }}
+          </Formik>
+        </ScrollView>
+      </SafeAreaWrapper>
+    </KeyboardAvoidingView>
   );
 };
 

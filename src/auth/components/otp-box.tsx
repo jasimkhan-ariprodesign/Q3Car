@@ -1,19 +1,29 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ViewStyle} from 'react-native';
 import React from 'react';
 import {OtpInput} from 'react-native-otp-entry';
-import {_color, _ms} from '../../misc';
+import {_color, _ms, _mvs} from '../../misc';
 import {_fonts} from '../../assets';
 import {TextButton} from '../../presentation/components';
 
 interface OTPBoxProp {
   otpInpHeight?: number;
+  resendVisible?: boolean;
+  onPress?: () => void;
+  containerStyle?: ViewStyle;
+  resendContainerStyle?: ViewStyle;
 }
 
-const OTPBox: React.FC<OTPBoxProp> = ({otpInpHeight = _ms(36)}) => {
+const OTPBox: React.FC<OTPBoxProp> = ({
+  otpInpHeight = _ms(36),
+  resendVisible = false,
+  onPress,
+  containerStyle,
+  resendContainerStyle,
+}) => {
   const styles = Styles(otpInpHeight);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <OtpInput
         numberOfDigits={5}
         onTextChange={text => console.log(text)}
@@ -27,9 +37,13 @@ const OTPBox: React.FC<OTPBoxProp> = ({otpInpHeight = _ms(36)}) => {
           focusedPinCodeContainerStyle: styles.focusedPinCodeContainerStyle,
         }}
       />
-      <View style={[styles.resendContInVisible]}>
+      <View
+        style={[
+          resendVisible ? styles.resendButtonContVisible : styles.resendButtonCont,
+          resendContainerStyle,
+        ]}>
         <Text style={styles.text}>Didn't receive code? </Text>
-        <TextButton title="Resend again" textStyle={styles.text} />
+        <TextButton title="Resend again" textStyle={styles.resendText} onPress={onPress} />
       </View>
     </View>
   );
@@ -42,6 +56,7 @@ const Styles = (otpInpHeight: number) => {
     container: {
       alignItems: 'center',
       justifyContent: 'center',
+      rowGap: _mvs(12),
     },
     containerStyle: {
       justifyContent: 'center',
@@ -56,7 +71,7 @@ const Styles = (otpInpHeight: number) => {
     },
     filledPinCodeContainerStyle: {
       backgroundColor: _color.white,
-      borderColor: _color.black,
+      // borderColor: _color.black,
       borderWidth: 1.5,
     },
     pinCodeTextStyle: {
@@ -78,15 +93,20 @@ const Styles = (otpInpHeight: number) => {
       fontSize: _ms(12),
       fontFamily: _fonts.workSansMedium,
     },
-    resendContInVisible: {
+    resendButtonCont: {
       flexDirection: 'row',
       alignItems: 'center',
-      opacity: 0.5,
+      opacity: 0.4,
     },
-    resendContVisible: {
+    resendButtonContVisible: {
       flexDirection: 'row',
       alignItems: 'center',
       opacity: 1,
+    },
+    resendText: {
+      color: _color.primary,
+      fontSize: _ms(12),
+      fontFamily: _fonts.workSansMedium,
     },
   });
 };
