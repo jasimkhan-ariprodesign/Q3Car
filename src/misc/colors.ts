@@ -50,4 +50,5 @@ export const _color = {
 
   // others
   B4B4B4: '#B4B4B4',
+  CFCFCF: '#CFCFCF',
 };

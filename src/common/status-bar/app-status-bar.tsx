@@ -1,6 +1,6 @@
 import {StatusBar} from 'react-native';
 import React from 'react';
-import {_color} from '../misc';
+import {_color} from '../../misc';
 
 type PropsAppStatusBar = {
   statusBarColor?: string;

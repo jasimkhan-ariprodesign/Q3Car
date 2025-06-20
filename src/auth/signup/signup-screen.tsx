@@ -1,39 +1,29 @@
 import {
-  Button,
+  Alert,
   Image,
   KeyboardAvoidingView,
+  Linking,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
 import {Formik} from 'formik';
-import * as Yup from 'yup';
 import {_icons, _fonts} from '../../assets';
 import {_color, _styles, _ms, _mvs, _isIOS} from '../../misc';
-import {SafeAreaWrapper, PrimaryHeader, TextButton} from '../../presentation/components';
-import OTPBox from '../components/otp-box';
+import {
+  SafeAreaWrapper,
+  PrimaryHeader,
+  TextButton,
+  PrimaryButton,
+} from '../../presentation/components';
+import {OTPBox} from '../components';
+import {_signupSchema} from '../validations';
 
 const authFieldHeight = _ms(36);
-
-const SignupSchema = Yup.object().shape({
-  fullName: Yup.string()
-    .min(2, 'Full name is too short')
-    .max(50, 'Full name is too long')
-    .required('Full name is required'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
-  countryCode: Yup.string().required('Required'),
-  phoneNumber: Yup.string()
-    .matches(/^[0-9]+$/, 'Must be only digits')
-    .min(7, 'Phone number is too short')
-    .max(15, 'Phone number is too long')
-    .required('Phone number is required'),
-  agreeToTerms: Yup.boolean()
-    .oneOf([true], 'You must accept the terms and conditions')
-    .required('You must accept the terms and conditions'),
-});
 
 const SignupScreen = () => {
   const [verificationStatus, setVerificationStatus] = useState({
@@ -46,16 +36,33 @@ const SignupScreen = () => {
     email: '',
     countryCode: '+1',
     phoneNumber: '',
-    agreeToTerms: false,
+    agreeToTerms: true,
   };
 
+  const termsOfServiceURL = 'https://www.linkedin.com/in/jasim-khan-40a3aa195/';
+  const privacyPolicyURL = 'https://www.linkedin.com/in/jasim-khan-40a3aa195/';
+
   // Usage
-  const handleEmailVerify = () => {
+  const _handleEmailVerify = () => {
     setVerificationStatus(prev => ({...prev, email: true}));
   };
 
-  const handlePhoneVerify = () => {
+  const _handlePhoneVerify = () => {
     setVerificationStatus(prev => ({...prev, phone: true}));
+  };
+
+  const _hanldeOpenUrl = async (url: string) => {
+    if (!url) return console.warn('---');
+
+    try {
+      const urlSupported = await Linking.canOpenURL(url);
+      if (urlSupported) {
+        await Linking.openURL(url);
+        await Linking.openURL(url);
+      }
+    } catch (error: any) {
+      Alert.alert('Error', 'Failed to open');
+    }
   };
 
   const _handleSignup = (value: any) => {
@@ -74,9 +81,9 @@ const SignupScreen = () => {
 
           <Formik
             initialValues={initialValues}
-            validationSchema={SignupSchema}
+            validationSchema={_signupSchema}
             onSubmit={_handleSignup}>
-            {({values, errors, touched, handleChange, handleBlur, handleSubmit}) => {
+            {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
               console.log('values ->', values);
 
               return (
@@ -125,11 +132,81 @@ const SignupScreen = () => {
                     </View>
                   </View>
 
-
                   {/* phone number */}
-                  
+                  <View>
+                    <View style={styles.sendOTPCont}>
+                      <TouchableOpacity style={styles.countryCodeBTN}>
+                        <Text>+1</Text>
+                        <Image
+                          source={_icons.angleLeftDark}
+                          style={styles.downArrow}
+                          resizeMode="contain"
+                        />
+                      </TouchableOpacity>
+                      <View style={styles.emailCont}>
+                        <TextInput
+                          placeholder="000 000 0000"
+                          placeholderTextColor={_color.textPrimary}
+                          value={values.phoneNumber}
+                          onChangeText={handleChange('phoneNumber')}
+                          onBlur={handleBlur('phoneNumber')}
+                          style={styles.emailInput}
+                        />
+                        <Image
+                          source={_icons.checkGreen}
+                          style={_styles.size16}
+                          resizeMode="contain"
+                        />
+                      </View>
+                      <TextButton title="Send OTP" textStyle={styles.verify} />
+                    </View>
+                    {errors.phoneNumber &&
+                      touched.phoneNumber &&
+                      typeof errors.phoneNumber === 'string' && (
+                        <Text style={styles.errorString}>{errors.phoneNumber}</Text>
+                      )}
+                    <View>
+                      <OTPBox otpInpHeight={authFieldHeight} />
+                    </View>
+                  </View>
 
-                  <Button title="check" onPress={() => handleSubmit()} />
+                  {/* signup button */}
+                  <PrimaryButton
+                    onPress={handleSubmit}
+                    title="Sign up"
+                    buttonStyle={true ? styles.SignupBTN : undefined}
+                    textStyle={true ? styles.SignupString : undefined}
+                  />
+
+                  {/* term of service - privacy policy */}
+                  <View style={styles.privacyPolicyCont}>
+                    <TouchableOpacity
+                      activeOpacity={0.7}
+                      onPress={() => setFieldValue('agreeToTerms', !values.agreeToTerms)}
+                      style={styles.checkCont}>
+                      {values.agreeToTerms && (
+                        <Image
+                          source={_icons.check}
+                          style={_styles.size10}
+                          tintColor={_color.black}
+                        />
+                      )}
+                    </TouchableOpacity>
+                    <Text style={styles.termOfServiceString}>
+                      By signing up. you agree to the{' '}
+                      <Text
+                        onPress={() => _hanldeOpenUrl(termsOfServiceURL)}
+                        style={[styles.termOfServiceString, styles.blueTxt]}>
+                        Terms of service
+                      </Text>{' '}
+                      and{' '}
+                      <Text
+                        onPress={() => _hanldeOpenUrl(privacyPolicyURL)}
+                        style={[styles.termOfServiceString, styles.blueTxt]}>
+                        Privacy policy.
+                      </Text>{' '}
+                    </Text>
+                  </View>
                 </View>
               );
             }}
@@ -164,7 +241,7 @@ const styles = StyleSheet.create({
     height: authFieldHeight,
     borderWidth: 1,
     borderColor: _color.black,
-    margin: 1,
+    // margin: 1,
     borderRadius: 8,
     color: _color.black,
     fontFamily: _fonts.workSansRegular,
@@ -185,7 +262,7 @@ const styles = StyleSheet.create({
     height: authFieldHeight,
     borderWidth: 1,
     borderColor: _color.black,
-    margin: 1,
+    // margin: 1,
     borderRadius: 8,
     paddingEnd: _ms(12),
     columnGap: _ms(8),
@@ -209,5 +286,54 @@ const styles = StyleSheet.create({
   verify: {
     color: _color.primary,
     fontSize: _ms(12),
+  },
+  sendOTPCont: {flexDirection: 'row', alignItems: 'center', columnGap: _ms(8)},
+  countryCodeBTN: {
+    borderWidth: 1,
+    borderColor: _color.black,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    height: authFieldHeight,
+    borderRadius: 8,
+    minWidth: _ms(52),
+  },
+  countryCodeString: {
+    fontSize: _ms(14),
+    color: _color.blue,
+    fontFamily: _fonts.workSansRegular,
+  },
+  downArrow: {
+    ..._styles.size10,
+    transform: [{rotate: '-90deg'}],
+  },
+  SignupBTN: {
+    backgroundColor: _color.CFCFCF,
+  },
+  SignupString: {
+    color: _color.black,
+  },
+  privacyPolicyCont: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: _ms(8),
+  },
+  checkCont: {
+    backgroundColor: _color.white,
+    width: _ms(20),
+    height: _ms(20),
+    borderRadius: _ms(20),
+    borderWidth: 2,
+    borderColor: _color.black,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  termOfServiceString: {
+    fontSize: _ms(12),
+    color: _color.B4B4B4,
+    fontFamily: _fonts.workSansMedium,
+  },
+  blueTxt: {
+    color: _color.primary,
   },
 });

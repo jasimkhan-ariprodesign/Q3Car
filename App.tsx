@@ -1,7 +1,7 @@
 import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {NavigationContainer} from '@react-navigation/native';
-import {AppStatusBar} from './src/common';
+import {AppStatusBar} from './src/common/status-bar/index';
 import {RootNavigator} from './src/navigation';
 
 const App = () => {

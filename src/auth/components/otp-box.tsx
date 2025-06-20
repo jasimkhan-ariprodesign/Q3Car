@@ -71,7 +71,7 @@ const Styles = (otpInpHeight: number) => {
     },
     filledPinCodeContainerStyle: {
       backgroundColor: _color.white,
-      // borderColor: _color.black,
+      borderColor: _color.black,
       borderWidth: 1.5,
     },
     pinCodeTextStyle: {

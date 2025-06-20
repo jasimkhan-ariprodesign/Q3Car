@@ -4,6 +4,7 @@ import {_color, _screens} from '../misc';
 import WelcomeStack from './welcome-stack';
 import AuthStack from './auth-stack';
 import {RootStackParamList} from './types/types';
+import {StyleSheet} from 'react-native';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -13,7 +14,7 @@ const RootNavigator = () => {
       initialRouteName={_screens.welcomeStack}
       screenOptions={{
         headerShown: false,
-        cardStyle: {backgroundColor: _color?.white},
+        cardStyle: styles.cardStyle,
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
       <Stack.Screen name={_screens.welcomeStack} component={WelcomeStack} />
@@ -23,3 +24,9 @@ const RootNavigator = () => {
 };
 
 export default RootNavigator;
+
+const styles = StyleSheet.create({
+  cardStyle: {
+    backgroundColor: _color?.white,
+  },
+});

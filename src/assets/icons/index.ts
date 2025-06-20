@@ -3,4 +3,5 @@ export const _icons = {
   arrowRight: require('./arrow-right.png'),
   angleLeftDark: require('./angle-left-dark.png'),
   checkGreen: require('./check-green.png'),
+  check: require('./check.png'),
 };
