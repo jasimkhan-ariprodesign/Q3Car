@@ -3,6 +3,7 @@ import React from 'react';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {_icons} from '../../../../assets';
 import {_color, _styles, _vs} from '../../../../misc';
+import { _logger } from '../../../../utils';
 
 interface Prop {
   onPress: (event: GestureResponderEvent) => void;
@@ -27,9 +28,9 @@ const NextButtonWithProgressBar = ({onPress, index, dataLength}: Prop) => {
         backgroundWidth={4}
         duration={600}
         lineCap="round"
-        onAnimationComplete={() => console.log('Animation complete')}>
+        onAnimationComplete={() => _logger.log('Animation complete')}>
         {(fill: number) => {
-          // console.log('fill --> ', fill);
+          // _logger.log('fill --> ', fill);
           return (
             <TouchableOpacity onPress={onPress} style={styles.buttonStyle}>
               <Image source={_icons.arrowRight} style={_styles.size20} />

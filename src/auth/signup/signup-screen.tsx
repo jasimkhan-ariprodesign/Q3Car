@@ -23,18 +23,20 @@ import {
 import {OTPBox} from '../components';
 import {_signupSchema} from '../validations';
 import {privacyPolicyURL, termsOfServiceURL} from '../../constant';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../navigation/types/types';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../navigation/types/types';
+import { _logger } from '../../utils';
 
 const authFieldHeight = _ms(36);
 
 const SignupScreen = () => {
-    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const [verificationStatus, setVerificationStatus] = useState({
     emailVerified: false,
     phoneVerified: false,
   });
+  _logger.log('verificationStatus ->', verificationStatus);
 
   const initialValues = {
     fullName: '',
@@ -46,15 +48,15 @@ const SignupScreen = () => {
 
   // Usage
   const _handleEmailVerify = () => {
-    setVerificationStatus(prev => ({...prev, email: true}));
+    setVerificationStatus(prev => ({...prev, emailVerified: true}));
   };
 
   const _handlePhoneVerify = () => {
-    setVerificationStatus(prev => ({...prev, phone: true}));
+    setVerificationStatus(prev => ({...prev, phoneVerified: true}));
   };
 
   const _hanldeOpenUrl = async (url: string) => {
-    if (!url) return console.warn('---');
+    if (!url) return _logger.log('url not found');
 
     try {
       const urlSupported = await Linking.canOpenURL(url);
@@ -68,14 +70,14 @@ const SignupScreen = () => {
   };
 
   const _handleSignup = (value: any) => {
-    console.log('_handleSignup --: ', value);
+    _logger.log('_handleSignup --: ', value);
   };
 
-    const _handleSignInClick = () => {
-      navigation.navigate(_screens.authStack, {
-        screen: _screens.loginScreen,
-      });
-    };
+  const _handleSignInClick = () => {
+    navigation.navigate(_screens.authStack, {
+      screen: _screens.loginScreen,
+    });
+  };
 
   const _renderOrView = () => {
     return (
@@ -118,7 +120,7 @@ const SignupScreen = () => {
         validationSchema={_signupSchema}
         onSubmit={_handleSignup}>
         {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
-          console.log('values ->', values);
+          _logger.log('values ->', values);
 
           return (
             <View style={styles.formCont}>
@@ -149,10 +151,21 @@ const SignupScreen = () => {
                       onBlur={handleBlur('email')}
                       style={styles.emailInput}
                     />
-                    <Image source={_icons.checkGreen} style={_styles.size16} resizeMode="contain" />
+                    {verificationStatus.emailVerified && (
+                      <Image
+                        source={_icons.checkGreen}
+                        style={_styles.size16}
+                        resizeMode="contain"
+                      />
+                    )}
                   </View>
 
-                  <TextButton title="Verify" textStyle={styles.verify} />
+                  <TextButton
+                    title="Verify"
+                    textStyle={styles.verify}
+                    onPress={_handleEmailVerify}
+                    disabled={false}
+                  />
                 </View>
                 {errors.email && touched.email && typeof errors.email === 'string' && (
                   <Text style={styles.errorString}>{errors.email}</Text>
@@ -182,9 +195,20 @@ const SignupScreen = () => {
                       onBlur={handleBlur('phoneNumber')}
                       style={styles.emailInput}
                     />
-                    <Image source={_icons.checkGreen} style={_styles.size16} resizeMode="contain" />
+                    {verificationStatus.phoneVerified && (
+                      <Image
+                        source={_icons.checkGreen}
+                        style={_styles.size16}
+                        resizeMode="contain"
+                      />
+                    )}
                   </View>
-                  <TextButton title="Send OTP" textStyle={styles.verify} />
+                  <TextButton
+                    title="Send OTP"
+                    textStyle={styles.verify}
+                    onPress={_handlePhoneVerify}
+                    disabled={false}
+                  />
                 </View>
                 {errors.phoneNumber &&
                   touched.phoneNumber &&
@@ -290,7 +314,7 @@ const styles = StyleSheet.create({
     marginTop: _mvs(20),
     rowGap: _mvs(16),
   },
-  commonCont:{rowGap: _mvs(16)},
+  commonCont: {rowGap: _mvs(16)},
   fullNameInput: {
     padding: 0,
     paddingStart: _ms(12),

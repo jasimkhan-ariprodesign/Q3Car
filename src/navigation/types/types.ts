@@ -88,4 +88,4 @@ export type RootStackParamList = {
 // import { RouteProp, useRoute } from '@react-navigation/native';
 
 // const route = useRoute<RouteProp<WelcomeStackParamList, 'WelcomeScreen'>>();
-// console.log(route.params.userId); // 👉 'abc123'
+// _logger.log(route.params.userId); // 👉 'abc123'

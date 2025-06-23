@@ -11,7 +11,7 @@ const OnboardingScreen = () => {
   const navigation = useNavigation<any>();
   const [curPageIndex, setCurPageIndex] = useState<number>(0);
   const scrollRef = useRef<ScrollView>(null);
-  // console.log('index ->', curPageIndex);
+  // _logger.log('index ->', curPageIndex);
 
   const _handleSkipClick = () => {
     navigation.push(_screens.userTypeSelectScreen);
