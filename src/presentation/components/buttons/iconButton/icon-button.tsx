@@ -7,9 +7,9 @@ import {
   ViewStyle,
 } from 'react-native';
 import React from 'react';
-import { _logger } from '../../../utils';
+import { _logger } from '../../../../utils';
 
-interface IconProp {
+interface IconButtonProp {
   iconBtnStyle?: ViewStyle;
   iconStyle?: ImageStyle;
   onPress?: () => void;
@@ -18,7 +18,7 @@ interface IconProp {
   resizeMode?: 'contain' | 'cover' | 'center' | 'stretch';
 }
 
-const Icon: React.FC<IconProp> = ({
+const IconButton: React.FC<IconButtonProp> = ({
   iconBtnStyle = {},
   iconStyle = {},
   onPress = () => _logger.log('icon pressed'),
@@ -47,7 +47,7 @@ const Icon: React.FC<IconProp> = ({
   );
 };
 
-export default Icon;
+export default IconButton;
 
 const styles = StyleSheet.create({
   container: {

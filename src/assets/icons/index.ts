@@ -6,4 +6,6 @@ export const _icons = {
   check: require('./check.png'),
   facebook: require('./facebook.png'),
   google: require('./google.png'),
+  invisible: require('./invisible.png'),
+  visible: require('./visible.png'),
 };

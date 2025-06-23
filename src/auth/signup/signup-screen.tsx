@@ -116,6 +116,7 @@ const SignupScreen = () => {
                   onChangeText={handleChange('fullName')}
                   onBlur={handleBlur('fullName')}
                   style={styles.fullNameInput}
+                  autoCorrect={false}
                 />
                 {errors.fullName && touched.fullName && typeof errors.fullName === 'string' && (
                   <Text style={styles.errorString}>{errors.fullName}</Text>
@@ -123,7 +124,7 @@ const SignupScreen = () => {
               </View>
 
               {/* email */}
-              <View style={styles.commonCont}>
+              <View>
                 <View style={styles.verifyCont}>
                   <View style={styles.emailCont}>
                     <TextInput
@@ -133,6 +134,7 @@ const SignupScreen = () => {
                       onChangeText={handleChange('email')}
                       onBlur={handleBlur('email')}
                       style={styles.emailInput}
+                      autoCorrect={false}
                     />
                     {verificationStatus.emailVerified && (
                       <Image
@@ -153,13 +155,13 @@ const SignupScreen = () => {
                 {errors.email && touched.email && typeof errors.email === 'string' && (
                   <Text style={styles.errorString}>{errors.email}</Text>
                 )}
-                <View>
+                <View style={styles.otpBoxCont}>
                   <OTPBox otpInpHeight={authFieldHeight} />
                 </View>
               </View>
 
               {/* phone number */}
-              <View style={styles.commonCont}>
+              <View>
                 <View style={styles.sendOTPCont}>
                   <TouchableOpacity style={styles.countryCodeBTN}>
                     <Text>+1</Text>
@@ -198,7 +200,7 @@ const SignupScreen = () => {
                   typeof errors.phoneNumber === 'string' && (
                     <Text style={styles.errorString}>{errors.phoneNumber}</Text>
                   )}
-                <View>
+                <View style={styles.otpBoxCont}>
                   <OTPBox otpInpHeight={authFieldHeight} />
                 </View>
               </View>
@@ -281,6 +283,9 @@ const SignupScreen = () => {
 
 export default SignupScreen;
 
+const gapAndMargin = _mvs(16);
+const bdrWidth = 1.2;
+
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: _ms(18),
@@ -290,7 +295,7 @@ const styles = StyleSheet.create({
     paddingTop: _mvs(16),
   },
   contentContainerStyle: {
-    rowGap: _mvs(16),
+    rowGap: gapAndMargin,
   },
   title: {
     color: _color.black,
@@ -298,15 +303,14 @@ const styles = StyleSheet.create({
     fontSize: _ms(20),
   },
   formCont: {
-    marginTop: _mvs(20),
-    rowGap: _mvs(16),
+    rowGap: gapAndMargin,
   },
-  commonCont: {rowGap: _mvs(16)},
+  otpBoxCont: {marginTop: gapAndMargin},
   fullNameInput: {
     padding: 0,
     paddingStart: _ms(12),
     height: authFieldHeight,
-    borderWidth: 1.5,
+    borderWidth: bdrWidth,
     borderColor: _color.black,
     borderRadius: 8,
     color: _color.black,
@@ -326,7 +330,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: authFieldHeight,
-    borderWidth: 1.5,
+    borderWidth: bdrWidth,
     borderColor: _color.black,
     borderRadius: 8,
     paddingEnd: _ms(12),
@@ -354,7 +358,7 @@ const styles = StyleSheet.create({
   },
   sendOTPCont: {flexDirection: 'row', alignItems: 'center', columnGap: _ms(8)},
   countryCodeBTN: {
-    borderWidth: 1.5,
+    borderWidth: bdrWidth,
     borderColor: _color.black,
     flexDirection: 'row',
     alignItems: 'center',
@@ -423,7 +427,7 @@ const styles = StyleSheet.create({
     fontFamily: _fonts.workSansMedium,
   },
   socialBTN: {
-    borderWidth: 1.5,
+    borderWidth: bdrWidth,
     borderColor: _color.CFCFCF,
     width: _ms(48),
     height: _ms(48),

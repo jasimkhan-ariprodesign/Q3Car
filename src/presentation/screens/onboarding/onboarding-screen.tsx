@@ -1,7 +1,7 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {TextButton, Icon, SafeAreaWrapper} from '../../components';
+import {TextButton, IconButton, SafeAreaWrapper} from '../../components';
 import {_color, _height, _ms, _screens, _strings, _styles, _width} from '../../../misc';
 import {_onboardingData} from '../../../constant';
 import {_fonts, _icons} from '../../../assets';
@@ -56,7 +56,7 @@ const OnboardingScreen = () => {
               </View>
 
               <View style={styles.skipCont}>
-                <Icon icon={_icons.q3Car} iconStyle={_styles.size54} />
+                <IconButton icon={_icons.q3Car} iconStyle={_styles.size54} />
                 <TextButton title={_strings.skip} onPress={_handleSkipClick} disabled={false} />
               </View>
 
