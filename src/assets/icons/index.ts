@@ -4,4 +4,6 @@ export const _icons = {
   angleLeftDark: require('./angle-left-dark.png'),
   checkGreen: require('./check-green.png'),
   check: require('./check.png'),
+  facebook: require('./facebook.png'),
+  google: require('./google.png'),
 };
