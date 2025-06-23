@@ -1,8 +1,6 @@
 import {
-  Alert,
   Image,
   KeyboardAvoidingView,
-  Linking,
   ScrollView,
   StyleSheet,
   Text,
@@ -25,7 +23,7 @@ import {_signupSchema} from '../validations';
 import {privacyPolicyURL, termsOfServiceURL} from '../../constant';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../navigation/types/types';
-import { _logger } from '../../utils';
+import {_hanldeOpenUrlFunc, _logger} from '../../utils';
 
 const authFieldHeight = _ms(36);
 
@@ -46,27 +44,12 @@ const SignupScreen = () => {
     agreeToTerms: true,
   };
 
-  // Usage
   const _handleEmailVerify = () => {
     setVerificationStatus(prev => ({...prev, emailVerified: true}));
   };
 
   const _handlePhoneVerify = () => {
     setVerificationStatus(prev => ({...prev, phoneVerified: true}));
-  };
-
-  const _hanldeOpenUrl = async (url: string) => {
-    if (!url) return _logger.log('url not found');
-
-    try {
-      const urlSupported = await Linking.canOpenURL(url);
-      if (urlSupported) {
-        await Linking.openURL(url);
-        await Linking.openURL(url);
-      }
-    } catch (error: any) {
-      Alert.alert('Error', 'Failed to open');
-    }
   };
 
   const _handleSignup = (value: any) => {
@@ -238,20 +221,24 @@ const SignupScreen = () => {
                     <Image source={_icons.check} style={_styles.size10} tintColor={_color.black} />
                   )}
                 </TouchableOpacity>
-                <Text style={styles.termOfServiceString}>
-                  By signing up. you agree to the{' '}
-                  <Text
-                    onPress={() => _hanldeOpenUrl(termsOfServiceURL)}
-                    style={[styles.termOfServiceString, styles.blueTxt]}>
-                    Terms of service
-                  </Text>{' '}
-                  and{' '}
-                  <Text
-                    onPress={() => _hanldeOpenUrl(privacyPolicyURL)}
-                    style={[styles.termOfServiceString, styles.blueTxt]}>
-                    Privacy policy.
-                  </Text>{' '}
-                </Text>
+                <View style={styles.privacyPolicyStringCont}>
+                  <Text style={styles.termOfServiceString}>By signing up. you agree to the </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      _hanldeOpenUrlFunc(termsOfServiceURL);
+                    }}>
+                    <Text style={[styles.termOfServiceString, styles.blueTxt]}>
+                      Terms of service{' '}
+                    </Text>
+                  </TouchableOpacity>
+
+                  <Text style={styles.termOfServiceString}>and </Text>
+                  <TouchableOpacity onPress={() => _hanldeOpenUrlFunc(privacyPolicyURL)}>
+                    <Text style={[styles.termOfServiceString, styles.blueTxt]}>
+                      Privacy policy.
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           );
@@ -395,6 +382,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: _ms(8),
+  },
+  privacyPolicyStringCont: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   checkCont: {
     backgroundColor: _color.white,
