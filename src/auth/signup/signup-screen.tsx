@@ -24,6 +24,7 @@ import {privacyPolicyURL, termsOfServiceURL} from '../../constant';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../navigation/types/types';
 import {_hanldeOpenUrlFunc, _logger} from '../../utils';
+import {SecondaryLoader} from '../../common/loaders';
 
 const authFieldHeight = _ms(36);
 
@@ -255,30 +256,34 @@ const SignupScreen = () => {
   // main View
   return (
     <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
-      <SafeAreaWrapper style={styles.container}>
-        <PrimaryHeader />
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={styles.ScrollViewStyle}
-          contentContainerStyle={styles.contentContainerStyle}>
-          <View>
-            <Text style={styles.title}>
-              Hello!{'\n'}Signup to {'\n'}get started
-            </Text>
-          </View>
+      <SafeAreaWrapper>
+        <PrimaryHeader containerStyle={styles.headerStyle} />
+        <View style={_styles.flex}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={styles.ScrollViewStyle}
+            contentContainerStyle={styles.contentContainerStyle}>
+            <View>
+              <Text style={styles.title}>
+                Hello!{'\n'}Signup to {'\n'}get started
+              </Text>
+            </View>
 
-          {/* form/formik */}
-          {_renderFormik()}
+            {/* form/formik */}
+            {_renderFormik()}
 
-          {/* or */}
-          {_renderOrView()}
+            {/* or */}
+            {_renderOrView()}
 
-          {/* social buttons */}
-          {_renderSocialButtons()}
+            {/* social buttons */}
+            {_renderSocialButtons()}
 
-          {/* sign in button */}
-          {_renderSignInButton()}
-        </ScrollView>
+            {/* sign in button */}
+            {_renderSignInButton()}
+          </ScrollView>
+          {/* loader */}
+          {/* <SecondaryLoader /> */}
+        </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
   );
@@ -290,15 +295,13 @@ const gapAndMargin = _mvs(16);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: _ms(18),
-    backgroundColor: _color.white,
-  },
+  headerStyle: {paddingHorizontal: _ms(18)},
   ScrollViewStyle: {
     paddingTop: _mvs(16),
   },
   contentContainerStyle: {
     rowGap: gapAndMargin,
+    paddingHorizontal: _ms(18),
   },
   title: {
     color: _color.black,
@@ -417,7 +420,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     columnGap: _ms(12),
-    // backgroundColor: _color.yellow,
   },
   horizontalView: {
     height: 1,

@@ -1,19 +1,104 @@
-import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import React, {useState} from 'react';
 import {_styles, _isIOS, _color, _ms, _mvs} from '../../misc';
-import {SafeAreaWrapper, PrimaryHeader} from '../../presentation/components';
+import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../presentation/components';
+import {_fonts} from '../../assets';
+import {Formik} from 'formik';
+import {_forgotPasswordSchema} from '../validations/schemas';
+import {_logger} from '../../utils';
+import {OTPBox} from '../components';
+import {SecondaryLoader} from '../../common/loaders';
 
 const ForgotPassword = () => {
+  const [currentStep, setCurrentStep] = useState<'emailOrPhone' | 'otp'>('emailOrPhone');
+  const [otp, setOtp] = useState();
+
+  const _handleSubmitClick = (value: any) => {
+    _logger.log('_handleSubmitClick --: ', value);
+    setCurrentStep('otp');
+  };
+
+  const _handleVerifyOTPClick = () => {
+    _logger.log('_handleVerifyOTPClick OTP:', otp);
+  };
+
+  const _renderEmailOrPhoneInputCom = () => {
+    return (
+      <View style={styles.formCont}>
+        <View>
+          <Text style={styles.title}>Enter your phone number {'\n'}Or email address</Text>
+          <Text style={styles.labelTxt}>Email or Phone Number</Text>
+        </View>
+
+        <Formik
+          initialValues={{email: ''}}
+          validationSchema={_forgotPasswordSchema}
+          onSubmit={_handleSubmitClick}>
+          {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
+            _logger.log('values ->', values);
+
+            return (
+              <View style={styles.formCont}>
+                {/* email */}
+                <View>
+                  <TextInput
+                    placeholder="Email or Phone Number"
+                    placeholderTextColor={_color.textPrimary}
+                    value={values.email}
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    style={styles.emailInput}
+                    autoCorrect={false}
+                  />
+                  {errors.email && touched.email && typeof errors.email === 'string' && (
+                    <Text style={styles.errorString}>{errors.email}</Text>
+                  )}
+                </View>
+
+                {/* sign in button */}
+                <PrimaryButton title="Submit" onPress={handleSubmit} />
+              </View>
+            );
+          }}
+        </Formik>
+      </View>
+    );
+  };
+
+  const _renderOTPInputCom = () => {
+    return (
+      <View style={styles.formCont}>
+        <View>
+          <Text style={styles.title}>Forgot Password</Text>
+          <Text style={styles.labelTxt}>Code has been send to ******70</Text>
+        </View>
+
+        <View style={styles.otpBoxCont}>
+          <OTPBox otpInpHeight={authFieldHeight} />
+        </View>
+
+        {/* verify in button */}
+        <PrimaryButton title="Verify" onPress={_handleVerifyOTPClick} />
+      </View>
+    );
+  };
+
+  // main com View
   return (
     <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
-      <SafeAreaWrapper style={styles.container}>
-        <PrimaryHeader />
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={styles.ScrollViewStyle}
-          contentContainerStyle={styles.contentContainerStyle}>
-          <Text>Hek</Text>
-        </ScrollView>
+      <SafeAreaWrapper>
+        <PrimaryHeader containerStyle={styles.headerStyle} />
+        <View style={_styles.flex}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={styles.ScrollViewStyle}
+            contentContainerStyle={styles.contentContainerStyle}>
+            {/* email Or Phone input && otp input com  */}
+            {currentStep === 'emailOrPhone' ? _renderEmailOrPhoneInputCom() : _renderOTPInputCom()}
+          </ScrollView>
+          {/* loader */}
+          {/* <SecondaryLoader /> */}
+        </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
   );
@@ -23,16 +108,51 @@ export default ForgotPassword;
 
 const gapAndMargin = _mvs(20);
 const bdrWidth = 1.2;
+const authFieldHeight = _ms(36);
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: _ms(18),
-    backgroundColor: _color.white,
-  },
+  headerStyle: {paddingHorizontal: _ms(18)},
   ScrollViewStyle: {
     paddingTop: _mvs(16),
   },
   contentContainerStyle: {
     rowGap: gapAndMargin,
+    paddingHorizontal: _ms(18),
   },
+  title: {
+    color: _color.black,
+    fontFamily: _fonts.workSansMedium,
+    fontSize: _ms(18),
+    textAlign: 'center',
+  },
+  labelTxt: {
+    color: _color.textSecondary,
+    fontFamily: _fonts.workSansRegular,
+    fontSize: _ms(12),
+    textAlign: 'center',
+  },
+  formCont: {
+    marginTop: _mvs(20),
+    rowGap: gapAndMargin,
+  },
+  emailInput: {
+    padding: 0,
+    paddingStart: _ms(12),
+    height: authFieldHeight,
+    borderWidth: bdrWidth,
+    borderColor: _color.black,
+    borderRadius: 8,
+    color: _color.black,
+    fontFamily: _fonts.workSansRegular,
+    fontSize: _ms(12),
+    includeFontPadding: false,
+  },
+  errorString: {
+    marginStart: _ms(8),
+    color: _color.red,
+    fontFamily: _fonts.workSansRegular,
+    fontSize: _ms(10),
+    includeFontPadding: false,
+  },
+  otpBoxCont: {marginTop: gapAndMargin},
 });
