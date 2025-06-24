@@ -261,7 +261,6 @@ const SignupScreen = () => {
         <View style={_styles.flex}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={styles.ScrollViewStyle}
             contentContainerStyle={styles.contentContainerStyle}>
             <View>
               <Text style={styles.title}>
@@ -296,9 +295,6 @@ const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
   headerStyle: {paddingHorizontal: _ms(18)},
-  ScrollViewStyle: {
-    paddingTop: _mvs(16),
-  },
   contentContainerStyle: {
     rowGap: gapAndMargin,
     paddingHorizontal: _ms(18),

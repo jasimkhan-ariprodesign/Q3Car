@@ -65,7 +65,7 @@ export default PrimaryHeader;
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: _mvs(8),
+    paddingVertical: _mvs(12),
   },
   buttonCont: {
     flexDirection: 'row',

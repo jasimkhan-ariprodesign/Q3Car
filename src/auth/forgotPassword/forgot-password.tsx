@@ -91,7 +91,6 @@ const ForgotPassword = () => {
         <View style={_styles.flex}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={styles.ScrollViewStyle}
             contentContainerStyle={styles.contentContainerStyle}>
             {/* email Or Phone input && otp input com  */}
             {currentStep === 'emailOrPhone' ? _renderEmailOrPhoneInputCom() : _renderOTPInputCom()}
@@ -112,9 +111,6 @@ const authFieldHeight = _ms(36);
 
 const styles = StyleSheet.create({
   headerStyle: {paddingHorizontal: _ms(18)},
-  ScrollViewStyle: {
-    paddingTop: _mvs(16),
-  },
   contentContainerStyle: {
     rowGap: gapAndMargin,
     paddingHorizontal: _ms(18),
