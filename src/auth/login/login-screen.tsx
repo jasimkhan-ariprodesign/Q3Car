@@ -5,24 +5,33 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
 import {_fonts, _icons} from '../../assets';
-import {_ms, _color, _mvs, _isIOS, _styles} from '../../misc';
+import {_ms, _color, _mvs, _isIOS, _styles, _screens} from '../../misc';
 import {
   SafeAreaWrapper,
   PrimaryHeader,
   TextButton,
   IconButton,
+  PrimaryButton,
 } from '../../presentation/components';
 import {Formik} from 'formik';
 import {_logger} from '../../utils';
 import {_loginSchema} from '../validations/schemas';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {AuthStackParamList, RootStackParamList} from '../../navigation/types/types';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 const authFieldHeight = _ms(36);
 
 const LoginScreen = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const route = useRoute<RouteProp<AuthStackParamList, 'LoginScreen'>>();
+  const {fromScreen} = route.params || {};
+
   const [formData, setFormData] = useState({
     showPasswrod: true,
   });
@@ -36,8 +45,39 @@ const LoginScreen = () => {
     setFormData(prev => ({...prev, showPasswrod: !formData.showPasswrod}));
   };
 
+  const _handleSignUpClick = () => {
+    if (fromScreen && fromScreen === 'signup') {
+      navigation.goBack();
+    } else {
+      navigation.push(_screens.authStack, {
+        screen: _screens.signupScreen,
+      });
+    }
+  };
+
   const _handleSignIn = (value: any) => {
     _logger.log('_handleSignup --: ', value);
+  };
+
+  const _renderOrView = () => {
+    return (
+      <View style={styles.orCont}>
+        <View style={styles.horizontalView} />
+        <Text style={styles.orString}>or</Text>
+        <View style={styles.horizontalView} />
+      </View>
+    );
+  };
+
+  const _renderSignUpButton = () => {
+    return (
+      <View style={styles.orCont}>
+        <Text style={styles.orString}>Don't have an account?</Text>
+        <TouchableOpacity onPress={_handleSignUpClick}>
+          <Text style={[styles.orString, styles.signInString]}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>
+    );
   };
 
   return (
@@ -103,13 +143,23 @@ const LoginScreen = () => {
                     )}
                   </View>
 
+                  {/* forgot password button */}
                   <View style={styles.forgotPWDBTN}>
                     <TextButton title="Forgot Password?" textStyle={styles.forgotPasswordString} />
                   </View>
+
+                  {/* sign in button */}
+                  <PrimaryButton title="Sign in" />
                 </View>
               );
             }}
           </Formik>
+
+          {/* or */}
+          {_renderOrView()}
+
+          {/* sign up button */}
+          {_renderSignUpButton()}
         </ScrollView>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
@@ -117,7 +167,7 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
-const gapAndMargin = _mvs(16);
+const gapAndMargin = _mvs(20);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
@@ -138,7 +188,7 @@ const styles = StyleSheet.create({
   },
   formCont: {
     marginTop: _mvs(20),
-    rowGap: _mvs(16),
+    rowGap: _mvs(12),
   },
   emailInput: {
     padding: 0,
@@ -183,10 +233,34 @@ const styles = StyleSheet.create({
   },
   forgotPWDBTN: {
     alignItems: 'flex-end',
-    marginTop: -gapAndMargin / 2,
+    // marginTop: -gapAndMargin / 2,
   },
   forgotPasswordString: {
     color: _color.red,
-    fontSize: _ms(12),
+    fontSize: _ms(10.5),
+    includeFontPadding: false,
+  },
+  orCont: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    columnGap: _ms(12),
+    // backgroundColor: _color.yellow,
+  },
+  horizontalView: {
+    height: 1,
+    flex: 1,
+    backgroundColor: _color.B4B4B4,
+  },
+  orString: {
+    color: _color.textSecondary,
+    fontSize: _ms(14),
+    fontFamily: _fonts.workSansMedium,
+  },
+  signInString: {
+    color: _color.primary,
+    fontSize: _ms(14),
+    fontFamily: _fonts.workSansMedium,
+    marginLeft: -6,
   },
 });

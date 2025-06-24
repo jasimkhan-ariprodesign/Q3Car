@@ -59,6 +59,9 @@ const SignupScreen = () => {
   const _handleSignInClick = () => {
     navigation.navigate(_screens.authStack, {
       screen: _screens.loginScreen,
+      params: {
+        fromScreen: 'signup',
+      },
     });
   };
 

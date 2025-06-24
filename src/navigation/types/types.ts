@@ -10,7 +10,7 @@ export type WelcomeStackParamList = {
 
 export type AuthStackParamList = {
   SignupScreen: undefined;
-  LoginScreen: undefined;
+  LoginScreen: {fromScreen?: string} | undefined;
   SPSignupScreen: undefined;
 };
 
@@ -40,9 +40,10 @@ export type RootStackParamList = {
   SPStack: NavigatorScreenParams<SPStackParamList>;
 };
 
+  // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  // const route = useRoute<RouteProp<AuthStackParamList, 'LoginScreen'>>();
 
 //  ------ Temporary - to understand how its working
-
 
 // navigation.navigate('AuthStack'); // 👈 navigate to Auth stack
 // If you're inside AuthStack and want to go to a screen in WelcomeStack, you can do:
