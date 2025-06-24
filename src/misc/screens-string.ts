@@ -3,6 +3,7 @@ export const _screens = {
   rootNavigator: 'RootNavigator',
   welcomeStack: 'WelcomeStack',
   authStack: 'AuthStack',
+  AppStack: 'AppStack',
 
   // welcome
   splash: 'SplashScreen',
@@ -16,4 +17,7 @@ export const _screens = {
   loginScreen: 'LoginScreen',
   spSignupScreen: 'SPSignupScreen',
   forgotPassword: 'ForgotPassword',
+
+  // app
+  successScreen: 'SuccessScreen',
 } as const;

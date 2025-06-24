@@ -5,6 +5,7 @@ import WelcomeStack from './welcome-stack';
 import AuthStack from './auth-stack';
 import {RootStackParamList} from './types/types';
 import {StyleSheet} from 'react-native';
+import AppStack from './app-stack';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -19,6 +20,7 @@ const RootNavigator = () => {
       }}>
       <Stack.Screen name={_screens.welcomeStack} component={WelcomeStack} />
       <Stack.Screen name={_screens.authStack} component={AuthStack} />
+      <Stack.Screen name={_screens.AppStack} component={AppStack} />
     </Stack.Navigator>
   );
 };

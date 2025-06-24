@@ -25,6 +25,7 @@ export type AppDrawerParamList = {
 export type AppStackParamList = {
   // HomeScreen: undefined;
   // ProfileScreen: undefined;
+  SuccessScreen: undefined;
 };
 
 // not created yet - tow truck as service provider
@@ -41,8 +42,8 @@ export type RootStackParamList = {
   SPStack: NavigatorScreenParams<SPStackParamList>;
 };
 
-  // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  // const route = useRoute<RouteProp<AuthStackParamList, 'LoginScreen'>>();
+// const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+// const route = useRoute<RouteProp<AuthStackParamList, 'LoginScreen'>>();
 
 //  ------ Temporary - to understand how its working
 

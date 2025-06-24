@@ -1,6 +1,6 @@
 import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
-import {_styles, _isIOS, _color, _ms, _mvs} from '../../misc';
+import {_styles, _isIOS, _color, _ms, _mvs, _screens} from '../../misc';
 import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../presentation/components';
 import {_fonts} from '../../assets';
 import {Formik} from 'formik';
@@ -8,8 +8,12 @@ import {_forgotPasswordSchema} from '../validations/schemas';
 import {_logger} from '../../utils';
 import {OTPBox} from '../components';
 import {SecondaryLoader} from '../../common/loaders';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../navigation/types/types';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 const ForgotPassword = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [currentStep, setCurrentStep] = useState<'emailOrPhone' | 'otp'>('emailOrPhone');
   const [otp, setOtp] = useState();
 
@@ -20,6 +24,9 @@ const ForgotPassword = () => {
 
   const _handleVerifyOTPClick = () => {
     _logger.log('_handleVerifyOTPClick OTP:', otp);
+    navigation.push(_screens.AppStack, {
+      screen: _screens.successScreen,
+    });
   };
 
   const _renderEmailOrPhoneInputCom = () => {
