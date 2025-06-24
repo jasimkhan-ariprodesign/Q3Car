@@ -15,4 +15,5 @@ export const _screens = {
   signupScreen: 'SignupScreen',
   loginScreen: 'LoginScreen',
   spSignupScreen: 'SPSignupScreen',
+  forgotPassword: 'ForgotPassword',
 } as const;

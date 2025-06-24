@@ -55,6 +55,12 @@ const LoginScreen = () => {
     }
   };
 
+  const _handleForgotPasswordClick = () => {
+    navigation.push(_screens.authStack, {
+      screen: _screens.forgotPassword,
+    });
+  };
+
   const _handleSignIn = (value: any) => {
     _logger.log('_handleSignup --: ', value);
   };
@@ -80,6 +86,76 @@ const LoginScreen = () => {
     );
   };
 
+  const _renderFormik = () => {
+    return (
+      <Formik
+        initialValues={initialValues}
+        validationSchema={_loginSchema}
+        onSubmit={_handleSignIn}>
+        {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
+          _logger.log('values ->', values);
+
+          return (
+            <View style={styles.formCont}>
+              {/* email */}
+              <View>
+                <TextInput
+                  placeholder="Email or Phone Number"
+                  placeholderTextColor={_color.textPrimary}
+                  value={values.email}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  style={styles.emailInput}
+                  autoCorrect={false}
+                />
+                {errors.email && touched.email && typeof errors.email === 'string' && (
+                  <Text style={styles.errorString}>{errors.email}</Text>
+                )}
+              </View>
+
+              {/* passwrod */}
+              <View>
+                <View style={styles.pwdCont}>
+                  <TextInput
+                    placeholder="Enter Your Password"
+                    placeholderTextColor={_color.textPrimary}
+                    value={values.password}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    style={styles.pwdInput}
+                    secureTextEntry={formData.showPasswrod}
+                  />
+                  <IconButton
+                    icon={formData.showPasswrod ? _icons.invisible : _icons.visible}
+                    iconStyle={_styles.size20}
+                    onPress={_handleShowPassword}
+                    disabled={false}
+                  />
+                </View>
+                {errors.password && touched.password && typeof errors.password === 'string' && (
+                  <Text style={styles.errorString}>{errors.password}</Text>
+                )}
+              </View>
+
+              {/* forgot password button */}
+              <View style={styles.forgotPWDBTN}>
+                <TextButton
+                  title="Forgot Password?"
+                  textStyle={styles.forgotPasswordString}
+                  onPress={_handleForgotPasswordClick}
+                  disabled={false}
+                />
+              </View>
+
+              {/* sign in button */}
+              <PrimaryButton title="Sign in" />
+            </View>
+          );
+        }}
+      </Formik>
+    );
+  };
+
   return (
     <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper style={styles.container}>
@@ -94,66 +170,8 @@ const LoginScreen = () => {
             </Text>
           </View>
 
-          <Formik
-            initialValues={initialValues}
-            validationSchema={_loginSchema}
-            onSubmit={_handleSignIn}>
-            {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
-              _logger.log('values ->', values);
-
-              return (
-                <View style={styles.formCont}>
-                  {/* email */}
-                  <View>
-                    <TextInput
-                      placeholder="Email or Phone Number"
-                      placeholderTextColor={_color.textPrimary}
-                      value={values.email}
-                      onChangeText={handleChange('email')}
-                      onBlur={handleBlur('email')}
-                      style={styles.emailInput}
-                      autoCorrect={false}
-                    />
-                    {errors.email && touched.email && typeof errors.email === 'string' && (
-                      <Text style={styles.errorString}>{errors.email}</Text>
-                    )}
-                  </View>
-
-                  {/* passwrod */}
-                  <View>
-                    <View style={styles.pwdCont}>
-                      <TextInput
-                        placeholder="Enter Your Password"
-                        placeholderTextColor={_color.textPrimary}
-                        value={values.password}
-                        onChangeText={handleChange('password')}
-                        onBlur={handleBlur('password')}
-                        style={styles.pwdInput}
-                        secureTextEntry={formData.showPasswrod}
-                      />
-                      <IconButton
-                        icon={formData.showPasswrod ? _icons.invisible : _icons.visible}
-                        iconStyle={_styles.size20}
-                        onPress={_handleShowPassword}
-                        disabled={false}
-                      />
-                    </View>
-                    {errors.password && touched.password && typeof errors.password === 'string' && (
-                      <Text style={styles.errorString}>{errors.password}</Text>
-                    )}
-                  </View>
-
-                  {/* forgot password button */}
-                  <View style={styles.forgotPWDBTN}>
-                    <TextButton title="Forgot Password?" textStyle={styles.forgotPasswordString} />
-                  </View>
-
-                  {/* sign in button */}
-                  <PrimaryButton title="Sign in" />
-                </View>
-              );
-            }}
-          </Formik>
+          {/* form/formik */}
+          {_renderFormik()}
 
           {/* or */}
           {_renderOrView()}

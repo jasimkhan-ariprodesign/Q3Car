@@ -2,7 +2,7 @@ import React from 'react';
 import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
 import {_color, _screens} from '../misc';
 import {AuthStackParamList} from './types/types';
-import {LoginScreen, SignupScreen, SPSignupScreen} from '../auth';
+import {ForgotPassword, LoginScreen, SignupScreen, SPSignupScreen} from '../auth';
 
 const Stack = createStackNavigator<AuthStackParamList>();
 
@@ -18,6 +18,7 @@ const AuthStack = () => {
       <Stack.Screen name={_screens.signupScreen} component={SignupScreen} />
       <Stack.Screen name={_screens.loginScreen} component={LoginScreen} />
       <Stack.Screen name={_screens.spSignupScreen} component={SPSignupScreen} />
+      <Stack.Screen name={_screens.forgotPassword} component={ForgotPassword} />
     </Stack.Navigator>
   );
 };

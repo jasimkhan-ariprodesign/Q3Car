@@ -12,6 +12,7 @@ export type AuthStackParamList = {
   SignupScreen: undefined;
   LoginScreen: {fromScreen?: string} | undefined;
   SPSignupScreen: undefined;
+  ForgotPassword: undefined;
 };
 
 // not created yet
