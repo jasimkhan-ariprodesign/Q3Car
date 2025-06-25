@@ -17,6 +17,8 @@ export const _screens = {
   loginScreen: 'LoginScreen',
   spSignupScreen: 'SPSignupScreen',
   forgotPassword: 'ForgotPassword',
+  setPassword: 'SetPassword',
+  spLoginScreen: 'SPLoginScreen',
 
   // app
   successScreen: 'SuccessScreen',

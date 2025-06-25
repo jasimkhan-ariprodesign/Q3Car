@@ -1,6 +1,6 @@
-import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {_color, _ms, _mvs, _screens, _styles, _width} from '../../../misc';
+import {_color, _ms, _mvs, _screens, _styles} from '../../../misc';
 import {_fonts, _images} from '../../../assets';
 import {CustomBottomShitModal, PrimaryButton, SafeAreaWrapper} from '../../components';
 import LocationPermissionPopup from './components/location-permission-popup';
@@ -9,7 +9,7 @@ import {RootStackParamList} from '../../../navigation/types/types';
 
 const SPWelcomeScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [showBottomShit, setShowBottomShit] = useState(false);
+  const [showBottomShit, setShowBottomShit] = useState(true);
 
   const _handleCreateAccountClick = () => {
     navigation.navigate(_screens.authStack, {
@@ -19,7 +19,7 @@ const SPWelcomeScreen = () => {
 
   const _handleLoginClick = () => {
     navigation.navigate(_screens.authStack, {
-      screen: _screens.loginScreen,
+      screen: _screens.spLoginScreen,
     });
   };
 

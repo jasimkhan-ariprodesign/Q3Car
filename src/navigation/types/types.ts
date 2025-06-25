@@ -13,6 +13,8 @@ export type AuthStackParamList = {
   LoginScreen: {fromScreen?: string} | undefined;
   SPSignupScreen: undefined;
   ForgotPassword: undefined;
+  SetPassword: undefined;
+  SPLoginScreen: undefined;
 };
 
 // not created yet
@@ -25,7 +27,7 @@ export type AppDrawerParamList = {
 export type AppStackParamList = {
   // HomeScreen: undefined;
   // ProfileScreen: undefined;
-  SuccessScreen: undefined;
+  SuccessScreen: {successMsg?: string} | undefined;
 };
 
 // not created yet - tow truck as service provider

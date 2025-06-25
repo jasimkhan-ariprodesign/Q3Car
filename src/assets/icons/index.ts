@@ -8,4 +8,5 @@ export const _icons = {
   google: require('./google.png'),
   invisible: require('./invisible.png'),
   visible: require('./visible.png'),
+  succeccCheck: require('./succeccCheck.png'),
 };

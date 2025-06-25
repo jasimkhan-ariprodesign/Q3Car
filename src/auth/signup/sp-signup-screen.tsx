@@ -1,35 +1,487 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {SafeAreaWrapper, PrimaryHeader} from '../../presentation/components';
-import {_ms, _color, _mvs} from '../../misc';
-import {_fonts} from '../../assets';
+// import {ScrollView, StyleSheet, Text, View} from 'react-native';
+// import React from 'react';
+// import {SafeAreaWrapper, PrimaryHeader} from '../../presentation/components';
+// import {_ms, _color, _mvs} from '../../misc';
+// import {_fonts} from '../../assets';
+
+// const SPSignupScreen = () => {
+//   return (
+//     <SafeAreaWrapper style={styles.container}>
+//       <PrimaryHeader />
+//       <ScrollView showsVerticalScrollIndicator={false} style={styles.ScrollViewStyle}>
+//         <View>
+//           <Text style={styles.title}>Hello! Signup to{'\n'}get started</Text>
+//         </View>
+//       </ScrollView>
+//     </SafeAreaWrapper>
+//   );
+// };
+
+// export default SPSignupScreen;
+
+// const styles = StyleSheet.create({
+//   container: {
+//     paddingHorizontal: _ms(18),
+//     backgroundColor: _color.white,
+//   },
+//   ScrollViewStyle: {
+//     paddingTop: _mvs(16),
+//   },
+//   title: {
+//     color: _color.black,
+//     fontFamily: _fonts.workSansRegular,
+//     fontSize: _ms(20),
+//   },
+// });
+
+import {
+  Image,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useState} from 'react';
+import {Formik} from 'formik';
+import {_icons, _fonts} from '../../assets';
+import {_color, _styles, _ms, _mvs, _isIOS, _screens} from '../../misc';
+import {
+  SafeAreaWrapper,
+  PrimaryHeader,
+  TextButton,
+  PrimaryButton,
+} from '../../presentation/components';
+import {OTPBox} from '../components';
+import {_signupSchema} from '../validations';
+import {privacyPolicyURL, termsOfServiceURL} from '../../constant';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../navigation/types/types';
+import {_hanldeOpenUrlFunc, _logger} from '../../utils';
+import {SecondaryLoader} from '../../common/loaders';
+
+const authFieldHeight = _ms(36);
 
 const SPSignupScreen = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const [verificationStatus, setVerificationStatus] = useState({
+    emailVerified: false,
+    phoneVerified: false,
+  });
+  _logger.log('verificationStatus ->', verificationStatus);
+
+  const initialValues = {
+    fullName: '',
+    email: '',
+    countryCode: '+1',
+    phoneNumber: '',
+    agreeToTerms: true,
+  };
+
+  const _handleEmailVerify = () => {
+    setVerificationStatus(prev => ({...prev, emailVerified: true}));
+  };
+
+  const _handlePhoneVerify = () => {
+    setVerificationStatus(prev => ({...prev, phoneVerified: true}));
+  };
+
+  const _handleSignup = () => {
+    // const _handleSignup = (value: any) => {
+    // _logger.log('_handleSignup --: ', value);
+    navigation.push(_screens.authStack, {
+      screen: _screens.setPassword,
+    });
+  };
+
+  const _handleSignInClick = () => {
+    navigation.navigate(_screens.authStack, {
+      screen: _screens.loginScreen,
+      params: {
+        fromScreen: 'signup',
+      },
+    });
+  };
+
+  const _renderOrView = () => {
+    return (
+      <View style={styles.orCont}>
+        <View style={styles.horizontalView} />
+        <Text style={styles.orString}>or</Text>
+        <View style={styles.horizontalView} />
+      </View>
+    );
+  };
+
+  const _renderSignInButton = () => {
+    return (
+      <View style={styles.orCont}>
+        <Text style={styles.orString}>Already have an account?</Text>
+        <TouchableOpacity onPress={_handleSignInClick}>
+          <Text style={[styles.orString, styles.signInString]}>Sign in</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const _renderFormik = () => {
+    return (
+      <Formik
+        initialValues={initialValues}
+        validationSchema={_signupSchema}
+        onSubmit={_handleSignup}>
+        {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
+          _logger.log('values ->', values);
+
+          return (
+            <View style={styles.formCont}>
+              {/* full name */}
+              <View>
+                <TextInput
+                  placeholder="Full Name"
+                  placeholderTextColor={_color.textPrimary}
+                  value={values.fullName}
+                  onChangeText={handleChange('fullName')}
+                  onBlur={handleBlur('fullName')}
+                  style={styles.fullNameInput}
+                  autoCorrect={false}
+                />
+                {errors.fullName && touched.fullName && typeof errors.fullName === 'string' && (
+                  <Text style={styles.errorString}>{errors.fullName}</Text>
+                )}
+              </View>
+
+              {/* email */}
+              <View>
+                <View style={styles.verifyCont}>
+                  <View style={styles.emailCont}>
+                    <TextInput
+                      placeholder="Email"
+                      placeholderTextColor={_color.textPrimary}
+                      value={values.email}
+                      onChangeText={handleChange('email')}
+                      onBlur={handleBlur('email')}
+                      style={styles.emailInput}
+                      autoCorrect={false}
+                    />
+                    {verificationStatus.emailVerified && (
+                      <Image
+                        source={_icons.checkGreen}
+                        style={_styles.size16}
+                        resizeMode="contain"
+                      />
+                    )}
+                  </View>
+
+                  <TextButton
+                    title="Verify"
+                    textStyle={styles.verify}
+                    onPress={_handleEmailVerify}
+                    disabled={false}
+                  />
+                </View>
+                {errors.email && touched.email && typeof errors.email === 'string' && (
+                  <Text style={styles.errorString}>{errors.email}</Text>
+                )}
+                <View style={styles.otpBoxCont}>
+                  <OTPBox otpInpHeight={authFieldHeight} />
+                </View>
+              </View>
+
+              {/* phone number */}
+              <View>
+                <View style={styles.sendOTPCont}>
+                  <TouchableOpacity style={styles.countryCodeBTN}>
+                    <Text>+1</Text>
+                    <Image
+                      source={_icons.angleLeftDark}
+                      style={styles.downArrow}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                  <View style={styles.emailCont}>
+                    <TextInput
+                      placeholder="000 000 0000"
+                      placeholderTextColor={_color.textPrimary}
+                      value={values.phoneNumber}
+                      onChangeText={handleChange('phoneNumber')}
+                      onBlur={handleBlur('phoneNumber')}
+                      style={styles.emailInput}
+                    />
+                    {verificationStatus.phoneVerified && (
+                      <Image
+                        source={_icons.checkGreen}
+                        style={_styles.size16}
+                        resizeMode="contain"
+                      />
+                    )}
+                  </View>
+                  <TextButton
+                    title="Send OTP"
+                    textStyle={styles.verify}
+                    onPress={_handlePhoneVerify}
+                    disabled={false}
+                  />
+                </View>
+                {errors.phoneNumber &&
+                  touched.phoneNumber &&
+                  typeof errors.phoneNumber === 'string' && (
+                    <Text style={styles.errorString}>{errors.phoneNumber}</Text>
+                  )}
+                <View style={styles.otpBoxCont}>
+                  <OTPBox otpInpHeight={authFieldHeight} />
+                </View>
+              </View>
+
+              {/* driver licence input */}
+              <View>
+                <TextInput
+                  placeholder="Driver licence"
+                  placeholderTextColor={_color.textPrimary}
+                  value={values.fullName}
+                  onChangeText={handleChange('fullName')}
+                  onBlur={handleBlur('fullName')}
+                  style={styles.fullNameInput}
+                  autoCorrect={false}
+                />
+                {errors.fullName && touched.fullName && typeof errors.fullName === 'string' && (
+                  <Text style={styles.errorString}>{errors.fullName}</Text>
+                )}
+              </View>
+
+              {/* signup button */}
+              <PrimaryButton
+                // onPress={handleSubmit}
+                onPress={_handleSignup}
+                title="Sign up"
+                buttonStyle={true ? styles.SignupBTN : undefined}
+                textStyle={true ? styles.SignupString : undefined}
+              />
+
+              {/* term of service - privacy policy */}
+              <View style={styles.privacyPolicyCont}>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => setFieldValue('agreeToTerms', !values.agreeToTerms)}
+                  style={styles.checkCont}>
+                  {values.agreeToTerms && (
+                    <Image source={_icons.check} style={_styles.size10} tintColor={_color.black} />
+                  )}
+                </TouchableOpacity>
+                <View style={styles.privacyPolicyStringCont}>
+                  <Text style={styles.termOfServiceString}>By signing up. you agree to the </Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      _hanldeOpenUrlFunc(termsOfServiceURL);
+                    }}>
+                    <Text style={[styles.termOfServiceString, styles.blueTxt]}>
+                      Terms of service{' '}
+                    </Text>
+                  </TouchableOpacity>
+
+                  <Text style={styles.termOfServiceString}>and </Text>
+                  <TouchableOpacity onPress={() => _hanldeOpenUrlFunc(privacyPolicyURL)}>
+                    <Text style={[styles.termOfServiceString, styles.blueTxt]}>
+                      Privacy policy.
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          );
+        }}
+      </Formik>
+    );
+  };
+
+  // main View
   return (
-    <SafeAreaWrapper style={styles.container}>
-      <PrimaryHeader />
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.ScrollViewStyle}>
-        <View>
-          <Text style={styles.title}>Hello! Signup to{'\n'}get started</Text>
+    <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+      <SafeAreaWrapper>
+        <PrimaryHeader containerStyle={styles.headerStyle} />
+        <View style={_styles.flex}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.contentContainerStyle}>
+            <View>
+              <Text style={styles.title}>
+                Hello!{'\n'}Signup to {'\n'}get started
+              </Text>
+            </View>
+
+            {/* form/formik */}
+            {_renderFormik()}
+
+            {/* or */}
+            {_renderOrView()}
+
+            {/* sign in button */}
+            {_renderSignInButton()}
+          </ScrollView>
+          {/* loader */}
+          {/* <SecondaryLoader /> */}
         </View>
-      </ScrollView>
-    </SafeAreaWrapper>
+      </SafeAreaWrapper>
+    </KeyboardAvoidingView>
   );
 };
 
 export default SPSignupScreen;
 
+const gapAndMargin = _mvs(16);
+const bdrWidth = 1.2;
+
 const styles = StyleSheet.create({
-  container: {
+  headerStyle: {paddingHorizontal: _ms(18)},
+  contentContainerStyle: {
+    rowGap: gapAndMargin,
     paddingHorizontal: _ms(18),
-    backgroundColor: _color.white,
-  },
-  ScrollViewStyle: {
-    paddingTop: _mvs(16),
   },
   title: {
     color: _color.black,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(20),
+  },
+  formCont: {
+    rowGap: gapAndMargin,
+  },
+  otpBoxCont: {marginTop: gapAndMargin},
+  fullNameInput: {
+    padding: 0,
+    paddingStart: _ms(12),
+    height: authFieldHeight,
+    borderWidth: bdrWidth,
+    borderColor: _color.black,
+    borderRadius: 8,
+    color: _color.black,
+    fontFamily: _fonts.workSansRegular,
+    fontSize: _ms(12),
+    includeFontPadding: false,
+  },
+  errorString: {
+    marginStart: _ms(8),
+    color: _color.red,
+    fontFamily: _fonts.workSansRegular,
+    fontSize: _ms(10),
+    includeFontPadding: false,
+  },
+  emailCont: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: authFieldHeight,
+    borderWidth: bdrWidth,
+    borderColor: _color.black,
+    borderRadius: 8,
+    paddingEnd: _ms(12),
+    columnGap: _ms(8),
+  },
+  emailInput: {
+    padding: 0,
+    height: authFieldHeight,
+    color: _color.black,
+    fontFamily: _fonts.workSansRegular,
+    fontSize: _ms(12),
+    includeFontPadding: false,
+    borderRadius: 8,
+    flex: 1,
+    paddingStart: _ms(12),
+  },
+  verifyCont: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    columnGap: _ms(8),
+  },
+  verify: {
+    color: _color.primary,
+    fontSize: _ms(12),
+  },
+  sendOTPCont: {flexDirection: 'row', alignItems: 'center', columnGap: _ms(8)},
+  countryCodeBTN: {
+    borderWidth: bdrWidth,
+    borderColor: _color.black,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    height: authFieldHeight,
+    borderRadius: 8,
+    minWidth: _ms(52),
+  },
+  countryCodeString: {
+    fontSize: _ms(14),
+    color: _color.blue,
+    fontFamily: _fonts.workSansRegular,
+  },
+  downArrow: {
+    ..._styles.size10,
+    transform: [{rotate: '-90deg'}],
+  },
+  SignupBTN: {
+    backgroundColor: _color.CFCFCF,
+  },
+  SignupString: {
+    color: _color.black,
+  },
+  privacyPolicyCont: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: _ms(8),
+  },
+  privacyPolicyStringCont: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  checkCont: {
+    backgroundColor: _color.white,
+    width: _ms(20),
+    height: _ms(20),
+    borderRadius: _ms(20),
+    borderWidth: 2,
+    borderColor: _color.black,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  termOfServiceString: {
+    fontSize: _ms(12),
+    color: _color.B4B4B4,
+    fontFamily: _fonts.workSansMedium,
+  },
+  blueTxt: {
+    color: _color.primary,
+  },
+  orCont: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    columnGap: _ms(12),
+  },
+  horizontalView: {
+    height: 1,
+    flex: 1,
+    backgroundColor: _color.B4B4B4,
+  },
+  orString: {
+    color: _color.textSecondary,
+    fontSize: _ms(14),
+    fontFamily: _fonts.workSansMedium,
+  },
+  socialBTN: {
+    borderWidth: bdrWidth,
+    borderColor: _color.CFCFCF,
+    width: _ms(48),
+    height: _ms(48),
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  signInString: {
+    color: _color.primary,
+    fontSize: _ms(14),
+    fontFamily: _fonts.workSansMedium,
+    marginLeft: -6,
   },
 });

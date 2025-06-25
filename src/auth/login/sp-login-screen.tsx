@@ -26,8 +26,8 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {SecondaryLoader} from '../../common/loaders';
 
 const authFieldHeight = _ms(36);
-
-const LoginScreen = () => {
+// CREATE SP LOGIN SEPARATE BECAUSE DESIGN IS DIFFERENT IN FIGMA BUT KEPPING SAME FOR NOW..
+const SPLoginScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<AuthStackParamList, 'LoginScreen'>>();
   const {fromScreen} = route?.params || {};
@@ -188,7 +188,7 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SPLoginScreen;
 const gapAndMargin = _mvs(20);
 const bdrWidth = 1.2;
 

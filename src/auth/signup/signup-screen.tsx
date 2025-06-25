@@ -21,7 +21,8 @@ import {
 import {OTPBox} from '../components';
 import {_signupSchema} from '../validations';
 import {privacyPolicyURL, termsOfServiceURL} from '../../constant';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/types/types';
 import {_hanldeOpenUrlFunc, _logger} from '../../utils';
 import {SecondaryLoader} from '../../common/loaders';
@@ -29,7 +30,7 @@ import {SecondaryLoader} from '../../common/loaders';
 const authFieldHeight = _ms(36);
 
 const SignupScreen = () => {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const [verificationStatus, setVerificationStatus] = useState({
     emailVerified: false,
@@ -53,8 +54,12 @@ const SignupScreen = () => {
     setVerificationStatus(prev => ({...prev, phoneVerified: true}));
   };
 
-  const _handleSignup = (value: any) => {
-    _logger.log('_handleSignup --: ', value);
+  const _handleSignup = () => {
+    // const _handleSignup = (value: any) => {
+    // _logger.log('_handleSignup --: ', value);
+    navigation.push(_screens.authStack, {
+      screen: _screens.setPassword,
+    });
   };
 
   const _handleSignInClick = () => {
@@ -211,7 +216,8 @@ const SignupScreen = () => {
 
               {/* signup button */}
               <PrimaryButton
-                onPress={handleSubmit}
+                // onPress={handleSubmit}
+                onPress={_handleSignup}
                 title="Sign up"
                 buttonStyle={true ? styles.SignupBTN : undefined}
                 textStyle={true ? styles.SignupString : undefined}
