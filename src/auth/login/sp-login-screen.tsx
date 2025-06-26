@@ -50,7 +50,7 @@ const SPLoginScreen = () => {
       navigation.goBack();
     } else {
       navigation.push(_screens.authStack, {
-        screen: _screens.signupScreen,
+        screen: _screens.spSignupScreen,
       });
     }
   };

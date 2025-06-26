@@ -8,6 +8,7 @@ export const _styles = StyleSheet.create({
   // Layout
   flex: {
     flex: 1,
+    backgroundColor: _color.transparent,
   },
   container: {
     flex: 1,

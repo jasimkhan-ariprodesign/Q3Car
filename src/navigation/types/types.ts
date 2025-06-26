@@ -18,9 +18,10 @@ export type AuthStackParamList = {
 };
 
 // not created yet
-export type AppDrawerParamList = {
-  // HomeScreen: undefined;
-  // ProfileScreen: undefined;
+export type DrawerNavigatorParamList = {
+  DrawerNavigator: undefined;
+  DashboardScreen: undefined;
+  ProfileScreen: undefined;
 };
 
 // not created yet
@@ -39,7 +40,7 @@ export type SPStackParamList = {
 export type RootStackParamList = {
   WelcomeStack: NavigatorScreenParams<WelcomeStackParamList>;
   AuthStack: NavigatorScreenParams<AuthStackParamList>;
-  AppDrawer: NavigatorScreenParams<AppDrawerParamList>;
+  DrawerNavigator: NavigatorScreenParams<DrawerNavigatorParamList>;
   AppStack: NavigatorScreenParams<AppStackParamList>;
   SPStack: NavigatorScreenParams<SPStackParamList>;
 };

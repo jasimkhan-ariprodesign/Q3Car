@@ -1,42 +1,7 @@
-// import {ScrollView, StyleSheet, Text, View} from 'react-native';
-// import React from 'react';
-// import {SafeAreaWrapper, PrimaryHeader} from '../../presentation/components';
-// import {_ms, _color, _mvs} from '../../misc';
-// import {_fonts} from '../../assets';
-
-// const SPSignupScreen = () => {
-//   return (
-//     <SafeAreaWrapper style={styles.container}>
-//       <PrimaryHeader />
-//       <ScrollView showsVerticalScrollIndicator={false} style={styles.ScrollViewStyle}>
-//         <View>
-//           <Text style={styles.title}>Hello! Signup to{'\n'}get started</Text>
-//         </View>
-//       </ScrollView>
-//     </SafeAreaWrapper>
-//   );
-// };
-
-// export default SPSignupScreen;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     paddingHorizontal: _ms(18),
-//     backgroundColor: _color.white,
-//   },
-//   ScrollViewStyle: {
-//     paddingTop: _mvs(16),
-//   },
-//   title: {
-//     color: _color.black,
-//     fontFamily: _fonts.workSansRegular,
-//     fontSize: _ms(20),
-//   },
-// });
-
 import {
   Image,
   KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -46,7 +11,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {Formik} from 'formik';
-import {_icons, _fonts} from '../../assets';
+import {_icons, _fonts, _images} from '../../assets';
 import {_color, _styles, _ms, _mvs, _isIOS, _screens} from '../../misc';
 import {
   SafeAreaWrapper,
@@ -91,7 +56,7 @@ const SPSignupScreen = () => {
   };
 
   const _handleSignup = () => {
-    // const _handleSignup = (value: any) => {
+  // const _handleSignup = (value: any) => {
     // _logger.log('_handleSignup --: ', value);
     navigation.push(_screens.authStack, {
       screen: _screens.setPassword,
@@ -196,7 +161,7 @@ const SPSignupScreen = () => {
               <View>
                 <View style={styles.sendOTPCont}>
                   <TouchableOpacity style={styles.countryCodeBTN}>
-                    <Text>+1</Text>
+                    <Text style={styles.countryCodeString}>+1</Text>
                     <Image
                       source={_icons.angleLeftDark}
                       style={styles.downArrow}
@@ -253,6 +218,56 @@ const SPSignupScreen = () => {
                 )}
               </View>
 
+              {/* driver licence picture */}
+              <View style={styles.sendOTPCont}>
+                <View style={styles.pictureContView}>
+                  {/* <Image
+                    source={_images.spWelcomeScreen}
+                    style={styles.pictureImage}
+                    resizeMode="cover"
+                  /> */}
+                  <Text style={[styles.countryCodeString, {marginLeft: _ms(12)}]}>
+                    Picture of Driver's License
+                  </Text>
+                </View>
+                <TouchableOpacity style={styles.countryCodeBTN}>
+                  <Text style={styles.countryCodeString}>Upload</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* insurance input */}
+              <View>
+                <TextInput
+                  placeholder="Insurance"
+                  placeholderTextColor={_color.textPrimary}
+                  value={values.fullName}
+                  onChangeText={handleChange('fullName')}
+                  onBlur={handleBlur('fullName')}
+                  style={styles.fullNameInput}
+                  autoCorrect={false}
+                />
+                {errors.fullName && touched.fullName && typeof errors.fullName === 'string' && (
+                  <Text style={styles.errorString}>{errors.fullName}</Text>
+                )}
+              </View>
+
+              {/* insurance picture */}
+              <View style={styles.sendOTPCont}>
+                <View style={styles.pictureContView}>
+                  {/* <Image
+                    source={_images.spWelcomeScreen}
+                    style={styles.pictureImage}
+                    resizeMode="cover"
+                  /> */}
+                  <Text style={[styles.countryCodeString, {marginLeft: _ms(12)}]}>
+                    Picture of proof of insurance
+                  </Text>
+                </View>
+                <TouchableOpacity style={styles.countryCodeBTN}>
+                  <Text style={styles.countryCodeString}>Upload</Text>
+                </TouchableOpacity>
+              </View>
+
               {/* signup button */}
               <PrimaryButton
                 // onPress={handleSubmit}
@@ -300,7 +315,10 @@ const SPSignupScreen = () => {
 
   // main View
   return (
-    <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+    <KeyboardAvoidingView
+      style={[_styles.flex]}
+      behavior={_isIOS() ? 'padding' : undefined}
+      keyboardVerticalOffset={Platform.select({ios: _mvs(8)})}>
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
         <View style={_styles.flex}>
@@ -340,6 +358,7 @@ const styles = StyleSheet.create({
   contentContainerStyle: {
     rowGap: gapAndMargin,
     paddingHorizontal: _ms(18),
+    paddingBottom: _mvs(20),
   },
   title: {
     color: _color.black,
@@ -409,11 +428,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     height: authFieldHeight,
     borderRadius: 8,
-    minWidth: _ms(52),
+    minWidth: _ms(60),
   },
   countryCodeString: {
-    fontSize: _ms(14),
-    color: _color.blue,
+    fontSize: _ms(12),
+    color: _color.textSecondary,
     fontFamily: _fonts.workSansRegular,
   },
   downArrow: {
@@ -483,5 +502,21 @@ const styles = StyleSheet.create({
     fontSize: _ms(14),
     fontFamily: _fonts.workSansMedium,
     marginLeft: -6,
+  },
+  // driver licence picture view
+  pictureContView: {
+    flex: 1,
+    borderWidth: bdrWidth,
+    borderColor: _color.black,
+    minHeight: authFieldHeight,
+    maxHeight: authFieldHeight * 3,
+    borderRadius: 8,
+    justifyContent: 'center',
+    overflow: 'scroll',
+  },
+  pictureImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 8,
   },
 });

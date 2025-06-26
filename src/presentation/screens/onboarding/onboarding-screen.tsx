@@ -14,7 +14,8 @@ const OnboardingScreen = () => {
   // _logger.log('index ->', curPageIndex);
 
   const _handleSkipClick = () => {
-    navigation.push(_screens.userTypeSelectScreen);
+    // navigation.push(_screens.userTypeSelectScreen);
+    navigation.push(_screens.drawerNavigator);
   };
 
   const _handleNextClick = () => {

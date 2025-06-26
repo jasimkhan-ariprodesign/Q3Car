@@ -19,6 +19,7 @@ import {
 } from '../../presentation/components';
 import {_fonts, _icons} from '../../assets';
 import {_setPasswordSchema} from '../validations/schemas';
+import { SecondaryLoader } from '../../common';
 
 const authFieldHeight = _ms(36);
 
@@ -124,6 +125,9 @@ const SetPassword = () => {
               )}
             </Formik>
           </ScrollView>
+
+          {/* loader */}
+          {/* <SecondaryLoader /> */}
         </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
