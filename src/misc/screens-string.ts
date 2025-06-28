@@ -22,9 +22,9 @@ export const _screens = {
 
   // app
   successScreen: 'SuccessScreen',
+  profileScreen: 'ProfileScreen',
 
   // drawer
   drawerNavigator: 'DrawerNavigator',
   dashboardScreen: 'DashboardScreen',
-  profileScreen: 'ProfileScreen',
 } as const;

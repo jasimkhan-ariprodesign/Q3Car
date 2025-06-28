@@ -6,16 +6,20 @@ import {_color, _height, _ms, _screens, _strings, _styles, _width} from '../../.
 import {_onboardingData} from '../../../constant';
 import {_fonts, _icons} from '../../../assets';
 import NextButtonWithProgressBar from './components/next-button-with-progress-bar';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../navigation/types/types';
 
 const OnboardingScreen = () => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [curPageIndex, setCurPageIndex] = useState<number>(0);
   const scrollRef = useRef<ScrollView>(null);
   // _logger.log('index ->', curPageIndex);
 
   const _handleSkipClick = () => {
     // navigation.push(_screens.userTypeSelectScreen);
-    navigation.push(_screens.drawerNavigator);
+    navigation.navigate(_screens.drawerNavigator, {
+      screen: _screens.dashboardScreen,
+    });
   };
 
   const _handleNextClick = () => {

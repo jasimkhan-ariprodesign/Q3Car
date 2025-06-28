@@ -32,7 +32,7 @@ const NextButtonWithProgressBar = ({onPress, index, dataLength}: Prop) => {
         {(fill: number) => {
           // _logger.log('fill --> ', fill);
           return (
-            <TouchableOpacity onPress={onPress} style={styles.buttonStyle}>
+            <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={styles.buttonStyle}>
               <Image source={_icons.arrowRight} style={_styles.size20} />
             </TouchableOpacity>
           );

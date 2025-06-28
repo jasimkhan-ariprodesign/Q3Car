@@ -2,6 +2,7 @@ export const _color = {
   // Brand colors
   primary: '#1C4B98',
   secondary: '#FF6B35',
+  primaryLight: '#E4E9F2',
 
   // Neutral colors
   black: '#000000',
@@ -51,4 +52,6 @@ export const _color = {
   // others
   B4B4B4: '#B4B4B4',
   CFCFCF: '#CFCFCF',
+  FF9391: '#FF9391',
+  EDEDED: '#EDEDED',
 };

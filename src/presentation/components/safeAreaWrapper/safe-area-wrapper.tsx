@@ -12,7 +12,7 @@ type SafeAreaWrapperProps = {
 
 const DEFAULT_EDGES: Edge[] = Platform.select({
   android: ['top', 'left', 'right', 'bottom'],
-  ios: ['top', 'left', 'right'],
+  ios: ['top', 'left', 'right', 'bottom'],
   default: ['top', 'left', 'right', 'bottom'],
 });
 

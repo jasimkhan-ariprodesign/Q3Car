@@ -21,13 +21,12 @@ export type AuthStackParamList = {
 export type DrawerNavigatorParamList = {
   DrawerNavigator: undefined;
   DashboardScreen: undefined;
-  ProfileScreen: undefined;
 };
 
 // not created yet
 export type AppStackParamList = {
   // HomeScreen: undefined;
-  // ProfileScreen: undefined;
+  ProfileScreen: undefined;
   SuccessScreen: {successMsg?: string} | undefined;
 };
 

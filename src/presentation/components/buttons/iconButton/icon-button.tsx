@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import React from 'react';
-import { _logger } from '../../../../utils';
+import {_logger} from '../../../../utils';
 
 interface IconButtonProp {
   iconBtnStyle?: ViewStyle;
@@ -16,6 +16,7 @@ interface IconButtonProp {
   disabled?: boolean;
   icon?: ImageSourcePropType | {uri: string};
   resizeMode?: 'contain' | 'cover' | 'center' | 'stretch';
+  tintColor?: string;
 }
 
 const IconButton: React.FC<IconButtonProp> = ({
@@ -25,6 +26,7 @@ const IconButton: React.FC<IconButtonProp> = ({
   disabled = true,
   icon,
   resizeMode = 'contain',
+  tintColor,
 }) => {
   if (!icon) {
     return null;
@@ -42,6 +44,7 @@ const IconButton: React.FC<IconButtonProp> = ({
         style={[iconStyle]}
         resizeMode={resizeMode}
         accessibilityLabel="Icon button"
+        tintColor={tintColor || ''}
       />
     </TouchableOpacity>
   );

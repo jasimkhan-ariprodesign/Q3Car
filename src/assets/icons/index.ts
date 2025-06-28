@@ -1,3 +1,5 @@
+import {_drawerMenuIcons} from './drawer-menu-icons';
+
 export const _icons = {
   q3Car: require('./q3Car.png'),
   arrowRight: require('./arrow-right.png'),
@@ -9,4 +11,13 @@ export const _icons = {
   invisible: require('./invisible.png'),
   visible: require('./visible.png'),
   succeccCheck: require('./succeccCheck.png'),
+  drawer: require('./drawer.png'),
+  circleBlue: require('./circle-blue.png'),
+  verticalLine: require('./vertical-line.png'),
+  locationRed: require('./location-red.png'),
+  closeBlack: require('./close-black.png'),
+  facebookWhite: require('./facebook-white.png'),
 };
+
+// drawer icons 👇🏻
+export {_drawerMenuIcons};
