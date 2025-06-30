@@ -66,7 +66,7 @@ const ProfileScreen = () => {
 
   const _renderPreferenceCont = () => {
     return (
-      <View style={styles.inputCont}>
+      <View style={[styles.inputCont, styles.margTop]}>
         <Text style={styles.labelString}>Preferences</Text>
         <View style={styles.preferencesCont}>
           <View style={styles.switchCont}>
@@ -94,7 +94,7 @@ const ProfileScreen = () => {
 
   const _renderSocialNetwork = () => {
     return (
-      <View style={styles.inputCont}>
+      <View style={[styles.inputCont, styles.margTop]}>
         <Text style={styles.labelString}>Social Network</Text>
 
         {/* facebook button */}
@@ -156,13 +156,12 @@ const ProfileScreen = () => {
 export default ProfileScreen;
 
 const authFieldHeight = _ms(36);
-const gapAndMargin = _mvs(16);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
   backIconStyle: {paddingHorizontal: _ms(18)},
   contentContainerStyle: {
-    rowGap: gapAndMargin,
+    rowGap: _mvs(18),
     paddingHorizontal: _ms(20),
     paddingBottom: _mvs(20),
   },
@@ -256,5 +255,8 @@ const styles = StyleSheet.create({
     borderColor: _color.EDEDED,
     backgroundColor: _color.white,
     marginTop: _mvs(8),
+  },
+  margTop: {
+    marginTop: _mvs(20),
   },
 });

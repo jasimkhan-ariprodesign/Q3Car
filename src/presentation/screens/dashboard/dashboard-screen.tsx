@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {EdgeInsets} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
@@ -46,25 +46,31 @@ const DashboardScreen = () => {
       {/* dashboard content */}
       <View style={_styles.flex}>
         <View style={styles.contentContainer}>
-          <View style={styles.child}>
-            <Text style={styles.titleString}>Where are you going today?</Text>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.child}>
+              <Text style={styles.titleString}>Where are you going today?</Text>
 
-            <View style={styles.pickupAndDestCont}>
-              {/* pick up point button */}
-              <TouchableOpacity style={styles.pickupPointBTN} activeOpacity={0.6}>
-                <Image source={_icons.circleBlue} style={_styles.size22} resizeMode="contain" />
-                <Text style={styles.pickupPointBTNString}>Choose pick up point</Text>
-              </TouchableOpacity>
+              <View style={styles.pickupAndDestCont}>
+                {/* pick up point button */}
+                <TouchableOpacity style={styles.pickupPointBTN} activeOpacity={0.6}>
+                  <Image source={_icons.circleBlue} style={_styles.size22} resizeMode="contain" />
+                  <Text style={styles.pickupPointBTNString}>Choose pick up point</Text>
+                </TouchableOpacity>
 
-              <TouchableOpacity style={styles.pickupPointBTN} activeOpacity={0.6}>
-                <Image source={_icons.locationRed} style={_styles.size22} resizeMode="contain" />
-                <Text style={styles.pickupPointBTNString}>Choose pick up point</Text>
-              </TouchableOpacity>
+                <TouchableOpacity style={styles.pickupPointBTN} activeOpacity={0.6}>
+                  <Image source={_icons.locationRed} style={_styles.size22} resizeMode="contain" />
+                  <Text style={styles.pickupPointBTNString}>Choose pick up point</Text>
+                </TouchableOpacity>
 
-              {/* vertical line - image */}
-              <Image source={_icons.verticalLine} style={styles.verticalLine} resizeMode="cover" />
+                {/* vertical line - image */}
+                <Image
+                  source={_icons.verticalLine}
+                  style={styles.verticalLine}
+                  resizeMode="cover"
+                />
+              </View>
             </View>
-          </View>
+          </ScrollView>
         </View>
       </View>
     </SafeAreaWrapper>
