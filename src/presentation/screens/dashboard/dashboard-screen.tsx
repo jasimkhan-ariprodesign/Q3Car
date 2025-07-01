@@ -1,4 +1,12 @@
-import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {EdgeInsets} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
@@ -8,6 +16,8 @@ import {IconButton, SafeAreaWrapper} from '../../components';
 import {_color, _height, _isIOS, _ms, _mvs, _styles, _useCustomSafeAreaInsets} from '../../../misc';
 import {_fonts, _icons} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
+import RenderMap from './components/renderMap/render-map';
+import DashboardContent from './components/dashboardContent/dashboard-content';
 
 const DashboardScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<RootStackParamList>>();
@@ -18,7 +28,7 @@ const DashboardScreen = () => {
     navigation.toggleDrawer();
   };
 
-  const _renderDrawerBTN = () => {
+  const _renderOpenDrawerBTN = () => {
     return (
       <View style={styles.drawerBTNCont}>
         <IconButton
@@ -30,50 +40,39 @@ const DashboardScreen = () => {
       </View>
     );
   };
+
   const _renderMap = () => {
     return (
       <View style={styles.mapContainer}>
         {/* button to open drawer */}
-        {_renderDrawerBTN()}
+        {_renderOpenDrawerBTN()}
+
+        {/* map  */}
+        <RenderMap />
       </View>
     );
   };
-  return (
-    <SafeAreaWrapper edges={_isIOS() ? ['left', 'right'] : undefined}>
-      {/* map here */}
-      {_renderMap()}
 
-      {/* dashboard content */}
+  const _renderDashboardCont = () => {
+    return (
       <View style={_styles.flex}>
-        <View style={styles.contentContainer}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.child}>
-              <Text style={styles.titleString}>Where are you going today?</Text>
-
-              <View style={styles.pickupAndDestCont}>
-                {/* pick up point button */}
-                <TouchableOpacity style={styles.pickupPointBTN} activeOpacity={0.6}>
-                  <Image source={_icons.circleBlue} style={_styles.size22} resizeMode="contain" />
-                  <Text style={styles.pickupPointBTNString}>Choose pick up point</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.pickupPointBTN} activeOpacity={0.6}>
-                  <Image source={_icons.locationRed} style={_styles.size22} resizeMode="contain" />
-                  <Text style={styles.pickupPointBTNString}>Choose pick up point</Text>
-                </TouchableOpacity>
-
-                {/* vertical line - image */}
-                <Image
-                  source={_icons.verticalLine}
-                  style={styles.verticalLine}
-                  resizeMode="cover"
-                />
-              </View>
-            </View>
-          </ScrollView>
-        </View>
+        {/* child for all content in bottom */}
+        <DashboardContent />
       </View>
-    </SafeAreaWrapper>
+    );
+  };
+
+  //   main view
+  return (
+    <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+      <SafeAreaWrapper edges={_isIOS() ? ['left', 'right'] : undefined}>
+        {/* map here */}
+        {_renderMap()}
+
+        {/* dashboard content */}
+        {_renderDashboardCont()}
+      </SafeAreaWrapper>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -82,7 +81,7 @@ export default DashboardScreen;
 const getStyles = (insets: EdgeInsets) =>
   StyleSheet.create({
     mapContainer: {
-      height: _height * 0.56,
+      height: _height * 0.58,
       backgroundColor: _color.pink,
     },
 
@@ -90,50 +89,5 @@ const getStyles = (insets: EdgeInsets) =>
       position: 'absolute',
       top: insets?.top || 0,
       left: _ms(24),
-    },
-
-    //   content cont
-    contentContainer: {
-      flex: 1,
-      backgroundColor: _color.white,
-      marginTop: -_mvs(24),
-      borderTopRightRadius: 24,
-      borderTopLeftRadius: 24,
-      paddingTop: _mvs(24),
-    },
-    child: {
-      paddingHorizontal: _ms(20),
-      rowGap: _mvs(8),
-    },
-    pickupAndDestCont: {
-      rowGap: _mvs(12),
-      justifyContent: 'center',
-    },
-    titleString: {
-      color: _color.black,
-      fontSize: _ms(14),
-      fontFamily: _fonts.poppinsRegular,
-    },
-
-    pickupPointBTN: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      borderWidth: 1.2,
-      borderColor: _color.EDEDED,
-      padding: _ms(8),
-      borderRadius: 20,
-      columnGap: _ms(12),
-    },
-    pickupPointBTNString: {
-      color: _color.textPrimary,
-      fontSize: _ms(12),
-      fontFamily: _fonts.poppinsRegular,
-      includeFontPadding: false,
-    },
-    verticalLine: {
-      width: _ms(2),
-      height: _mvs(28),
-      position: 'absolute',
-      left: _ms(8 + 11),
     },
   });

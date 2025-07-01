@@ -259,7 +259,7 @@ const SignupScreen = () => {
     );
   };
 
-  // main View
+  // Main View
   return (
     <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>

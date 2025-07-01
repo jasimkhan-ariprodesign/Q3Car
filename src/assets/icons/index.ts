@@ -17,6 +17,9 @@ export const _icons = {
   locationRed: require('./location-red.png'),
   closeBlack: require('./close-black.png'),
   facebookWhite: require('./facebook-white.png'),
+  saveGrey: require('./save-grey.png'),
+  angleRightGrey: require('./angle-right-grey.png'),
+  clockGrey: require('./clock-grey.png'),
 };
 
 // drawer icons 👇🏻
