@@ -4,6 +4,9 @@ import {_getStatusBarHeight} from './statusbar-height';
 import {ms} from 'react-native-size-matters';
 
 const statusBarHeight = _getStatusBarHeight();
+
+export const _inputFieldHeight = ms(36);
+
 export const _styles = StyleSheet.create({
   // Layout
   flex: {

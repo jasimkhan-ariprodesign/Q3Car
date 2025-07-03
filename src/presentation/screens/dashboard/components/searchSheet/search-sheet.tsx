@@ -13,6 +13,41 @@ interface SearchSheetProp {
   handleSheetChanges: (index: number, position: number, type: SNAP_POINT_TYPE) => void;
 }
 
+// deleted code
+
+//   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+//   _logger.log('bottomSheetModalRef -->', JSON.stringify(bottomSheetModalRef, null, 2));
+
+//   const _handleSearchClick = () => {
+//     // navigation.navigate(_screens.appStack, {
+//     //   screen: _screens.searchScreen,
+//     // });
+//     bottomSheetModalRef.current?.present();
+//   };
+
+//   const _handleBottomSheetChanges = useCallback(
+//     (index: number, position: number, type: SNAP_POINT_TYPE) => {
+//       console.log('handleSheetChanges', index, position, type);
+//     },
+//     [],
+//   );
+
+//  {/* search bottom sheet */}
+//     {_renderSearchSheetCont()}
+
+//   const _renderSearchSheetCont = () => {
+//     return (
+//       <>
+//         <SearchSheet
+//           bottomSheetModalRef={bottomSheetModalRef}
+//           handleSheetChanges={_handleBottomSheetChanges}
+//         />
+//       </>
+//     );
+//   };
+
+// deleted end
+
 const SearchSheet: React.FC<SearchSheetProp> = ({bottomSheetModalRef, handleSheetChanges}) => {
   const _handleCloseBottomSheet = () => {
     bottomSheetModalRef.current?.close();

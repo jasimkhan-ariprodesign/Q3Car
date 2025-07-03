@@ -1,17 +1,22 @@
 import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
-import React, {useCallback, useRef} from 'react';
+import React from 'react';
 import {EdgeInsets} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {IconButton, SafeAreaWrapper} from '../../components';
-import {_color, _height, _isIOS, _ms, _styles, _useCustomSafeAreaInsets} from '../../../misc';
+import {
+  _color,
+  _height,
+  _isIOS,
+  _ms,
+  _screens,
+  _styles,
+  _useCustomSafeAreaInsets,
+} from '../../../misc';
 import {_icons} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
 import RenderMap from './components/renderMap/render-map';
 import DashboardContent from './components/dashboardContent/dashboard-content';
-import {BottomSheetModal, SNAP_POINT_TYPE} from '@gorhom/bottom-sheet';
-import SearchSheet from './components/searchSheet/search-sheet';
-import {_logger} from '../../../utils';
 
 const DashboardScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<RootStackParamList>>();
@@ -19,25 +24,15 @@ const DashboardScreen = () => {
   const insets = _useCustomSafeAreaInsets();
   const styles = getStyles(insets);
 
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
   const _handleDrawerToggle = () => {
     navigation.toggleDrawer();
   };
 
   const _handleSearchClick = () => {
-    // navigation.navigate(_screens.appStack, {
-    //   screen: _screens.searchScreen,
-    // });
-    bottomSheetModalRef.current?.present();
+    navigation.navigate(_screens.appStack, {
+      screen: _screens.searchScreen,
+    });
   };
-
-  const _handleBottomSheetChanges = useCallback(
-    (index: number, position: number, type: SNAP_POINT_TYPE) => {
-      console.log('handleSheetChanges', index, position, type);
-    },
-    [],
-  );
 
   const _renderOpenDrawerBTN = () => {
     return (
@@ -73,17 +68,6 @@ const DashboardScreen = () => {
     );
   };
 
-  const _renderSearchSheetCont = () => {
-    return (
-      <>
-        <SearchSheet
-          bottomSheetModalRef={bottomSheetModalRef}
-          handleSheetChanges={_handleBottomSheetChanges}
-        />
-      </>
-    );
-  };
-
   //   main view
   return (
     <>
@@ -95,9 +79,6 @@ const DashboardScreen = () => {
           {/* dashboard content */}
           {_renderDashboardCont()}
         </SafeAreaWrapper>
-
-        {/* search bottom sheet */}
-        {_renderSearchSheetCont()}
       </KeyboardAvoidingView>
     </>
   );

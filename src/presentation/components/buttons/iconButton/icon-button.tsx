@@ -26,7 +26,7 @@ const IconButton: React.FC<IconButtonProp> = ({
   disabled = true,
   icon,
   resizeMode = 'contain',
-  tintColor,
+  tintColor = null,
 }) => {
   if (!icon) {
     return null;

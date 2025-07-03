@@ -20,6 +20,7 @@ export const _icons = {
   saveGrey: require('./save-grey.png'),
   angleRightGrey: require('./angle-right-grey.png'),
   clockGrey: require('./clock-grey.png'),
+  locationBlack: require('./location-black.png'),
 };
 
 // drawer icons 👇🏻
