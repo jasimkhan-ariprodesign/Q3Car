@@ -25,7 +25,7 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
 
   const _handleProfileClick = () => {
     prop.navigation.closeDrawer();
-    navigation.navigate(_screens.AppStack, {
+    navigation.navigate(_screens.appStack, {
       screen: _screens.profileScreen,
     });
   };

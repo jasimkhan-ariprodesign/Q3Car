@@ -17,7 +17,7 @@ const OnboardingScreen = () => {
 
   const _handleSkipClick = () => {
     // navigation.push(_screens.userTypeSelectScreen);
-    navigation.navigate(_screens.drawerNavigator, {
+    navigation.push(_screens.drawerNavigator, {
       screen: _screens.dashboardScreen,
     });
   };

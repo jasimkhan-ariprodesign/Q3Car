@@ -19,13 +19,7 @@ const AppStack = () => {
       <Stack.Screen name={_screens.successScreen} component={SuccessScreen} />
       <Stack.Screen name={_screens.profileScreen} component={ProfileScreen} />
 
-      <Stack.Group
-        screenOptions={{
-          presentation: 'modal',
-          gestureEnabled: true,
-          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-          cardOverlayEnabled: true,
-        }}>
+      <Stack.Group>
         <Stack.Screen name={_screens.searchScreen} component={SearchScreen} />
       </Stack.Group>
     </Stack.Navigator>
