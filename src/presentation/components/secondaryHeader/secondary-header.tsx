@@ -2,14 +2,13 @@ import {
   Image,
   ImageStyle,
   StyleSheet,
-  Text,
   TextStyle,
   TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
 import React from 'react';
-import {_fonts, _icons} from '../../../assets';
+import {_icons} from '../../../assets';
 import {_color, _ms, _mvs} from '../../../misc';
 import {useNavigation} from '@react-navigation/native';
 
@@ -26,11 +25,9 @@ interface SecondaryHeaderProps {
 const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({
   disabled = false,
   onPress,
-  title = 'Back',
   containerStyle,
   buttonContStyle,
   iconStyle,
-  titleStyle,
 }) => {
   const navigation = useNavigation();
 

@@ -17,17 +17,21 @@ export type AuthStackParamList = {
   SPLoginScreen: undefined;
 };
 
-// not created yet
 export type DrawerNavigatorParamList = {
   DrawerNavigator: undefined;
   DashboardScreen: undefined;
 };
 
-// not created yet
 export type AppStackParamList = {
   // HomeScreen: undefined;
   ProfileScreen: undefined;
   SuccessScreen: {successMsg?: string} | undefined;
+  ModalStack: undefined;
+  SearchScreen: undefined;
+};
+
+export type ModalStackParamList = {
+  SearchScreen: undefined; // ?? not in use
 };
 
 // not created yet - tow truck as service provider
@@ -42,6 +46,7 @@ export type RootStackParamList = {
   DrawerNavigator: NavigatorScreenParams<DrawerNavigatorParamList>;
   AppStack: NavigatorScreenParams<AppStackParamList>;
   SPStack: NavigatorScreenParams<SPStackParamList>;
+  ModalStack: NavigatorScreenParams<ModalStackParamList>; // ?? not in use
 };
 
 // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();

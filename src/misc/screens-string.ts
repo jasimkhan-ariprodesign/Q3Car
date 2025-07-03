@@ -3,7 +3,8 @@ export const _screens = {
   rootNavigator: 'RootNavigator',
   welcomeStack: 'WelcomeStack',
   authStack: 'AuthStack',
-  AppStack: 'AppStack',
+  appStack: 'AppStack',
+  modalStack: 'ModalStack',
 
   // welcome
   splash: 'SplashScreen',
@@ -23,6 +24,10 @@ export const _screens = {
   // app
   successScreen: 'SuccessScreen',
   profileScreen: 'ProfileScreen',
+  searchScreen: 'SearchScreen',
+
+  // modal
+  // searchScreen: 'SearchScreen',
 
   // drawer
   drawerNavigator: 'DrawerNavigator',

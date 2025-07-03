@@ -4,7 +4,15 @@ import {_fonts, _icons} from '../../../../../assets';
 import {_color, _ms, _mvs, _styles} from '../../../../../misc';
 import RecentSearchSuggestion from './recent-search-suggestion';
 
-const DashboardContent = () => {
+interface DashboardContentProp {
+  _handleSearchClick?: Function;
+}
+
+const DashboardContent: React.FC<DashboardContentProp> = ({_handleSearchClick}) => {
+  const _handleChoosePickUpOrDestinationClick = () => {
+    _handleSearchClick && _handleSearchClick();
+  };
+
   const _renderRecentSearchSuggestion = () => {
     return (
       <>
@@ -20,6 +28,7 @@ const DashboardContent = () => {
       </>
     );
   };
+
   return (
     <View style={styles.contentContainer}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -29,14 +38,20 @@ const DashboardContent = () => {
           <View style={styles.pickupAndDestCont}>
             {/* pick up point button */}
 
-            <TouchableOpacity style={styles.pickupPointBTN} activeOpacity={0.6}>
+            <TouchableOpacity
+              onPress={_handleChoosePickUpOrDestinationClick}
+              style={styles.pickupPointBTN}
+              activeOpacity={0.6}>
               <Image source={_icons.circleBlue} style={_styles.size22} resizeMode="contain" />
               <Text style={styles.pickupPointBTNString}>Choose pick up point</Text>
             </TouchableOpacity>
 
             {/* Choose your destination button */}
 
-            <TouchableOpacity style={styles.pickupPointBTN} activeOpacity={0.6}>
+            <TouchableOpacity
+              onPress={_handleChoosePickUpOrDestinationClick}
+              style={styles.pickupPointBTN}
+              activeOpacity={0.6}>
               <Image source={_icons.locationRed} style={_styles.size22} resizeMode="contain" />
               <Text style={styles.pickupPointBTNString}>Choose your destination</Text>
             </TouchableOpacity>

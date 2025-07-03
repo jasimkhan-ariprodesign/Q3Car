@@ -5,6 +5,7 @@ import UserTypeSelectScreen from './screens/userTypeSelect/user-type-select-scre
 import SPWelcomeScreen from './screens/welcome/sp-welcome-screen';
 import DashboardScreen from './screens/dashboard/dashboard-screen';
 import ProfileScreen from './screens/profile/profile-screen';
+import SearchScreen from './screens/search/search-screen';
 
 export {
   SplashScreen,
@@ -14,4 +15,5 @@ export {
   SPWelcomeScreen,
   DashboardScreen,
   ProfileScreen,
+  SearchScreen,
 };

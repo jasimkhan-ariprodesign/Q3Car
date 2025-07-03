@@ -3,7 +3,7 @@ import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/st
 import {AppStackParamList} from './types/types';
 import {_color, _screens} from '../misc';
 import {SuccessScreen} from '../common';
-import { ProfileScreen } from '../presentation';
+import {ProfileScreen, SearchScreen} from '../presentation';
 
 const Stack = createStackNavigator<AppStackParamList>();
 
@@ -17,7 +17,17 @@ const AppStack = () => {
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
       <Stack.Screen name={_screens.successScreen} component={SuccessScreen} />
-      <Stack.Screen name={_screens.profileScreen} component={ProfileScreen} /> 
+      <Stack.Screen name={_screens.profileScreen} component={ProfileScreen} />
+
+      <Stack.Group
+        screenOptions={{
+          presentation: 'modal',
+          gestureEnabled: true,
+          cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+          cardOverlayEnabled: true,
+        }}>
+        <Stack.Screen name={_screens.searchScreen} component={SearchScreen} />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

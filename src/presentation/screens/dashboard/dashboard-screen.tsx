@@ -1,20 +1,19 @@
-import {
-  Image,
-  KeyboardAvoidingView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {EdgeInsets} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {IconButton, SafeAreaWrapper} from '../../components';
-import {_color, _height, _isIOS, _ms, _mvs, _styles, _useCustomSafeAreaInsets} from '../../../misc';
-import {_fonts, _icons} from '../../../assets';
+import {
+  _color,
+  _height,
+  _isIOS,
+  _ms,
+  _screens,
+  _styles,
+  _useCustomSafeAreaInsets,
+} from '../../../misc';
+import {_icons} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
 import RenderMap from './components/renderMap/render-map';
 import DashboardContent from './components/dashboardContent/dashboard-content';
@@ -26,6 +25,12 @@ const DashboardScreen = () => {
 
   const _handleDrawerToggle = () => {
     navigation.toggleDrawer();
+  };
+
+  const _handleSearchClick = () => {
+    navigation.navigate(_screens.appStack, {
+      screen: _screens.searchScreen,
+    });
   };
 
   const _renderOpenDrawerBTN = () => {
@@ -57,7 +62,7 @@ const DashboardScreen = () => {
     return (
       <View style={_styles.flex}>
         {/* child for all content in bottom */}
-        <DashboardContent />
+        <DashboardContent _handleSearchClick={_handleSearchClick} />
       </View>
     );
   };

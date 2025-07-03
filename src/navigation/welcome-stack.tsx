@@ -4,7 +4,6 @@ import {_color, _screens} from '../misc';
 import {OnboardingScreen, SplashScreen, SPWelcomeScreen, UserTypeSelectScreen, WelcomeScreen} from '../presentation';
 import {WelcomeStackParamList} from './types/types';
 
-// const Stack = createStackNavigator();
 const Stack = createStackNavigator<WelcomeStackParamList>();
 
 const WelcomeStack = () => {

@@ -24,7 +24,7 @@ const ForgotPassword = () => {
 
   const _handleVerifyOTPClick = () => {
     _logger.log('_handleVerifyOTPClick OTP:', otp);
-    navigation.push(_screens.AppStack, {
+    navigation.push(_screens.appStack, {
       screen: _screens.successScreen,
     });
   };

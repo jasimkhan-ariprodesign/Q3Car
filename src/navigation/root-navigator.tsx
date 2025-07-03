@@ -21,7 +21,7 @@ const RootNavigator = () => {
       }}>
       <Stack.Screen name={_screens.welcomeStack} component={WelcomeStack} />
       <Stack.Screen name={_screens.authStack} component={AuthStack} />
-      <Stack.Screen name={_screens.AppStack} component={AppStack} />
+      <Stack.Screen name={_screens.appStack} component={AppStack} />
       <Stack.Screen name={_screens.drawerNavigator} component={DrawerNavigator} />
     </Stack.Navigator>
   );
