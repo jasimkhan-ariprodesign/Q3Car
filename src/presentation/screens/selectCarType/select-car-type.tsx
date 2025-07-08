@@ -7,6 +7,7 @@ import {_vehicleTypes} from '../../../constant';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/types/types';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {SecondaryLoader} from '../../../common';
 
 const SelectCarType = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -49,25 +50,29 @@ const SelectCarType = () => {
   };
 
   return (
-    <SafeAreaWrapper style={styles.container}>
-      <PrimaryHeader />
-      <View style={[_styles.flex, styles.spaceBetweenView]}>
-        <View style={styles.spaceBetweenText}>
-          <Text style={styles.title}>Select Vehicle Type</Text>
-          <Text style={styles.desc}>to determine the appropriate towing vehicle</Text>
-        </View>
+    <SafeAreaWrapper style={_styles.flex}>
+      <PrimaryHeader containerStyle={_styles.headerStyle} />
+      <View style={_styles.flex}>
+        <View style={[_styles.flex, styles.spaceBetweenView]}>
+          <View style={styles.spaceBetweenText}>
+            <Text style={styles.title}>Select Vehicle Type</Text>
+            <Text style={styles.desc}>to determine the appropriate towing vehicle</Text>
+          </View>
 
-        <View style={_styles.flex}>
-          <Text style={styles.requestTowString}>Request Tow</Text>
-          {/* tow truck lists */}
-          {_renderFlatList()}
-        </View>
+          <View style={_styles.flex}>
+            <Text style={styles.requestTowString}>Request Tow</Text>
+            {/* tow truck lists */}
+            {_renderFlatList()}
+          </View>
 
-        <PrimaryButton
-          title="BOOK NOW"
-          buttonStyle={styles.bookNowBTN}
-          onPress={_handleBookNowClick}
-        />
+          <PrimaryButton
+            title="BOOK NOW"
+            buttonStyle={styles.bookNowBTN}
+            onPress={_handleBookNowClick}
+          />
+        </View>
+        {/* loader */}
+        {/* <SecondaryLoader /> */}
       </View>
     </SafeAreaWrapper>
   );
@@ -79,12 +84,10 @@ const gapAndMargin = _mvs(20);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  container: {
-    rowGap: gapAndMargin,
-    paddingHorizontal: _ms(18),
-  },
   spaceBetweenView: {
     rowGap: gapAndMargin,
+    paddingHorizontal: _ms(18),
+    paddingTop: _mvs(12),
   },
   title: {
     color: _color.textPrimary,

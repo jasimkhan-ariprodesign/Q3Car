@@ -27,6 +27,7 @@ export const _screens = {
   searchScreen: 'SearchScreen',
   selectCarType: 'SelectCarType',
   uploadPictureOfVehicle: 'UploadPictureOfVehicle',
+  searchResultScreen: 'SearchResultScreen',
 
   // modal
   // searchScreen: 'SearchScreen',

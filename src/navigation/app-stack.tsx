@@ -3,7 +3,7 @@ import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/st
 import {AppStackParamList} from './types/types';
 import {_color, _screens} from '../misc';
 import {SuccessScreen} from '../common';
-import {ProfileScreen, SearchScreen, SelectCarType, UploadPictureOfVehicle} from '../presentation';
+import {ProfileScreen, SearchResultScreen, SearchScreen, SelectCarType, UploadPictureOfVehicle} from '../presentation';
 
 const Stack = createStackNavigator<AppStackParamList>();
 
@@ -24,6 +24,7 @@ const AppStack = () => {
       </Stack.Group>
       <Stack.Screen name={_screens.selectCarType} component={SelectCarType} />
       <Stack.Screen name={_screens.uploadPictureOfVehicle} component={UploadPictureOfVehicle} />
+      <Stack.Screen name={_screens.searchResultScreen} component={SearchResultScreen} />
     </Stack.Navigator>
   );
 };

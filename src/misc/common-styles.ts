@@ -22,6 +22,7 @@ export const _styles = StyleSheet.create({
     backgroundColor: _color.white,
     paddingTop: statusBarHeight || 0,
   },
+  headerStyle: {paddingHorizontal: ms(18)},
 
   // Flexbox Alignment
   center: {

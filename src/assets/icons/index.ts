@@ -24,6 +24,9 @@ export const _icons = {
   smallCar: require('./small-car.png'),
   suvCar: require('./suv-car.png'),
   truck: require('./truck.png'),
+  galleryGrey: require('./gallery-grey.png'),
+  cameraWhite: require('./camera-white.png'),
+  fromToDest: require('./from-to-dest.png'),
 };
 
 // drawer icons 👇🏻

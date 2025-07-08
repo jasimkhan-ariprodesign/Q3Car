@@ -8,6 +8,7 @@ import ProfileScreen from './screens/profile/profile-screen';
 import SearchScreen from './screens/search/search-screen';
 import SelectCarType from './screens/selectCarType/select-car-type';
 import UploadPictureOfVehicle from './screens/uploadPictureOfVehicle/upload-picture-of-vehicle';
+import SearchResultScreen from './screens/searchResultScreen/search-result-screen';
 
 export {
   SplashScreen,
@@ -20,4 +21,5 @@ export {
   SearchScreen,
   SelectCarType,
   UploadPictureOfVehicle,
+  SearchResultScreen,
 };
