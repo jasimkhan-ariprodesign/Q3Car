@@ -29,6 +29,7 @@ export type AppStackParamList = {
   ModalStack: undefined;
   SearchScreen: undefined;
   SelectCarType: undefined;
+  UploadPictureOfVehicle: undefined;
 };
 
 export type ModalStackParamList = {

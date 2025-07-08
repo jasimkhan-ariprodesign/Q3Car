@@ -1,12 +1,22 @@
 import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
-import {_color, _isIOS, _ms, _mvs, _styles} from '../../../misc';
+import {_color, _isIOS, _ms, _mvs, _screens, _styles} from '../../../misc';
 import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../components';
 import {_fonts} from '../../../assets';
 import {_vehicleTypes} from '../../../constant';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../../navigation/types/types';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 const SelectCarType = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [towTruck, setTowTruck] = useState<any>();
+
+  const _handleBookNowClick = () => {
+    navigation.push(_screens.appStack, {
+      screen: _screens.uploadPictureOfVehicle,
+    });
+  };
 
   const _renderFlatList = () => {
     return (
@@ -53,7 +63,11 @@ const SelectCarType = () => {
           {_renderFlatList()}
         </View>
 
-        <PrimaryButton title="BOOK NOW" buttonStyle={styles.bookNowBTN} />
+        <PrimaryButton
+          title="BOOK NOW"
+          buttonStyle={styles.bookNowBTN}
+          onPress={_handleBookNowClick}
+        />
       </View>
     </SafeAreaWrapper>
   );
