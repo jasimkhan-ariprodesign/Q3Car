@@ -6,6 +6,7 @@ import SPWelcomeScreen from './screens/welcome/sp-welcome-screen';
 import DashboardScreen from './screens/dashboard/dashboard-screen';
 import ProfileScreen from './screens/profile/profile-screen';
 import SearchScreen from './screens/search/search-screen';
+import SelectCarType from './screens/selectCarType/select-car-type';
 
 export {
   SplashScreen,
@@ -16,4 +17,5 @@ export {
   DashboardScreen,
   ProfileScreen,
   SearchScreen,
+  SelectCarType,
 };

@@ -9,45 +9,24 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {_styles, _isIOS, _color, _mvs, _ms} from '../../../misc';
+import {_styles, _isIOS, _color, _mvs, _ms, _screens} from '../../../misc';
 import {SafeAreaWrapper, PrimaryHeader, IconButton, TextButton} from '../../components';
 import {_inputFieldHeight} from '../../../misc/common-styles';
 import {_fonts, _icons} from '../../../assets';
-
-export const recentPlaces = [
-  {
-    id: '1',
-    title: 'Office',
-    address: '2972 Westheimer Rd. Santa Ana, Illinois 85486',
-    distance: '2.7km',
-  },
-  {
-    id: '2',
-    title: 'Coffee shop',
-    address: '1901 Thornridge Cir. Shiloh, Hawaii 81063',
-    distance: '1.1km',
-  },
-  {
-    id: '3',
-    title: 'Shopping center',
-    address: '4140 Parker Rd. Allentown, New Mexico 31134',
-    distance: '4.9km',
-  },
-  {
-    id: '4',
-    title: 'Shopping mall',
-    address: '4140 Parker Rd. Allentown, New Mexico 31134',
-    distance: '4.0km',
-  },
-  {
-    id: '5',
-    title: 'Shopping mall',
-    address: '4140 Parker Rd. Allentown, New Mexico 31134',
-    distance: '4.0km',
-  },
-];
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../navigation/types/types';
+import {_recentPlaces} from '../../../constant';
 
 const SearchScreen = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const _handleMoveToNextScreen = () => {
+    navigation.push(_screens.appStack, {
+      screen: _screens.selectCarType,
+    });
+  };
+
   const _renderPickupPointInpCont = () => {
     return (
       <View style={styles.searchBarParentView}>
@@ -82,7 +61,7 @@ const SearchScreen = () => {
 
   const _renderItem = ({item}: any) => {
     return (
-      <TouchableOpacity style={styles.itemBTNStyle}>
+      <TouchableOpacity onPress={_handleMoveToNextScreen} style={styles.itemBTNStyle}>
         <Image
           source={_icons.clockGrey}
           style={[_styles.size16, styles.itemIcon]}
@@ -102,7 +81,7 @@ const SearchScreen = () => {
     return (
       <View style={_styles.flex}>
         <FlatList
-          data={recentPlaces}
+          data={_recentPlaces || []}
           renderItem={_renderItem}
           keyExtractor={(item, index) => item?.id?.toString() || index?.toString()}
           contentContainerStyle={styles.contentContainerStyle}
@@ -110,6 +89,8 @@ const SearchScreen = () => {
       </View>
     );
   };
+
+  // main view
   return (
     <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>

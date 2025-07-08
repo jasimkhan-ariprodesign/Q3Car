@@ -21,6 +21,9 @@ export const _icons = {
   angleRightGrey: require('./angle-right-grey.png'),
   clockGrey: require('./clock-grey.png'),
   locationBlack: require('./location-black.png'),
+  smallCar: require('./small-car.png'),
+  suvCar: require('./suv-car.png'),
+  truck: require('./truck.png'),
 };
 
 // drawer icons 👇🏻

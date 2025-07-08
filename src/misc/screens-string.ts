@@ -25,6 +25,7 @@ export const _screens = {
   successScreen: 'SuccessScreen',
   profileScreen: 'ProfileScreen',
   searchScreen: 'SearchScreen',
+  selectCarType: 'SelectCarType',
 
   // modal
   // searchScreen: 'SearchScreen',

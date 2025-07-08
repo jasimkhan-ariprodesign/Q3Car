@@ -28,6 +28,7 @@ export type AppStackParamList = {
   SuccessScreen: {successMsg?: string} | undefined;
   ModalStack: undefined;
   SearchScreen: undefined;
+  SelectCarType: undefined;
 };
 
 export type ModalStackParamList = {
