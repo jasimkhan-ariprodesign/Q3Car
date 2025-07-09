@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {_fonts, _icons} from '../../assets';
-import {_ms, _color, _mvs, _isIOS, _styles, _screens} from '../../misc';
+import {_ms, COLORS, _mvs, _isIOS, COMMON_STYLES, SCREENS} from '../../misc';
 import {
   SafeAreaWrapper,
   PrimaryHeader,
@@ -49,15 +49,15 @@ const SPLoginScreen = () => {
     if (fromScreen && fromScreen === 'signup') {
       navigation.goBack();
     } else {
-      navigation.push(_screens.authStack, {
-        screen: _screens.spSignupScreen,
+      navigation.push(SCREENS.authStack, {
+        screen: SCREENS.spSignupScreen,
       });
     }
   };
 
   const _handleForgotPasswordClick = () => {
-    navigation.push(_screens.authStack, {
-      screen: _screens.forgotPassword,
+    navigation.push(SCREENS.authStack, {
+      screen: SCREENS.forgotPassword,
     });
   };
 
@@ -101,7 +101,7 @@ const SPLoginScreen = () => {
               <View>
                 <TextInput
                   placeholder="Email or Phone Number"
-                  placeholderTextColor={_color.textPrimary}
+                  placeholderTextColor={COLORS.textPrimary}
                   value={values.email}
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
@@ -118,7 +118,7 @@ const SPLoginScreen = () => {
                 <View style={styles.pwdCont}>
                   <TextInput
                     placeholder="Enter Your Password"
-                    placeholderTextColor={_color.textPrimary}
+                    placeholderTextColor={COLORS.textPrimary}
                     value={values.password}
                     onChangeText={handleChange('password')}
                     onBlur={handleBlur('password')}
@@ -127,7 +127,7 @@ const SPLoginScreen = () => {
                   />
                   <IconButton
                     icon={formData.showPasswrod ? _icons.invisible : _icons.visible}
-                    iconStyle={_styles.size20}
+                    iconStyle={COMMON_STYLES.size20}
                     onPress={_handleShowPassword}
                     disabled={false}
                   />
@@ -157,10 +157,10 @@ const SPLoginScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
-        <View style={_styles.flex}>
+        <View style={COMMON_STYLES.flex}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.contentContainerStyle}>
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: _ms(18),
   },
   title: {
-    color: _color.black,
+    color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(20),
   },
@@ -212,16 +212,16 @@ const styles = StyleSheet.create({
     paddingStart: _ms(12),
     height: authFieldHeight,
     borderWidth: bdrWidth,
-    borderColor: _color.black,
+    borderColor: COLORS.black,
     borderRadius: 8,
-    color: _color.black,
+    color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(12),
     includeFontPadding: false,
   },
   errorString: {
     marginStart: _ms(8),
-    color: _color.red,
+    color: COLORS.red,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(10),
     includeFontPadding: false,
@@ -233,14 +233,14 @@ const styles = StyleSheet.create({
 
     height: authFieldHeight,
     borderWidth: bdrWidth,
-    borderColor: _color.black,
+    borderColor: COLORS.black,
     paddingEnd: _ms(12),
     borderRadius: 8,
   },
   pwdInput: {
     padding: 0,
     height: authFieldHeight,
-    color: _color.black,
+    color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(12),
     includeFontPadding: false,
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
     // marginTop: -gapAndMargin / 2,
   },
   forgotPasswordString: {
-    color: _color.red,
+    color: COLORS.red,
     fontSize: _ms(10.5),
     includeFontPadding: false,
   },
@@ -267,15 +267,15 @@ const styles = StyleSheet.create({
   horizontalView: {
     height: 1,
     flex: 1,
-    backgroundColor: _color.B4B4B4,
+    backgroundColor: COLORS.B4B4B4,
   },
   orString: {
-    color: _color.textSecondary,
+    color: COLORS.textSecondary,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansMedium,
   },
   signInString: {
-    color: _color.primary,
+    color: COLORS.primary,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansMedium,
     marginLeft: -6,

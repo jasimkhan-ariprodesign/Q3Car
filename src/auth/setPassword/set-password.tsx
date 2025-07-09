@@ -10,7 +10,7 @@ import {
 import React, {useState} from 'react';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {_styles, _isIOS, _color, _ms, _mvs} from '../../misc';
+import {COMMON_STYLES, _isIOS, COLORS, _ms, _mvs} from '../../misc';
 import {
   SafeAreaWrapper,
   PrimaryHeader,
@@ -45,10 +45,10 @@ const SetPassword = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
-        <View style={_styles.flex}>
+        <View style={COMMON_STYLES.flex}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.contentContainerStyle}
@@ -70,7 +70,7 @@ const SetPassword = () => {
                     <View style={styles.pwdCont}>
                       <TextInput
                         placeholder="Enter Your Password"
-                        placeholderTextColor={_color.textPrimary}
+                        placeholderTextColor={COLORS.textPrimary}
                         value={values.password}
                         onChangeText={handleChange('password')}
                         onBlur={handleBlur('password')}
@@ -79,7 +79,7 @@ const SetPassword = () => {
                       />
                       <IconButton
                         icon={formData.showPasswrod ? _icons.invisible : _icons.visible}
-                        iconStyle={_styles.size20}
+                        iconStyle={COMMON_STYLES.size20}
                         onPress={() => _handleShowPassword('password')}
                         disabled={false}
                       />
@@ -94,7 +94,7 @@ const SetPassword = () => {
                     <View style={styles.pwdCont}>
                       <TextInput
                         placeholder="Confirm Password"
-                        placeholderTextColor={_color.textPrimary}
+                        placeholderTextColor={COLORS.textPrimary}
                         value={values.confirmPassword}
                         onChangeText={handleChange('confirmPassword')}
                         onBlur={handleBlur('confirmPassword')}
@@ -103,7 +103,7 @@ const SetPassword = () => {
                       />
                       <IconButton
                         icon={formData.showConfirmPassword ? _icons.invisible : _icons.visible}
-                        iconStyle={_styles.size20}
+                        iconStyle={COMMON_STYLES.size20}
                         onPress={() => _handleShowPassword('confirmPassword')}
                         disabled={false}
                       />
@@ -149,13 +149,13 @@ const styles = StyleSheet.create({
     rowGap: gapAndMargin,
   },
   title: {
-    color: _color.black,
+    color: COLORS.black,
     fontFamily: _fonts.workSansMedium,
     fontSize: _ms(20),
     textAlign: 'center',
   },
   labelString: {
-    color: _color.textSecondary,
+    color: COLORS.textSecondary,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansRegular,
     textAlign: 'center',
@@ -168,14 +168,14 @@ const styles = StyleSheet.create({
 
     height: authFieldHeight,
     borderWidth: bdrWidth,
-    borderColor: _color.black,
+    borderColor: COLORS.black,
     paddingEnd: _ms(12),
     borderRadius: 8,
   },
   pwdInput: {
     padding: 0,
     height: authFieldHeight,
-    color: _color.black,
+    color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(12),
     includeFontPadding: false,
@@ -185,14 +185,14 @@ const styles = StyleSheet.create({
   },
   errorString: {
     marginStart: _ms(8),
-    color: _color.red,
+    color: COLORS.red,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(10),
     includeFontPadding: false,
   },
 
   pwdSuggestionString: {
-    color: _color.textDisabled,
+    color: COLORS.textDisabled,
     fontSize: _ms(12),
     fontFamily: _fonts.workSansMedium,
     marginTop: 4,

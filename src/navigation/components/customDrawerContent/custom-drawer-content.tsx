@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {_color, _ms, _mvs, _screens, _styles} from '../../../misc';
+import {COLORS, _ms, _mvs, SCREENS, COMMON_STYLES} from '../../../misc';
 import {IconButton, SafeAreaWrapper} from '../../../presentation/components';
 import {_fonts, _icons} from '../../../assets';
 import {_drawerMenuList} from '../../../constant/drawer-menu-list';
@@ -25,8 +25,8 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
 
   const _handleProfileClick = () => {
     prop.navigation.closeDrawer();
-    navigation.navigate(_screens.appStack, {
-      screen: _screens.profileScreen,
+    navigation.navigate(SCREENS.appStack, {
+      screen: SCREENS.profileScreen,
     });
   };
 
@@ -51,7 +51,7 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
         <IconButton
           icon={_icons.angleLeftDark}
           iconStyle={styles.rightArrow}
-          tintColor={_color.white}
+          tintColor={COLORS.white}
         />
       </TouchableOpacity>
     );
@@ -63,12 +63,12 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
     return (
       <View>
         <TouchableHighlight
-          underlayColor={`${_color.primary}0D`}
+          underlayColor={`${COLORS.primary}0D`}
           activeOpacity={0.6}
           onPress={() => {}}
           style={styles.drawerBTN}>
           <View style={styles.drawerBTNView}>
-            <Image source={item?.icon || ''} style={_styles.size16} resizeMode="contain" />
+            <Image source={item?.icon || ''} style={COMMON_STYLES.size16} resizeMode="contain" />
             <Text style={styles.titleString}>{item.title || ''}</Text>
           </View>
         </TouchableHighlight>
@@ -89,7 +89,7 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
   };
 
   return (
-    <View style={_styles.container}>
+    <View style={COMMON_STYLES.container}>
       <SafeAreaWrapper style={styles.profileCont}>
         {/* profile cont */}
         {_renderProfileCont()}
@@ -112,18 +112,18 @@ export default CustomDrawerContent;
 const leftSpace = _ms(24);
 const styles = StyleSheet.create({
   profileCont: {
-    backgroundColor: _color.primary,
+    backgroundColor: COLORS.primary,
     flex: 0,
     padding: leftSpace,
     rowGap: _mvs(6),
   },
   profileView: {
-    backgroundColor: _color.transparentBlack2,
+    backgroundColor: COLORS.transparentBlack2,
     width: _ms(70),
     height: _ms(70),
     borderRadius: _ms(70),
     borderWidth: 2,
-    borderColor: _color.white,
+    borderColor: COLORS.white,
   },
   profile: {
     width: _ms(70),
@@ -137,16 +137,16 @@ const styles = StyleSheet.create({
     marginTop: _mvs(12),
   },
   profileNameString: {
-    color: _color.white,
+    color: COLORS.white,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansBold,
   },
   rightArrow: {
-    ..._styles.size12,
+    ...COMMON_STYLES.size12,
     transform: [{rotate: '180deg'}],
   },
   phoneString: {
-    color: _color.FF9391,
+    color: COLORS.FF9391,
     fontSize: _ms(12),
     fontFamily: _fonts.workSansMedium,
     includeFontPadding: false,
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: leftSpace / 2,
   },
   titleString: {
-    color: _color.black,
+    color: COLORS.black,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansSemiBold,
   },

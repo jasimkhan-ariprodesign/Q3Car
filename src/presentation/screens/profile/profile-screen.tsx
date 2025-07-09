@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {_styles, _isIOS, _mvs, _ms, _color} from '../../../misc';
+import {COMMON_STYLES, _isIOS, _mvs, _ms, COLORS} from '../../../misc';
 import {SafeAreaWrapper, SecondaryHeader} from '../../components';
 import {SecondaryLoader} from '../../../common';
 import {_fonts, _icons} from '../../../assets';
@@ -76,10 +76,10 @@ const ProfileScreen = () => {
               onValueChange={() => {
                 setReceiveReceiptEmails(!receiveReceiptEmails);
               }}
-              thumbColor={_color.white}
+              thumbColor={COLORS.white}
               trackColor={{
-                false: _color.CFCFCF,
-                true: _color.primary,
+                false: COLORS.CFCFCF,
+                true: COLORS.primary,
               }}
             />
           </View>
@@ -101,7 +101,7 @@ const ProfileScreen = () => {
         <TouchableOpacity style={styles.socialBTN}>
           <Image
             source={_icons.facebookWhite}
-            style={[_styles.size24, styles.socialIconStyle]}
+            style={[COMMON_STYLES.size24, styles.socialIconStyle]}
             resizeMode="contain"
           />
           <Text style={styles.socialBTNString}>Connect with Facebook</Text>
@@ -111,10 +111,10 @@ const ProfileScreen = () => {
         <TouchableOpacity style={[styles.socialBTN, styles.googleBTN]}>
           <Image
             source={_icons.google}
-            style={[_styles.size24, styles.socialIconStyle]}
+            style={[COMMON_STYLES.size24, styles.socialIconStyle]}
             resizeMode="contain"
           />
-          <Text style={[styles.socialBTNString, {color: _color.black}]}>Connect with Google</Text>
+          <Text style={[styles.socialBTNString, {color: COLORS.black}]}>Connect with Google</Text>
         </TouchableOpacity>
       </View>
     );
@@ -122,13 +122,13 @@ const ProfileScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      style={[_styles.flex]}
+      style={[COMMON_STYLES.flex]}
       behavior={_isIOS() ? 'padding' : undefined}
       keyboardVerticalOffset={Platform.select({ios: _mvs(8)})}>
       <SafeAreaWrapper>
         <SecondaryHeader containerStyle={styles.backIconStyle} />
 
-        <View style={_styles.flex}>
+        <View style={COMMON_STYLES.flex}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.contentContainerStyle}>
@@ -171,15 +171,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   profileView: {
-    backgroundColor: _color.transparentBlack1,
+    backgroundColor: COLORS.transparentBlack1,
     width: _ms(70),
     height: _ms(70),
     borderRadius: _ms(70),
     borderWidth: 2,
-    borderColor: _color.white,
+    borderColor: COLORS.white,
   },
   nameString: {
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontFamily: _fonts.workSansBold,
     fontSize: _ms(20),
   },
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     rowGap: _mvs(4),
   },
   labelString: {
-    color: _color.textSecondary,
+    color: COLORS.textSecondary,
     fontSize: _ms(12),
     fontFamily: _fonts.workSansBold,
     textTransform: 'uppercase',
@@ -200,10 +200,10 @@ const styles = StyleSheet.create({
   nameInputStyle: {
     padding: 0,
     borderWidth: bdrWidth,
-    borderColor: _color.EDEDED,
+    borderColor: COLORS.EDEDED,
     borderRadius: 4,
     height: authFieldHeight,
-    color: _color.black,
+    color: COLORS.black,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansRegular,
     textAlignVertical: 'center',
@@ -211,10 +211,10 @@ const styles = StyleSheet.create({
   },
   preferencesCont: {
     borderWidth: bdrWidth,
-    borderColor: _color.EDEDED,
+    borderColor: COLORS.EDEDED,
     borderRadius: 4,
     padding: _ms(12),
-    backgroundColor: _color.primaryLight,
+    backgroundColor: COLORS.primaryLight,
   },
   switchCont: {
     flexDirection: 'row',
@@ -222,13 +222,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   recieveReceiptsString: {
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontSize: _ms(12),
     fontFamily: _fonts.workSansMedium,
     textTransform: 'uppercase',
   },
   descString: {
-    color: _color.textDisabled,
+    color: COLORS.textDisabled,
     fontSize: _ms(10),
     fontFamily: _fonts.workSansRegular,
     maxWidth: '80%',
@@ -237,12 +237,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: _color.primary,
+    backgroundColor: COLORS.primary,
     height: authFieldHeight,
     borderRadius: 4,
   },
   socialBTNString: {
-    color: _color.white,
+    color: COLORS.white,
     fontSize: _ms(12),
     fontFamily: _fonts.workSansMedium,
   },
@@ -252,8 +252,8 @@ const styles = StyleSheet.create({
   },
   googleBTN: {
     borderWidth: bdrWidth,
-    borderColor: _color.EDEDED,
-    backgroundColor: _color.white,
+    borderColor: COLORS.EDEDED,
+    backgroundColor: COLORS.white,
     marginTop: _mvs(8),
   },
   margTop: {

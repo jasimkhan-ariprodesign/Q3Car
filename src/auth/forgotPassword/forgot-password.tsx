@@ -1,6 +1,6 @@
 import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
-import {_styles, _isIOS, _color, _ms, _mvs, _screens} from '../../misc';
+import {COMMON_STYLES, _isIOS, COLORS, _ms, _mvs, SCREENS} from '../../misc';
 import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../presentation/components';
 import {_fonts} from '../../assets';
 import {Formik} from 'formik';
@@ -24,8 +24,8 @@ const ForgotPassword = () => {
 
   const _handleVerifyOTPClick = () => {
     _logger.log('_handleVerifyOTPClick OTP:', otp);
-    navigation.push(_screens.appStack, {
-      screen: _screens.successScreen,
+    navigation.push(SCREENS.appStack, {
+      screen: SCREENS.successScreen,
     });
   };
 
@@ -50,7 +50,7 @@ const ForgotPassword = () => {
                 <View>
                   <TextInput
                     placeholder="Email or Phone Number"
-                    placeholderTextColor={_color.textPrimary}
+                    placeholderTextColor={COLORS.textPrimary}
                     value={values.email}
                     onChangeText={handleChange('email')}
                     onBlur={handleBlur('email')}
@@ -92,10 +92,10 @@ const ForgotPassword = () => {
 
   // main com View
   return (
-    <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
-        <View style={_styles.flex}>
+        <View style={COMMON_STYLES.flex}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.contentContainerStyle}>
@@ -123,13 +123,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: _ms(18),
   },
   title: {
-    color: _color.black,
+    color: COLORS.black,
     fontFamily: _fonts.workSansMedium,
     fontSize: _ms(18),
     textAlign: 'center',
   },
   labelTxt: {
-    color: _color.textSecondary,
+    color: COLORS.textSecondary,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(12),
     textAlign: 'center',
@@ -143,16 +143,16 @@ const styles = StyleSheet.create({
     paddingStart: _ms(12),
     height: authFieldHeight,
     borderWidth: bdrWidth,
-    borderColor: _color.black,
+    borderColor: COLORS.black,
     borderRadius: 8,
-    color: _color.black,
+    color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(12),
     includeFontPadding: false,
   },
   errorString: {
     marginStart: _ms(8),
-    color: _color.red,
+    color: COLORS.red,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(10),
     includeFontPadding: false,

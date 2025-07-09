@@ -1,30 +1,31 @@
 import React from 'react';
 import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
 import {AppStackParamList} from './types/types';
-import {_color, _screens} from '../misc';
+import {COLORS, SCREENS} from '../misc';
 import {SuccessScreen} from '../common';
-import {ProfileScreen, SearchResultScreen, SearchScreen, SelectCarType, UploadPictureOfVehicle} from '../presentation';
+import {BookingDetailsProcessingInfoScreen, ProfileScreen, SearchResultScreen, SearchScreen, SelectCarType, UploadPictureOfVehicle} from '../presentation';
 
 const Stack = createStackNavigator<AppStackParamList>();
 
 const AppStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={_screens.successScreen}
+      initialRouteName={SCREENS.successScreen}
       screenOptions={{
         headerShown: false,
-        cardStyle: {backgroundColor: _color?.white},
+        cardStyle: {backgroundColor: COLORS?.white},
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
-      <Stack.Screen name={_screens.successScreen} component={SuccessScreen} />
-      <Stack.Screen name={_screens.profileScreen} component={ProfileScreen} />
+      <Stack.Screen name={SCREENS.successScreen} component={SuccessScreen} />
+      <Stack.Screen name={SCREENS.profileScreen} component={ProfileScreen} />
 
       <Stack.Group>
-        <Stack.Screen name={_screens.searchScreen} component={SearchScreen} />
+        <Stack.Screen name={SCREENS.searchScreen} component={SearchScreen} />
       </Stack.Group>
-      <Stack.Screen name={_screens.selectCarType} component={SelectCarType} />
-      <Stack.Screen name={_screens.uploadPictureOfVehicle} component={UploadPictureOfVehicle} />
-      <Stack.Screen name={_screens.searchResultScreen} component={SearchResultScreen} />
+      <Stack.Screen name={SCREENS.selectCarType} component={SelectCarType} />
+      <Stack.Screen name={SCREENS.uploadPictureOfVehicle} component={UploadPictureOfVehicle} />
+      <Stack.Screen name={SCREENS.searchResultScreen} component={SearchResultScreen} />
+      <Stack.Screen name={SCREENS.bookingDetailsProcessingInfoScreen} component={BookingDetailsProcessingInfoScreen} />
     </Stack.Navigator>
   );
 };

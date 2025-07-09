@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {_icons} from '../../../assets';
-import {_color, _ms, _mvs} from '../../../misc';
+import {COLORS, _ms, _mvs} from '../../../misc';
 import {useNavigation} from '@react-navigation/native';
 
 interface SecondaryHeaderProps {
@@ -69,6 +69,6 @@ const styles = StyleSheet.create({
   icon: {
     width: _ms(18),
     height: _ms(18),
-    tintColor: _color.textPrimary,
+    tintColor: COLORS.textPrimary,
   },
 });

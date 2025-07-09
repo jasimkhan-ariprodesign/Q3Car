@@ -1,6 +1,6 @@
 import {Alert, Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {_color, _ms, _mvs, _styles} from '../../../../misc';
+import {COLORS, _ms, _mvs, COMMON_STYLES} from '../../../../misc';
 import {_fonts, _images} from '../../../../assets';
 import {PrimaryButton, TextButton} from '../../../components';
 
@@ -34,7 +34,7 @@ export default LocationPermissionPopup;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: _color.white,
+    backgroundColor: COLORS.white,
     paddingVertical: _mvs(20),
     paddingHorizontal: _ms(12),
     borderRadius: 10,
@@ -43,19 +43,19 @@ const styles = StyleSheet.create({
     marginTop: -_mvs(50),
   },
   imgStyle: {
-    ..._styles.size90,
+    ...COMMON_STYLES.size90,
     alignSelf: 'center',
     resizeMode: 'contain',
   },
   title: {
-    color: _color.black,
+    color: COLORS.black,
     fontSize: _ms(16),
     fontFamily: _fonts.workSansMedium,
     textAlign: 'center',
     marginBottom: _mvs(4),
   },
   descString: {
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontSize: _ms(12),
     fontFamily: _fonts.workSansMedium,
     textAlign: 'center',

@@ -2,7 +2,7 @@ import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {TextButton, IconButton, SafeAreaWrapper} from '../../components';
-import {_color, _height, _ms, _screens, _strings, _styles, _width} from '../../../misc';
+import {COLORS, WINDOW_HEIGHT, _ms, SCREENS, STRINGS, COMMON_STYLES, WINDOW_WIDTH} from '../../../misc';
 import {_onboardingData} from '../../../constant';
 import {_fonts, _icons} from '../../../assets';
 import NextButtonWithProgressBar from './components/next-button-with-progress-bar';
@@ -17,8 +17,8 @@ const OnboardingScreen = () => {
 
   const _handleSkipClick = () => {
     // navigation.push(_screens.userTypeSelectScreen);
-    navigation.push(_screens.drawerNavigator, {
-      screen: _screens.dashboardScreen,
+    navigation.push(SCREENS.drawerNavigator, {
+      screen: SCREENS.dashboardScreen,
     });
   };
 
@@ -28,7 +28,7 @@ const OnboardingScreen = () => {
         const nextIndex = curPageIndex + 1;
         scrollRef?.current.scrollTo({
           animated: true,
-          x: nextIndex * _width,
+          x: nextIndex * WINDOW_WIDTH,
         });
       }
     } else {
@@ -37,7 +37,7 @@ const OnboardingScreen = () => {
   };
 
   return (
-    <SafeAreaWrapper style={[_styles.container]}>
+    <SafeAreaWrapper style={[COMMON_STYLES.container]}>
       {/* icon, skip, onboarding image */}
       <ScrollView
         ref={scrollRef}
@@ -46,13 +46,13 @@ const OnboardingScreen = () => {
         pagingEnabled
         decelerationRate={'fast'}
         scrollEventThrottle={16}
-        snapToInterval={_width}
+        snapToInterval={WINDOW_WIDTH}
         onScroll={event => {
           const offset = event.nativeEvent.contentOffset.x;
-          const index = Math.round(offset / _width);
+          const index = Math.round(offset / WINDOW_WIDTH);
           setCurPageIndex(index);
         }}
-        style={_styles.flex}>
+        style={COMMON_STYLES.flex}>
         {_onboardingData?.map(item => {
           return (
             <View key={item?.id} style={styles.parentCont}>
@@ -61,8 +61,8 @@ const OnboardingScreen = () => {
               </View>
 
               <View style={styles.skipCont}>
-                <IconButton icon={_icons.q3Car} iconStyle={_styles.size54} />
-                <TextButton title={_strings.skip} onPress={_handleSkipClick} disabled={false} />
+                <IconButton icon={_icons.q3Car} iconStyle={COMMON_STYLES.size54} />
+                <TextButton title={STRINGS.skip} onPress={_handleSkipClick} disabled={false} />
               </View>
 
               {/* strings */}
@@ -88,28 +88,28 @@ export default OnboardingScreen;
 
 const styles = StyleSheet.create({
   parentCont: {
-    width: _width,
-    height: _height * 0.75,
+    width: WINDOW_WIDTH,
+    height: WINDOW_HEIGHT * 0.75,
   },
   skipCont: {
     flexDirection: 'row',
     position: 'absolute',
-    width: _width,
+    width: WINDOW_WIDTH,
     top: 0,
     paddingHorizontal: _ms(24),
     justifyContent: 'space-between',
   },
   imageCont: {
-    width: _width,
-    height: _height * 0.48,
-    backgroundColor: _color.offWhite,
+    width: WINDOW_WIDTH,
+    height: WINDOW_HEIGHT * 0.48,
+    backgroundColor: COLORS.offWhite,
   },
   img: {
     width: '100%',
     height: '100%',
   },
   stringCont: {
-    width: _width * 0.8,
+    width: WINDOW_WIDTH * 0.8,
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
@@ -117,12 +117,12 @@ const styles = StyleSheet.create({
     gap: _ms(12),
   },
   title: {
-    color: _color.black,
+    color: COLORS.black,
     fontSize: _ms(18),
     fontFamily: _fonts.workSansMedium,
   },
   descTxt: {
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontSize: _ms(12),
     fontFamily: _fonts.workSansMedium,
     textAlign: 'center',

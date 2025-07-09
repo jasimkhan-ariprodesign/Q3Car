@@ -1,6 +1,6 @@
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {_color, _ms, _mvs, _screens, _styles, _width} from '../../../misc';
+import {COLORS, _ms, _mvs, SCREENS, COMMON_STYLES, WINDOW_WIDTH} from '../../../misc';
 import {_fonts, _images} from '../../../assets';
 import {CustomBottomShitModal, PrimaryButton, SafeAreaWrapper} from '../../components';
 import LocationPermissionPopup from './components/location-permission-popup';
@@ -12,19 +12,19 @@ const WelcomeScreen = () => {
   const [showBottomShit, setShowBottomShit] = useState(true);
 
   const _handleCreateAccountClick = () => {
-    navigation.navigate(_screens.authStack, {
-      screen: _screens.signupScreen,
+    navigation.navigate(SCREENS.authStack, {
+      screen: SCREENS.signupScreen,
     });
   };
 
   const _handleLoginClick = () => {
-    navigation.navigate(_screens.authStack, {
-      screen: _screens.loginScreen,
+    navigation.navigate(SCREENS.authStack, {
+      screen: SCREENS.loginScreen,
     });
   };
 
   return (
-    <SafeAreaWrapper style={_styles.flex}>
+    <SafeAreaWrapper style={COMMON_STYLES.flex}>
       <ImageBackground source={_images.welcomeScreen} style={styles.bgImg}>
         <View style={styles.btnCont}>
           <PrimaryButton title="Create an account" onPress={_handleCreateAccountClick} />
@@ -56,19 +56,19 @@ export default WelcomeScreen;
 const styles = StyleSheet.create({
   bgImg: {
     flex: 1,
-    width: _width,
+    width: WINDOW_WIDTH,
     rowGap: _mvs(28),
     flexDirection: 'column-reverse',
     paddingBottom: _mvs(40),
   },
   welcomeString: {
-    color: _color.primary,
+    color: COLORS.primary,
     fontSize: _ms(20),
     fontFamily: _fonts.workSansMedium,
     textAlign: 'center',
   },
   welDescString: {
-    color: _color.black,
+    color: COLORS.black,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansRegular,
     textAlign: 'center',
@@ -78,12 +78,12 @@ const styles = StyleSheet.create({
     rowGap: _mvs(16),
   },
   logInBtn: {
-    backgroundColor: _color.transparent,
+    backgroundColor: COLORS.transparent,
     borderWidth: 1,
-    borderColor: _color.primary,
+    borderColor: COLORS.primary,
     marginHorizontal: 1,
   },
   logInBtnString: {
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
   },
 });

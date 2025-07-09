@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {_styles, _isIOS, _color, _mvs, _ms, _screens} from '../../../misc';
+import {COMMON_STYLES, _isIOS, COLORS, _mvs, _ms, SCREENS} from '../../../misc';
 import {SafeAreaWrapper, PrimaryHeader, IconButton, TextButton} from '../../components';
 import {_inputFieldHeight} from '../../../misc/common-styles';
 import {_fonts, _icons} from '../../../assets';
@@ -22,8 +22,8 @@ const SearchScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const _handleMoveToNextScreen = () => {
-    navigation.push(_screens.appStack, {
-      screen: _screens.selectCarType,
+    navigation.push(SCREENS.appStack, {
+      screen: SCREENS.selectCarType,
     });
   };
 
@@ -32,19 +32,19 @@ const SearchScreen = () => {
       <View style={styles.searchBarParentView}>
         <IconButton
           icon={_icons.locationBlack}
-          iconStyle={_styles.size18}
-          tintColor={_color.textPrimary}
+          iconStyle={COMMON_STYLES.size18}
+          tintColor={COLORS.textPrimary}
         />
         <TextInput
           placeholder="Search Address Here"
-          placeholderTextColor={_color.textPrimary}
+          placeholderTextColor={COLORS.textPrimary}
           style={styles.inputStyle}
         />
         <IconButton
           icon={_icons.closeBlack}
-          iconStyle={_styles.size10}
+          iconStyle={COMMON_STYLES.size10}
           resizeMode="contain"
-          tintColor={_color.textPrimary}
+          tintColor={COLORS.textPrimary}
         />
       </View>
     );
@@ -64,11 +64,11 @@ const SearchScreen = () => {
       <TouchableOpacity onPress={_handleMoveToNextScreen} style={styles.itemBTNStyle}>
         <Image
           source={_icons.clockGrey}
-          style={[_styles.size16, styles.itemIcon]}
+          style={[COMMON_STYLES.size16, styles.itemIcon]}
           resizeMode="contain"
-          tintColor={_color.textPrimary}
+          tintColor={COLORS.textPrimary}
         />
-        <View style={_styles.flex}>
+        <View style={COMMON_STYLES.flex}>
           <Text style={styles.itemTitleString}>{item?.title}</Text>
           <Text style={styles.itemDescString}>{item?.address}</Text>
         </View>
@@ -79,7 +79,7 @@ const SearchScreen = () => {
 
   const _renderSearchHistoryListsCont = () => {
     return (
-      <View style={_styles.flex}>
+      <View style={COMMON_STYLES.flex}>
         <FlatList
           data={_recentPlaces || []}
           renderItem={_renderItem}
@@ -92,12 +92,12 @@ const SearchScreen = () => {
 
   // main view
   return (
-    <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
         <View style={styles.headerCont}>
           <PrimaryHeader containerStyle={styles.headerStyle} />
         </View>
-        <View style={[_styles.flex, styles.container]}>
+        <View style={[COMMON_STYLES.flex, styles.container]}>
           {/* pickup bar */}
           {_renderPickupPointInpCont()}
 
@@ -115,7 +115,7 @@ const SearchScreen = () => {
 export default SearchScreen;
 const leftSpace = _ms(16);
 const bWidth = 1.2;
-const bColor = _color.textSecondary;
+const bColor = COLORS.textSecondary;
 const bRadius = 8;
 
 const styles = StyleSheet.create({
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     height: _inputFieldHeight,
     flex: 1,
     fontSize: _ms(12),
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontFamily: _fonts.poppinsMedium,
     includeFontPadding: false,
   },
@@ -159,13 +159,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   titleString: {
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontSize: _ms(14),
     fontFamily: _fonts.poppinsMedium,
     includeFontPadding: false,
   },
   clearAllString: {
-    color: _color.yellow,
+    color: COLORS.yellow,
   },
 
   //   flatlist
@@ -181,13 +181,13 @@ const styles = StyleSheet.create({
   itemIcon: {marginTop: _mvs(2)},
   itemTitleString: {
     fontSize: _ms(14),
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontFamily: _fonts.poppinsMedium,
     includeFontPadding: false,
   },
   itemDescString: {
     fontSize: _ms(10),
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontFamily: _fonts.poppinsRegular,
     includeFontPadding: false,
   },

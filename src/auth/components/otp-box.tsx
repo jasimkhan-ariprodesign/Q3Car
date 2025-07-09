@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View, ViewStyle} from 'react-native';
 import React from 'react';
 import {OtpInput} from 'react-native-otp-entry';
-import {_color, _ms, _mvs} from '../../misc';
+import {COLORS, _ms, _mvs} from '../../misc';
 import {_fonts} from '../../assets';
 import {TextButton} from '../../presentation/components';
 import { _logger } from '../../utils';
@@ -67,30 +67,30 @@ const Styles = (otpInpHeight: number) => {
       height: otpInpHeight,
       width: otpInpHeight + _ms(4),
       borderRadius: 8,
-      backgroundColor: _color.white,
+      backgroundColor: COLORS.white,
       borderWidth: 1.5,
     },
     filledPinCodeContainerStyle: {
-      backgroundColor: _color.white,
-      borderColor: _color.black,
+      backgroundColor: COLORS.white,
+      borderColor: COLORS.black,
       borderWidth: 1.5,
     },
     pinCodeTextStyle: {
-      color: _color.textPrimary,
+      color: COLORS.textPrimary,
       fontSize: _ms(14),
       fontFamily: _fonts.workSansMedium,
       includeFontPadding: false,
     },
     focusStickStyle: {
-      backgroundColor: _color.primary,
+      backgroundColor: COLORS.primary,
     },
     focusedPinCodeContainerStyle: {
       borderWidth: 1.5,
-      borderColor: _color.primary,
+      borderColor: COLORS.primary,
     },
     // text style
     text: {
-      color: _color.black,
+      color: COLORS.black,
       fontSize: _ms(12),
       fontFamily: _fonts.workSansMedium,
     },
@@ -105,7 +105,7 @@ const Styles = (otpInpHeight: number) => {
       opacity: 1,
     },
     resendText: {
-      color: _color.primary,
+      color: COLORS.primary,
       fontSize: _ms(12),
       fontFamily: _fonts.workSansMedium,
     },

@@ -7,7 +7,7 @@ import {
   TextStyle,
   ActivityIndicator,
 } from 'react-native';
-import {_color, _ms} from '../../../../misc';
+import {COLORS, _ms} from '../../../../misc';
 import {_fonts} from '../../../../assets';
 import { _logger } from '../../../../utils';
 
@@ -41,7 +41,7 @@ const TextButton: React.FC<ReusableButtonProps> = ({
       disabled={isButtonDisabled}
       activeOpacity={0.7}>
       {isLoading ? (
-        <ActivityIndicator color={_color.primary || _color.white} />
+        <ActivityIndicator color={COLORS.primary || COLORS.white} />
       ) : (
         <>{children || <Text style={[styles.text, textStyle]}>{title}</Text>}</>
       )}
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    color: _color.black,
+    color: COLORS.black,
     fontSize: _ms(14),
     fontFamily: _fonts.poppinsRegular,
     includeFontPadding: false,

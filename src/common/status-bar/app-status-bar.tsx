@@ -1,6 +1,6 @@
 import {StatusBar} from 'react-native';
 import React from 'react';
-import {_color} from '../../misc';
+import {COLORS} from '../../misc';
 
 type PropsAppStatusBar = {
   statusBarColor?: string;
@@ -9,7 +9,7 @@ type PropsAppStatusBar = {
 };
 
 const AppStatusBar = ({
-  statusBarColor = _color.transparent,
+  statusBarColor = COLORS.transparent,
   barStyle = 'dark-content',
   translucent = true,
 }: PropsAppStatusBar) => {

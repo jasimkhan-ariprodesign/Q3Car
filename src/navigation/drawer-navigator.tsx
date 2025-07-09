@@ -1,7 +1,7 @@
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {DashboardScreen} from '../presentation';
-import {_screens} from '../misc';
+import {SCREENS} from '../misc';
 import {CustomDrawerContent} from './components';
 
 const Drawer = createDrawerNavigator();
@@ -11,14 +11,14 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       drawerContent={CustomDrawer}
-      initialRouteName={_screens.dashboardScreen}
+      initialRouteName={SCREENS.dashboardScreen}
       screenOptions={() => ({
         headerShown: false,
         gestureEnabled: true,
         swipeEnabled: true,
         drawerType: 'front',
       })}>
-      <Drawer.Screen name={_screens.dashboardScreen} component={DashboardScreen} />
+      <Drawer.Screen name={SCREENS.dashboardScreen} component={DashboardScreen} />
     </Drawer.Navigator>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
-import {_color, _screens} from '../misc';
+import {COLORS, SCREENS} from '../misc';
 import {SPStackParamList} from './types/types';
 
 const Stack = createStackNavigator<SPStackParamList>();
@@ -11,7 +11,7 @@ const SPStack = () => {
       // initialRouteName={_screens.signupScreen}
       screenOptions={{
         headerShown: false,
-        cardStyle: {backgroundColor: _color?.white},
+        cardStyle: {backgroundColor: COLORS?.white},
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
       {/* customer */}

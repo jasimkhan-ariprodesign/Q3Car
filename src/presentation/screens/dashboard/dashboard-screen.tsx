@@ -5,12 +5,12 @@ import {useNavigation} from '@react-navigation/native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {IconButton, SafeAreaWrapper} from '../../components';
 import {
-  _color,
-  _height,
+  COLORS,
+  WINDOW_HEIGHT,
   _isIOS,
   _ms,
-  _screens,
-  _styles,
+  SCREENS,
+  COMMON_STYLES,
   _useCustomSafeAreaInsets,
 } from '../../../misc';
 import {_icons} from '../../../assets';
@@ -29,8 +29,8 @@ const DashboardScreen = () => {
   };
 
   const _handleSearchClick = () => {
-    navigation.navigate(_screens.appStack, {
-      screen: _screens.searchScreen,
+    navigation.navigate(SCREENS.appStack, {
+      screen: SCREENS.searchScreen,
     });
   };
 
@@ -39,7 +39,7 @@ const DashboardScreen = () => {
       <View style={styles.drawerBTNCont}>
         <IconButton
           icon={_icons.drawer}
-          iconStyle={_styles.size36}
+          iconStyle={COMMON_STYLES.size36}
           onPress={_handleDrawerToggle}
           disabled={false}
         />
@@ -61,7 +61,7 @@ const DashboardScreen = () => {
 
   const _renderDashboardCont = () => {
     return (
-      <View style={_styles.flex}>
+      <View style={COMMON_STYLES.flex}>
         {/* child for all content in bottom */}
         <DashboardContent _handleSearchClick={_handleSearchClick} />
       </View>
@@ -71,7 +71,7 @@ const DashboardScreen = () => {
   //   main view
   return (
     <>
-      <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+      <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
         <SafeAreaWrapper edges={_isIOS() ? ['left', 'right'] : undefined}>
           {/* map here */}
           {_renderMap()}
@@ -89,8 +89,8 @@ export default DashboardScreen;
 const getStyles = (insets: EdgeInsets) =>
   StyleSheet.create({
     mapContainer: {
-      height: _height * 0.58,
-      backgroundColor: _color.pink,
+      height: WINDOW_HEIGHT * 0.58,
+      backgroundColor: COLORS.pink,
     },
 
     drawerBTNCont: {

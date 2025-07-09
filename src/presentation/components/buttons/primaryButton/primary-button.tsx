@@ -7,7 +7,7 @@ import {
   TextStyle,
   ActivityIndicator,
 } from 'react-native';
-import {_color, _ms, _mvs} from '../../../../misc';
+import {COLORS, _ms, _mvs} from '../../../../misc';
 import {_fonts} from '../../../../assets';
 import { _logger } from '../../../../utils';
 
@@ -41,7 +41,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
       disabled={isButtonDisabled}
       activeOpacity={0.7}>
       {isLoading ? (
-        <ActivityIndicator color={_color.primary || _color.white} />
+        <ActivityIndicator color={COLORS.primary || COLORS.white} />
       ) : (
         <>{children || <Text style={[styles.text, textStyle]}>{title}</Text>}</>
       )}
@@ -53,12 +53,12 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: _color.primary,
+    backgroundColor: COLORS.primary,
     borderRadius: 8,
     minHeight: _mvs(34),
   },
   text: {
-    color: _color.white,
+    color: COLORS.white,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansMedium,
   },

@@ -1,7 +1,7 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {PrimaryButton, SafeAreaWrapper} from '../../components';
-import {_color, _height, _ms, _mvs, _screens} from '../../../misc';
+import {COLORS, WINDOW_HEIGHT, _ms, _mvs, SCREENS} from '../../../misc';
 import {_fonts, _images} from '../../../assets';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -11,14 +11,14 @@ const UserTypeSelectScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const _handleFindTowService = () => {
-    navigation.push(_screens.welcomeStack, {
-      screen: _screens.welcomeScreen,
+    navigation.push(SCREENS.welcomeStack, {
+      screen: SCREENS.welcomeScreen,
     });
   };
 
   const _handlePublishTowingService = () => {
-    navigation.push(_screens.welcomeStack, {
-      screen: _screens.spWelcomeScreen,
+    navigation.push(SCREENS.welcomeStack, {
+      screen: SCREENS.spWelcomeScreen,
     });
   };
 
@@ -52,24 +52,24 @@ const styles = StyleSheet.create({
     rowGap: _mvs(40),
   },
   title: {
-    color: _color.black,
+    color: COLORS.black,
     fontSize: _ms(20),
     fontFamily: _fonts.workSansRegular,
   },
   imgStyle: {
     width: '100%',
-    height: _height * 0.4,
+    height: WINDOW_HEIGHT * 0.4,
   },
   buttonCont: {
     gap: _mvs(12),
   },
   publishBtn: {
-    backgroundColor: _color.transparent,
+    backgroundColor: COLORS.transparent,
     borderWidth: 1,
-    borderColor: _color.primary,
+    borderColor: COLORS.primary,
     marginHorizontal: 1,
   },
   publishString: {
-    color: _color.black,
+    color: COLORS.black,
   },
 });

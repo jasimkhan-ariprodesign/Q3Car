@@ -28,6 +28,7 @@ export const _screens = {
   selectCarType: 'SelectCarType',
   uploadPictureOfVehicle: 'UploadPictureOfVehicle',
   searchResultScreen: 'SearchResultScreen',
+  bookingDetailsProcessingInfoScreen: 'BookingDetailsProcessingInfoScreen',
 
   // modal
   // searchScreen: 'SearchScreen',

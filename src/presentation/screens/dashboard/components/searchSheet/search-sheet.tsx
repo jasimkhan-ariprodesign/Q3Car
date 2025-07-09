@@ -6,7 +6,7 @@ import {
   BottomSheetView,
   SNAP_POINT_TYPE,
 } from '@gorhom/bottom-sheet';
-import {_color, _screens} from '../../../../../misc';
+import {COLORS, SCREENS} from '../../../../../misc';
 
 interface SearchSheetProp {
   bottomSheetModalRef: React.RefObject<BottomSheetModal | null>;
@@ -56,7 +56,7 @@ const SearchSheet: React.FC<SearchSheetProp> = ({bottomSheetModalRef, handleShee
   const _renderBackdropComponent = ({style}: BottomSheetBackdropProps) => {
     return (
       <Pressable
-        style={[style, {backgroundColor: _color.transparentBlack5}]}
+        style={[style, {backgroundColor: COLORS.transparentBlack5}]}
         onPress={_handleCloseBottomSheet}
       />
     );

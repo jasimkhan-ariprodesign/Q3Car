@@ -1,6 +1,6 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {_color, _ms, _mvs, _screens, _styles} from '../../../misc';
+import {COLORS, _ms, _mvs, SCREENS, COMMON_STYLES} from '../../../misc';
 import {_fonts, _images} from '../../../assets';
 import {CustomBottomShitModal, PrimaryButton, SafeAreaWrapper} from '../../components';
 import LocationPermissionPopup from './components/location-permission-popup';
@@ -12,20 +12,20 @@ const SPWelcomeScreen = () => {
   const [showBottomShit, setShowBottomShit] = useState(true);
 
   const _handleCreateAccountClick = () => {
-    navigation.navigate(_screens.authStack, {
-      screen: _screens.spSignupScreen,
+    navigation.navigate(SCREENS.authStack, {
+      screen: SCREENS.spSignupScreen,
     });
   };
 
   const _handleLoginClick = () => {
-    navigation.navigate(_screens.authStack, {
-      screen: _screens.spLoginScreen,
+    navigation.navigate(SCREENS.authStack, {
+      screen: SCREENS.spLoginScreen,
     });
   };
 
   return (
-    <SafeAreaWrapper style={_styles.flex}>
-      <View style={_styles.flex}>
+    <SafeAreaWrapper style={COMMON_STYLES.flex}>
+      <View style={COMMON_STYLES.flex}>
         <Image
           source={_images.spWelcomeScreen}
           style={styles.img}
@@ -74,13 +74,13 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: _ms(28),
   },
   welcomeString: {
-    color: _color.primary,
+    color: COLORS.primary,
     fontSize: _ms(20),
     fontFamily: _fonts.workSansMedium,
     textAlign: 'center',
   },
   welDescString: {
-    color: _color.black,
+    color: COLORS.black,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansRegular,
     textAlign: 'center',
@@ -90,12 +90,12 @@ const styles = StyleSheet.create({
     rowGap: _mvs(16),
   },
   logInBtn: {
-    backgroundColor: _color.transparent,
+    backgroundColor: COLORS.transparent,
     borderWidth: 1,
-    borderColor: _color.primary,
+    borderColor: COLORS.primary,
     marginHorizontal: 1,
   },
   logInBtnString: {
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
   },
 });

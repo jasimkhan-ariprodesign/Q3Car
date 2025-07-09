@@ -1,7 +1,7 @@
 import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {_fonts, _icons} from '../../../../../assets';
-import {_color, _ms, _mvs, _styles} from '../../../../../misc';
+import {COLORS, _ms, _mvs, COMMON_STYLES} from '../../../../../misc';
 import RecentSearchSuggestion from './recent-search-suggestion';
 
 interface DashboardContentProp {
@@ -42,7 +42,7 @@ const DashboardContent: React.FC<DashboardContentProp> = ({_handleSearchClick}) 
               onPress={_handleChoosePickUpOrDestinationClick}
               style={styles.pickupPointBTN}
               activeOpacity={0.6}>
-              <Image source={_icons.circleBlue} style={_styles.size22} resizeMode="contain" />
+              <Image source={_icons.circleBlue} style={COMMON_STYLES.size22} resizeMode="contain" />
               <Text style={styles.pickupPointBTNString}>Choose pick up point</Text>
             </TouchableOpacity>
 
@@ -52,7 +52,7 @@ const DashboardContent: React.FC<DashboardContentProp> = ({_handleSearchClick}) 
               onPress={_handleChoosePickUpOrDestinationClick}
               style={styles.pickupPointBTN}
               activeOpacity={0.6}>
-              <Image source={_icons.locationRed} style={_styles.size22} resizeMode="contain" />
+              <Image source={_icons.locationRed} style={COMMON_STYLES.size22} resizeMode="contain" />
               <Text style={styles.pickupPointBTNString}>Choose your destination</Text>
             </TouchableOpacity>
 
@@ -68,7 +68,7 @@ const DashboardContent: React.FC<DashboardContentProp> = ({_handleSearchClick}) 
               activeOpacity={0.7}
               style={[styles.addressBTN, styles.selectedAddBTN]}>
               <Image
-                style={[_styles.size16, styles.selectedBTNIconColor]}
+                style={[COMMON_STYLES.size16, styles.selectedBTNIconColor]}
                 resizeMode="contain"
                 source={_icons.saveGrey}
               />
@@ -78,14 +78,14 @@ const DashboardContent: React.FC<DashboardContentProp> = ({_handleSearchClick}) 
             {/* office button */}
 
             <TouchableOpacity activeOpacity={0.7} style={[styles.addressBTN]}>
-              <Image style={[_styles.size16]} resizeMode="contain" source={_icons.saveGrey} />
+              <Image style={[COMMON_STYLES.size16]} resizeMode="contain" source={_icons.saveGrey} />
               <Text style={[styles.addressNameString]}>Office</Text>
             </TouchableOpacity>
 
             {/* next: (>) button */}
 
             <TouchableOpacity activeOpacity={0.7} style={[styles.nextBTN]}>
-              <Image style={[_styles.size16]} resizeMode="contain" source={_icons.angleRightGrey} />
+              <Image style={[COMMON_STYLES.size16]} resizeMode="contain" source={_icons.angleRightGrey} />
             </TouchableOpacity>
           </View>
         </View>
@@ -103,7 +103,7 @@ export default DashboardContent;
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    backgroundColor: _color.white,
+    backgroundColor: COLORS.white,
     marginTop: -_mvs(24),
     borderTopRightRadius: 24,
     borderTopLeftRadius: 24,
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleString: {
-    color: _color.black,
+    color: COLORS.black,
     fontSize: _ms(14),
     fontFamily: _fonts.poppinsRegular,
   },
@@ -128,13 +128,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1.2,
-    borderColor: _color.EDEDED,
+    borderColor: COLORS.EDEDED,
     padding: _ms(8),
     borderRadius: 20,
     columnGap: _ms(12),
   },
   pickupPointBTNString: {
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontSize: _ms(12),
     fontFamily: _fonts.poppinsRegular,
     includeFontPadding: false,
@@ -157,31 +157,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: _ms(8),
     borderWidth: 1.5,
-    borderColor: _color.EDEDED,
+    borderColor: COLORS.EDEDED,
     paddingHorizontal: _ms(16),
     paddingVertical: _ms(6),
     borderRadius: 50,
   },
   selectedAddBTN: {
-    backgroundColor: _color.primary,
+    backgroundColor: COLORS.primary,
   },
   selectedBTNIconColor: {
-    tintColor: _color.white,
+    tintColor: COLORS.white,
   },
   addressNameString: {
-    color: _color.textSecondary,
+    color: COLORS.textSecondary,
     fontFamily: _fonts.poppinsRegular,
     fontSize: _ms(12),
     includeFontPadding: false,
   },
   selectedAddressNameString: {
-    color: _color.white,
+    color: COLORS.white,
   },
   nextBTN: {
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1.5,
-    borderColor: _color.EDEDED,
+    borderColor: COLORS.EDEDED,
     width: _ms(34),
     height: _ms(34),
     borderRadius: 50,

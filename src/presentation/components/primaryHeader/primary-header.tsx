@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {_fonts, _icons} from '../../../assets';
-import {_color, _ms, _mvs} from '../../../misc';
+import {COLORS, _ms, _mvs} from '../../../misc';
 import {useNavigation} from '@react-navigation/native';
 
 interface PrimaryHeaderProps {
@@ -76,10 +76,10 @@ const styles = StyleSheet.create({
   icon: {
     width: _ms(10),
     height: _ms(17),
-    tintColor: _color.textPrimary,
+    tintColor: COLORS.textPrimary,
   },
   title: {
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansRegular,
     includeFontPadding: false,

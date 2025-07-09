@@ -12,7 +12,7 @@ import {
 import React, {useState} from 'react';
 import {Formik} from 'formik';
 import {_icons, _fonts, _images} from '../../assets';
-import {_color, _styles, _ms, _mvs, _isIOS, _screens} from '../../misc';
+import {COLORS, COMMON_STYLES, _ms, _mvs, _isIOS, SCREENS} from '../../misc';
 import {
   SafeAreaWrapper,
   PrimaryHeader,
@@ -58,14 +58,14 @@ const SPSignupScreen = () => {
   const _handleSignup = () => {
   // const _handleSignup = (value: any) => {
     // _logger.log('_handleSignup --: ', value);
-    navigation.push(_screens.authStack, {
-      screen: _screens.setPassword,
+    navigation.push(SCREENS.authStack, {
+      screen: SCREENS.setPassword,
     });
   };
 
   const _handleSignInClick = () => {
-    navigation.navigate(_screens.authStack, {
-      screen: _screens.loginScreen,
+    navigation.navigate(SCREENS.authStack, {
+      screen: SCREENS.loginScreen,
       params: {
         fromScreen: 'signup',
       },
@@ -108,7 +108,7 @@ const SPSignupScreen = () => {
               <View>
                 <TextInput
                   placeholder="Full Name"
-                  placeholderTextColor={_color.textPrimary}
+                  placeholderTextColor={COLORS.textPrimary}
                   value={values.fullName}
                   onChangeText={handleChange('fullName')}
                   onBlur={handleBlur('fullName')}
@@ -126,7 +126,7 @@ const SPSignupScreen = () => {
                   <View style={styles.emailCont}>
                     <TextInput
                       placeholder="Email"
-                      placeholderTextColor={_color.textPrimary}
+                      placeholderTextColor={COLORS.textPrimary}
                       value={values.email}
                       onChangeText={handleChange('email')}
                       onBlur={handleBlur('email')}
@@ -136,7 +136,7 @@ const SPSignupScreen = () => {
                     {verificationStatus.emailVerified && (
                       <Image
                         source={_icons.checkGreen}
-                        style={_styles.size16}
+                        style={COMMON_STYLES.size16}
                         resizeMode="contain"
                       />
                     )}
@@ -171,7 +171,7 @@ const SPSignupScreen = () => {
                   <View style={styles.emailCont}>
                     <TextInput
                       placeholder="000 000 0000"
-                      placeholderTextColor={_color.textPrimary}
+                      placeholderTextColor={COLORS.textPrimary}
                       value={values.phoneNumber}
                       onChangeText={handleChange('phoneNumber')}
                       onBlur={handleBlur('phoneNumber')}
@@ -180,7 +180,7 @@ const SPSignupScreen = () => {
                     {verificationStatus.phoneVerified && (
                       <Image
                         source={_icons.checkGreen}
-                        style={_styles.size16}
+                        style={COMMON_STYLES.size16}
                         resizeMode="contain"
                       />
                     )}
@@ -206,7 +206,7 @@ const SPSignupScreen = () => {
               <View>
                 <TextInput
                   placeholder="Driver licence"
-                  placeholderTextColor={_color.textPrimary}
+                  placeholderTextColor={COLORS.textPrimary}
                   value={values.fullName}
                   onChangeText={handleChange('fullName')}
                   onBlur={handleBlur('fullName')}
@@ -239,7 +239,7 @@ const SPSignupScreen = () => {
               <View>
                 <TextInput
                   placeholder="Insurance"
-                  placeholderTextColor={_color.textPrimary}
+                  placeholderTextColor={COLORS.textPrimary}
                   value={values.fullName}
                   onChangeText={handleChange('fullName')}
                   onBlur={handleBlur('fullName')}
@@ -284,7 +284,7 @@ const SPSignupScreen = () => {
                   onPress={() => setFieldValue('agreeToTerms', !values.agreeToTerms)}
                   style={styles.checkCont}>
                   {values.agreeToTerms && (
-                    <Image source={_icons.check} style={_styles.size10} tintColor={_color.black} />
+                    <Image source={_icons.check} style={COMMON_STYLES.size10} tintColor={COLORS.black} />
                   )}
                 </TouchableOpacity>
                 <View style={styles.privacyPolicyStringCont}>
@@ -316,12 +316,12 @@ const SPSignupScreen = () => {
   // main View
   return (
     <KeyboardAvoidingView
-      style={[_styles.flex]}
+      style={[COMMON_STYLES.flex]}
       behavior={_isIOS() ? 'padding' : undefined}
       keyboardVerticalOffset={Platform.select({ios: _mvs(8)})}>
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
-        <View style={_styles.flex}>
+        <View style={COMMON_STYLES.flex}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.contentContainerStyle}>
@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
     paddingBottom: _mvs(20),
   },
   title: {
-    color: _color.black,
+    color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(20),
   },
@@ -374,16 +374,16 @@ const styles = StyleSheet.create({
     paddingStart: _ms(12),
     height: authFieldHeight,
     borderWidth: bdrWidth,
-    borderColor: _color.black,
+    borderColor: COLORS.black,
     borderRadius: 8,
-    color: _color.black,
+    color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(12),
     includeFontPadding: false,
   },
   errorString: {
     marginStart: _ms(8),
-    color: _color.red,
+    color: COLORS.red,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(10),
     includeFontPadding: false,
@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: authFieldHeight,
     borderWidth: bdrWidth,
-    borderColor: _color.black,
+    borderColor: COLORS.black,
     borderRadius: 8,
     paddingEnd: _ms(12),
     columnGap: _ms(8),
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
   emailInput: {
     padding: 0,
     height: authFieldHeight,
-    color: _color.black,
+    color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(12),
     includeFontPadding: false,
@@ -416,13 +416,13 @@ const styles = StyleSheet.create({
     columnGap: _ms(8),
   },
   verify: {
-    color: _color.primary,
+    color: COLORS.primary,
     fontSize: _ms(12),
   },
   sendOTPCont: {flexDirection: 'row', alignItems: 'center', columnGap: _ms(8)},
   countryCodeBTN: {
     borderWidth: bdrWidth,
-    borderColor: _color.black,
+    borderColor: COLORS.black,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
@@ -432,18 +432,18 @@ const styles = StyleSheet.create({
   },
   countryCodeString: {
     fontSize: _ms(12),
-    color: _color.textSecondary,
+    color: COLORS.textSecondary,
     fontFamily: _fonts.workSansRegular,
   },
   downArrow: {
-    ..._styles.size10,
+    ...COMMON_STYLES.size10,
     transform: [{rotate: '-90deg'}],
   },
   SignupBTN: {
-    backgroundColor: _color.CFCFCF,
+    backgroundColor: COLORS.CFCFCF,
   },
   SignupString: {
-    color: _color.black,
+    color: COLORS.black,
   },
   privacyPolicyCont: {
     flexDirection: 'row',
@@ -455,22 +455,22 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   checkCont: {
-    backgroundColor: _color.white,
+    backgroundColor: COLORS.white,
     width: _ms(20),
     height: _ms(20),
     borderRadius: _ms(20),
     borderWidth: 2,
-    borderColor: _color.black,
+    borderColor: COLORS.black,
     alignItems: 'center',
     justifyContent: 'center',
   },
   termOfServiceString: {
     fontSize: _ms(12),
-    color: _color.B4B4B4,
+    color: COLORS.B4B4B4,
     fontFamily: _fonts.workSansMedium,
   },
   blueTxt: {
-    color: _color.primary,
+    color: COLORS.primary,
   },
   orCont: {
     flexDirection: 'row',
@@ -481,16 +481,16 @@ const styles = StyleSheet.create({
   horizontalView: {
     height: 1,
     flex: 1,
-    backgroundColor: _color.B4B4B4,
+    backgroundColor: COLORS.B4B4B4,
   },
   orString: {
-    color: _color.textSecondary,
+    color: COLORS.textSecondary,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansMedium,
   },
   socialBTN: {
     borderWidth: bdrWidth,
-    borderColor: _color.CFCFCF,
+    borderColor: COLORS.CFCFCF,
     width: _ms(48),
     height: _ms(48),
     borderRadius: 8,
@@ -498,7 +498,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   signInString: {
-    color: _color.primary,
+    color: COLORS.primary,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansMedium,
     marginLeft: -6,
@@ -507,7 +507,7 @@ const styles = StyleSheet.create({
   pictureContView: {
     flex: 1,
     borderWidth: bdrWidth,
-    borderColor: _color.black,
+    borderColor: COLORS.black,
     minHeight: authFieldHeight,
     maxHeight: authFieldHeight * 3,
     borderRadius: 8,

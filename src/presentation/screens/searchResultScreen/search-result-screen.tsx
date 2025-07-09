@@ -1,15 +1,25 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {_color, _ms, _mvs, _styles} from '../../../misc';
+import {useNavigation} from '@react-navigation/native';
+import {COLORS, _ms, _mvs, COMMON_STYLES, SCREENS} from '../../../misc';
 import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../components';
 import {SecondaryLoader} from '../../../common';
 import {_fonts, _icons} from '../../../assets';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../navigation/types/types';
 
 const SearchResultScreen = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const _handleRequestClick = () => {
+    navigation.push(SCREENS.appStack, {
+      screen: SCREENS.bookingDetailsProcessingInfoScreen,
+    });
+  };
   return (
     <SafeAreaWrapper>
-      <PrimaryHeader containerStyle={_styles.headerStyle} />
-      <View style={_styles.flex}>
+      <PrimaryHeader containerStyle={COMMON_STYLES.headerStyle} />
+      <View style={COMMON_STYLES.flex}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.contentContainerStyle}>
@@ -19,11 +29,11 @@ const SearchResultScreen = () => {
             <Text style={styles.dateString}>Total Distance : 30 km</Text>
           </View>
 
-          <View style={_styles.row}>
+          <View style={COMMON_STYLES.row}>
             <Image source={_icons.fromToDest} style={styles.fromToDestImage} resizeMode="contain" />
 
             {/* address from to Destination */}
-            <View style={_styles.spaceBetween}>
+            <View style={COMMON_STYLES.spaceBetween}>
               <Text numberOfLines={1} style={styles.addressesString}>
                 Abbaseen House queen road, Estonia...
               </Text>
@@ -34,23 +44,23 @@ const SearchResultScreen = () => {
           </View>
 
           {/* vehicle detail */}
-          <View style={[_styles.row, styles.nameDateDistCont]}>
-            <View style={[_styles.flex]}>
+          <View style={[COMMON_STYLES.row, styles.nameDateDistCont]}>
+            <View style={[COMMON_STYLES.flex]}>
               <Text style={styles.labelString}>Vehicle</Text>
               <Text style={styles.vehicleDetailString}>Mercedes</Text>
             </View>
-            <View style={[_styles.flex, _styles.center]}>
+            <View style={[COMMON_STYLES.flex, COMMON_STYLES.center]}>
               <Text style={styles.labelString}>Total seats</Text>
               <Text style={styles.vehicleDetailString}>4</Text>
             </View>
-            <View style={[_styles.flex, _styles.alignEnd]}>
+            <View style={[COMMON_STYLES.flex, COMMON_STYLES.alignEnd]}>
               <Text style={styles.labelString}>Estimated</Text>
               <Text style={styles.vehicleDetailString}>$234</Text>
             </View>
           </View>
 
           {/* request button */}
-          <PrimaryButton title="Request" />
+          <PrimaryButton title="Request" onPress={_handleRequestClick} />
         </ScrollView>
 
         {/* loader */}
@@ -72,14 +82,14 @@ const styles = StyleSheet.create({
   },
 
   nameString: {
-    color: _color.black,
+    color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(16),
     includeFontPadding: false,
     textTransform: 'capitalize',
   },
   dateString: {
-    color: _color.black,
+    color: COLORS.black,
     fontFamily: _fonts.workSansMedium,
     fontSize: _ms(12),
     includeFontPadding: false,
@@ -94,17 +104,17 @@ const styles = StyleSheet.create({
     marginRight: _ms(8),
   },
   addressesString: {
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansRegular,
   },
   labelString: {
-    color: _color.textSecondary,
+    color: COLORS.textSecondary,
     fontSize: _ms(12),
     fontFamily: _fonts.workSansRegular,
   },
   vehicleDetailString: {
-    color: _color.black,
+    color: COLORS.black,
     fontSize: _ms(14),
     fontFamily: _fonts.workSansMedium,
   },

@@ -1,6 +1,6 @@
 import {View, StyleSheet, ViewStyle, Animated} from 'react-native';
 import React, {useEffect, useRef} from 'react';
-import {_color} from '../../../misc';
+import {COLORS} from '../../../misc';
 
 interface CustomBottomShitModalProps {
   containerStyle?: ViewStyle;
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: _color.black,
+    backgroundColor: COLORS.black,
     opacity: 0.7,
   },
   contentContainer: {

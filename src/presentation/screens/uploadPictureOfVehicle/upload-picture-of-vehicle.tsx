@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../components';
-import {_color, _isIOS, _ms, _mvs, _screens, _strings, _styles} from '../../../misc';
+import {COLORS, _isIOS, _ms, _mvs, SCREENS, STRINGS, COMMON_STYLES} from '../../../misc';
 import {_fonts, _icons} from '../../../assets';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -20,16 +20,16 @@ import {SecondaryLoader} from '../../../common';
 const UploadPictureOfVehicle = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const _handleUploadClick = () => {
-    navigation.push(_screens.appStack, {
-      screen: _screens.searchResultScreen,
+    navigation.push(SCREENS.appStack, {
+      screen: SCREENS.searchResultScreen,
     });
   };
 
   const _renderCarPhotoContView = () => {
     return (
       <View style={styles.carPhotoCont}>
-        <Image source={_icons.galleryGrey} style={_styles.size24} resizeMode="contain" />
-        <Text style={styles.selectFileString}>{_strings.selectFile}</Text>
+        <Image source={_icons.galleryGrey} style={COMMON_STYLES.size24} resizeMode="contain" />
+        <Text style={styles.selectFileString}>{STRINGS.selectFile}</Text>
       </View>
     );
   };
@@ -38,7 +38,7 @@ const UploadPictureOfVehicle = () => {
     return (
       <View style={styles.orCont}>
         <View style={styles.horiLine} />
-        <Text style={styles.selectFileString}>{_strings.or}</Text>
+        <Text style={styles.selectFileString}>{STRINGS.or}</Text>
         <View style={styles.horiLine} />
       </View>
     );
@@ -47,8 +47,8 @@ const UploadPictureOfVehicle = () => {
   const _renderOpenCameraBTN = () => {
     return (
       <TouchableOpacity activeOpacity={0.7} style={styles.openCameraBTN}>
-        <Image source={_icons.cameraWhite} style={_styles.size20} resizeMode="contain" />
-        <Text style={styles.openCameraString}>{_strings.openCameraAndTakePhoto}</Text>
+        <Image source={_icons.cameraWhite} style={COMMON_STYLES.size20} resizeMode="contain" />
+        <Text style={styles.openCameraString}>{STRINGS.openCameraAndTakePhoto}</Text>
       </TouchableOpacity>
     );
   };
@@ -59,7 +59,7 @@ const UploadPictureOfVehicle = () => {
         <Text style={styles.labelString}>{'Add service-specific notes (Optional)'}</Text>
         <TextInput
           placeholder="Add service-specific notes (Optional)"
-          placeholderTextColor={_color.textDisabled}
+          placeholderTextColor={COLORS.textDisabled}
           style={styles.inputStyle}
         />
       </View>
@@ -68,14 +68,14 @@ const UploadPictureOfVehicle = () => {
 
   // main view
   return (
-    <KeyboardAvoidingView style={_styles.flex} behavior={_isIOS() ? 'padding' : 'height'}>
-      <SafeAreaWrapper style={_styles.flex}>
-        <PrimaryHeader containerStyle={_styles.headerStyle} />
-        <View style={[_styles.flex]}>
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+      <SafeAreaWrapper style={COMMON_STYLES.flex}>
+        <PrimaryHeader containerStyle={COMMON_STYLES.headerStyle} />
+        <View style={[COMMON_STYLES.flex]}>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.contentContainerStyle}>
-            <Text style={styles.title}>{_strings.uploadThePictureOfTheVehicle}</Text>
+            <Text style={styles.title}>{STRINGS.uploadThePictureOfTheVehicle}</Text>
 
             {/* car photo view */}
             {_renderCarPhotoContView()}
@@ -90,7 +90,7 @@ const UploadPictureOfVehicle = () => {
             {_renderInputCont()}
 
             <PrimaryButton
-              title={_strings.upload}
+              title={STRINGS.upload}
               textStyle={styles.uploadString}
               onPress={_handleUploadClick}
             />
@@ -108,7 +108,7 @@ export default UploadPictureOfVehicle;
 
 const gapAndMargin = _mvs(44);
 const bdrWidth = 1.2;
-const bdrColor = _color.EDEDED;
+const bdrColor = COLORS.EDEDED;
 const authFieldHeight = _ms(36);
 
 const styles = StyleSheet.create({
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     paddingTop: _mvs(12),
   },
   title: {
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontFamily: _fonts.workSansMedium,
     fontSize: _ms(16),
     includeFontPadding: false,
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   carPhotoCont: {
     borderWidth: 2,
-    borderColor: _color.primary,
+    borderColor: COLORS.primary,
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     minHeight: _mvs(160),
   },
   selectFileString: {
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(12),
     includeFontPadding: false,
@@ -147,11 +147,11 @@ const styles = StyleSheet.create({
   },
   horiLine: {
     height: 1.2,
-    backgroundColor: _color.EDEDED,
+    backgroundColor: COLORS.EDEDED,
     flex: 1,
   },
   openCameraBTN: {
-    backgroundColor: _color.primary,
+    backgroundColor: COLORS.primary,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     columnGap: _ms(8),
   },
   openCameraString: {
-    color: _color.white,
+    color: COLORS.white,
     fontFamily: _fonts.workSansBold,
     fontSize: _ms(14),
     includeFontPadding: false,
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   labelString: {
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(12),
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     includeFontPadding: false,
   },
   inputStyle: {
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     height: authFieldHeight,
     paddingLeft: _ms(12),
 
-    color: _color.textPrimary,
+    color: COLORS.textPrimary,
     fontFamily: _fonts.workSansRegular,
     fontSize: _ms(14),
     includeFontPadding: false,
