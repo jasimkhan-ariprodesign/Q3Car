@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {COMMON_STYLES, _isIOS, COLORS, _mvs, _ms, SCREENS} from '../../../misc';
+import {COMMON_STYLES, isIOS, COLORS, mvs, ms, SCREENS} from '../../../misc';
 import {SafeAreaWrapper, PrimaryHeader, IconButton, TextButton} from '../../components';
 import {_inputFieldHeight} from '../../../misc/common-styles';
 import {_fonts, _icons} from '../../../assets';
@@ -92,7 +92,7 @@ const SearchScreen = () => {
 
   // main view
   return (
-    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
         <View style={styles.headerCont}>
           <PrimaryHeader containerStyle={styles.headerStyle} />
@@ -113,22 +113,22 @@ const SearchScreen = () => {
 };
 
 export default SearchScreen;
-const leftSpace = _ms(16);
+const leftSpace = ms(16);
 const bWidth = 1.2;
 const bColor = COLORS.textSecondary;
 const bRadius = 8;
 
 const styles = StyleSheet.create({
   container: {
-    rowGap: _mvs(12),
+    rowGap: mvs(12),
   },
   headerCont: {
     flexDirection: 'row',
     paddingLeft: leftSpace,
   },
   headerStyle: {
-    paddingTop: _isIOS() ? 0 : _mvs(12),
-    paddingBottom: _isIOS() ? _mvs(16) : _mvs(16),
+    paddingTop: isIOS() ? 0 : mvs(12),
+    paddingBottom: isIOS() ? mvs(16) : mvs(16),
   },
 
   searchBarParentView: {
@@ -139,15 +139,15 @@ const styles = StyleSheet.create({
     borderColor: bColor,
     borderRadius: bRadius,
     height: _inputFieldHeight,
-    paddingHorizontal: _ms(8),
-    columnGap: _ms(8),
+    paddingHorizontal: ms(8),
+    columnGap: ms(8),
   },
   inputStyle: {
     padding: 0,
     textAlignVertical: 'center',
     height: _inputFieldHeight,
     flex: 1,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     color: COLORS.textPrimary,
     fontFamily: _fonts.poppinsMedium,
     includeFontPadding: false,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   titleString: {
     color: COLORS.textPrimary,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.poppinsMedium,
     includeFontPadding: false,
   },
@@ -170,23 +170,23 @@ const styles = StyleSheet.create({
 
   //   flatlist
   contentContainerStyle: {
-    rowGap: _mvs(16),
+    rowGap: mvs(16),
   },
   itemBTNStyle: {
     marginHorizontal: leftSpace,
     flexDirection: 'row',
-    columnGap: _ms(12),
-    paddingVertical: _ms(2),
+    columnGap: ms(12),
+    paddingVertical: ms(2),
   },
-  itemIcon: {marginTop: _mvs(2)},
+  itemIcon: {marginTop: mvs(2)},
   itemTitleString: {
-    fontSize: _ms(14),
+    fontSize: ms(14),
     color: COLORS.textPrimary,
     fontFamily: _fonts.poppinsMedium,
     includeFontPadding: false,
   },
   itemDescString: {
-    fontSize: _ms(10),
+    fontSize: ms(10),
     color: COLORS.textPrimary,
     fontFamily: _fonts.poppinsRegular,
     includeFontPadding: false,

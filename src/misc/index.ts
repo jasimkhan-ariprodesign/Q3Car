@@ -9,18 +9,24 @@ import {_s, _ms, _vs, _mvs} from './responsive';
 import {_strings} from './common-strings';
 
 export {
-  _isAndroid,
-  _isIOS,
+  _isAndroid as isAndroid,
+  _isIOS as isIOS,
+
   _color as COLORS,
   _styles as COMMON_STYLES,
+
   _getStatusBarHeight,
   _useCustomSafeAreaInsets,
+
   _screens as SCREENS,
+  _strings as STRINGS,
+
   _height as WINDOW_HEIGHT,
   _width as WINDOW_WIDTH,
-  _s,
-  _ms,
-  _vs,
-  _mvs,
-  _strings as STRINGS,
+
+  _s as s,
+  _ms as ms,
+  _vs as vs,
+  _mvs as mvs,
+
 };

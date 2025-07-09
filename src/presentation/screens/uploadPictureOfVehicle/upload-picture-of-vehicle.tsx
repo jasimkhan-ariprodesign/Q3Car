@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../components';
-import {COLORS, _isIOS, _ms, _mvs, SCREENS, STRINGS, COMMON_STYLES} from '../../../misc';
+import {COLORS, isIOS, ms, mvs, SCREENS, STRINGS, COMMON_STYLES} from '../../../misc';
 import {_fonts, _icons} from '../../../assets';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -68,7 +68,7 @@ const UploadPictureOfVehicle = () => {
 
   // main view
   return (
-    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper style={COMMON_STYLES.flex}>
         <PrimaryHeader containerStyle={COMMON_STYLES.headerStyle} />
         <View style={[COMMON_STYLES.flex]}>
@@ -106,21 +106,21 @@ const UploadPictureOfVehicle = () => {
 
 export default UploadPictureOfVehicle;
 
-const gapAndMargin = _mvs(44);
+const gapAndMargin = mvs(44);
 const bdrWidth = 1.2;
 const bdrColor = COLORS.EDEDED;
-const authFieldHeight = _ms(36);
+const authFieldHeight = ms(36);
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
     rowGap: gapAndMargin,
-    paddingHorizontal: _ms(18),
-    paddingTop: _mvs(12),
+    paddingHorizontal: ms(18),
+    paddingTop: mvs(12),
   },
   title: {
     color: COLORS.textPrimary,
     fontFamily: _fonts.workSansMedium,
-    fontSize: _ms(16),
+    fontSize: ms(16),
     includeFontPadding: false,
     textTransform: 'capitalize',
   },
@@ -130,20 +130,20 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    rowGap: _mvs(8),
-    minHeight: _mvs(160),
+    rowGap: mvs(8),
+    minHeight: mvs(160),
   },
   selectFileString: {
     color: COLORS.textPrimary,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     includeFontPadding: false,
   },
   orCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: _ms(12),
-    marginHorizontal: _ms(2),
+    columnGap: ms(12),
+    marginHorizontal: ms(2),
   },
   horiLine: {
     height: 1.2,
@@ -155,22 +155,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: _mvs(34),
+    minHeight: mvs(34),
     borderRadius: 16,
-    columnGap: _ms(8),
+    columnGap: ms(8),
   },
   openCameraString: {
     color: COLORS.white,
     fontFamily: _fonts.workSansBold,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     includeFontPadding: false,
   },
   inputCont: {
-    rowGap: _mvs(4),
+    rowGap: mvs(4),
   },
   labelString: {
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     color: COLORS.textPrimary,
     includeFontPadding: false,
   },
@@ -180,11 +180,11 @@ const styles = StyleSheet.create({
     borderColor: bdrColor,
     borderRadius: 4,
     height: authFieldHeight,
-    paddingLeft: _ms(12),
+    paddingLeft: ms(12),
 
     color: COLORS.textPrimary,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     includeFontPadding: false,
     textAlignVertical: 'center',
   },

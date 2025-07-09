@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {COLORS, _ms, _mvs, SCREENS, COMMON_STYLES} from '../../../misc';
+import {COLORS, ms, mvs, SCREENS, COMMON_STYLES} from '../../../misc';
 import {IconButton, SafeAreaWrapper} from '../../../presentation/components';
 import {_fonts, _icons} from '../../../assets';
 import {_drawerMenuList} from '../../../constant/drawer-menu-list';
@@ -109,36 +109,36 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
 
 export default CustomDrawerContent;
 
-const leftSpace = _ms(24);
+const leftSpace = ms(24);
 const styles = StyleSheet.create({
   profileCont: {
     backgroundColor: COLORS.primary,
     flex: 0,
     padding: leftSpace,
-    rowGap: _mvs(6),
+    rowGap: mvs(6),
   },
   profileView: {
     backgroundColor: COLORS.transparentBlack2,
-    width: _ms(70),
-    height: _ms(70),
-    borderRadius: _ms(70),
+    width: ms(70),
+    height: ms(70),
+    borderRadius: ms(70),
     borderWidth: 2,
     borderColor: COLORS.white,
   },
   profile: {
-    width: _ms(70),
-    height: _ms(70),
-    borderRadius: _ms(70),
+    width: ms(70),
+    height: ms(70),
+    borderRadius: ms(70),
   },
   profileBTN: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: _mvs(12),
+    marginTop: mvs(12),
   },
   profileNameString: {
     color: COLORS.white,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansBold,
   },
   rightArrow: {
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   },
   phoneString: {
     color: COLORS.FF9391,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     fontFamily: _fonts.workSansMedium,
     includeFontPadding: false,
   },
@@ -163,16 +163,16 @@ const styles = StyleSheet.create({
   drawerBTNView: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: _ms(12),
-    paddingVertical: _mvs(4),
+    columnGap: ms(12),
+    paddingVertical: mvs(4),
     paddingHorizontal: leftSpace / 2,
   },
   titleString: {
     color: COLORS.black,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansSemiBold,
   },
   contentContainerStyle: {
-    rowGap: _mvs(12),
+    rowGap: mvs(12),
   },
 });

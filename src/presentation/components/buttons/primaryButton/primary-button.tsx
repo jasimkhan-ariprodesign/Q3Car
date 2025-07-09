@@ -7,7 +7,7 @@ import {
   TextStyle,
   ActivityIndicator,
 } from 'react-native';
-import {COLORS, _ms, _mvs} from '../../../../misc';
+import {COLORS, ms, mvs} from '../../../../misc';
 import {_fonts} from '../../../../assets';
 import { _logger } from '../../../../utils';
 
@@ -55,11 +55,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: COLORS.primary,
     borderRadius: 8,
-    minHeight: _mvs(34),
+    minHeight: mvs(34),
   },
   text: {
     color: COLORS.white,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansMedium,
   },
 });

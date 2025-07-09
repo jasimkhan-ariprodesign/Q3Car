@@ -3,7 +3,7 @@ import React from 'react';
 import {WINDOW_HEIGHT} from '@gorhom/bottom-sheet';
 import {_color} from '../../../../../../../misc/colors';
 import {EdgeInsets} from 'react-native-safe-area-context';
-import {_ms, _mvs, _useCustomSafeAreaInsets} from '../../../../../../../misc';
+import {ms, mvs, _useCustomSafeAreaInsets} from '../../../../../../../misc';
 import {_fonts} from '../../../../../../../assets';
 
 const BookingProcessingComponent = () => {
@@ -38,26 +38,26 @@ const getStyles = (insets: EdgeInsets) =>
       width: '100%',
       borderTopLeftRadius: 16,
       borderTopRightRadius: 16,
-      marginTop: -_mvs(16),
+      marginTop: -mvs(16),
       borderWidth: 2,
       borderColor: 'lime',
-      paddingBottom: insets?.bottom || _mvs(16),
-      paddingTop: _mvs(16),
+      paddingBottom: insets?.bottom || mvs(16),
+      paddingTop: mvs(16),
     },
     loaderAndMsgCont: {
       alignItems: 'center',
-      rowGap: _mvs(12),
+      rowGap: mvs(12),
     },
     processingMSGString: {
       color: _color.textPrimary,
-      fontSize: _ms(14),
+      fontSize: ms(14),
       fontFamily: _fonts.workSansBold,
       includeFontPadding: false,
       textTransform: 'uppercase',
     },
     staticMsgString: {
       color: _color.textPrimary,
-      fontSize: _ms(12),
+      fontSize: ms(12),
       fontFamily: _fonts.workSansRegular,
       includeFontPadding: false,
     },

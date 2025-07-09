@@ -1,6 +1,6 @@
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {COLORS, _ms, _mvs, SCREENS, COMMON_STYLES, WINDOW_WIDTH} from '../../../misc';
+import {COLORS, ms, mvs, SCREENS, COMMON_STYLES, WINDOW_WIDTH} from '../../../misc';
 import {_fonts, _images} from '../../../assets';
 import {CustomBottomShitModal, PrimaryButton, SafeAreaWrapper} from '../../components';
 import LocationPermissionPopup from './components/location-permission-popup';
@@ -57,25 +57,25 @@ const styles = StyleSheet.create({
   bgImg: {
     flex: 1,
     width: WINDOW_WIDTH,
-    rowGap: _mvs(28),
+    rowGap: mvs(28),
     flexDirection: 'column-reverse',
-    paddingBottom: _mvs(40),
+    paddingBottom: mvs(40),
   },
   welcomeString: {
     color: COLORS.primary,
-    fontSize: _ms(20),
+    fontSize: ms(20),
     fontFamily: _fonts.workSansMedium,
     textAlign: 'center',
   },
   welDescString: {
     color: COLORS.black,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansRegular,
     textAlign: 'center',
   },
   btnCont: {
-    paddingHorizontal: _ms(22),
-    rowGap: _mvs(16),
+    paddingHorizontal: ms(22),
+    rowGap: mvs(16),
   },
   logInBtn: {
     backgroundColor: COLORS.transparent,

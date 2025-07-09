@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {_fonts, _icons} from '../../../assets';
-import {COLORS, _ms, _mvs} from '../../../misc';
+import {COLORS, ms, mvs} from '../../../misc';
 import {useNavigation} from '@react-navigation/native';
 
 interface PrimaryHeaderProps {
@@ -65,22 +65,22 @@ export default PrimaryHeader;
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: _mvs(12),
+    paddingVertical: mvs(12),
   },
   buttonCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: _ms(8),
+    columnGap: ms(8),
     alignSelf: 'flex-start',
   },
   icon: {
-    width: _ms(10),
-    height: _ms(17),
+    width: ms(10),
+    height: ms(17),
     tintColor: COLORS.textPrimary,
   },
   title: {
     color: COLORS.textPrimary,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansRegular,
     includeFontPadding: false,
   },

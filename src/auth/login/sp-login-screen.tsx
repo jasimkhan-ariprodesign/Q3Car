@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {_fonts, _icons} from '../../assets';
-import {_ms, COLORS, _mvs, _isIOS, COMMON_STYLES, SCREENS} from '../../misc';
+import {ms, COLORS, mvs, isIOS, COMMON_STYLES, SCREENS} from '../../misc';
 import {
   SafeAreaWrapper,
   PrimaryHeader,
@@ -25,7 +25,7 @@ import {AuthStackParamList, RootStackParamList} from '../../navigation/types/typ
 import {StackNavigationProp} from '@react-navigation/stack';
 import {SecondaryLoader} from '../../common/loaders';
 
-const authFieldHeight = _ms(36);
+const authFieldHeight = ms(36);
 // CREATE SP LOGIN SEPARATE BECAUSE DESIGN IS DIFFERENT IN FIGMA BUT KEPPING SAME FOR NOW..
 const SPLoginScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -157,7 +157,7 @@ const SPLoginScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
         <View style={COMMON_STYLES.flex}>
@@ -189,52 +189,52 @@ const SPLoginScreen = () => {
 };
 
 export default SPLoginScreen;
-const gapAndMargin = _mvs(20);
+const gapAndMargin = mvs(20);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  headerStyle: {paddingHorizontal: _ms(18)},
+  headerStyle: {paddingHorizontal: ms(18)},
   contentContainerStyle: {
     rowGap: gapAndMargin,
-    paddingHorizontal: _ms(18),
+    paddingHorizontal: ms(18),
   },
   title: {
     color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(20),
+    fontSize: ms(20),
   },
   formCont: {
-    marginTop: _mvs(20),
-    rowGap: _mvs(12),
+    marginTop: mvs(20),
+    rowGap: mvs(12),
   },
   emailInput: {
     padding: 0,
-    paddingStart: _ms(12),
+    paddingStart: ms(12),
     height: authFieldHeight,
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
     borderRadius: 8,
     color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     includeFontPadding: false,
   },
   errorString: {
-    marginStart: _ms(8),
+    marginStart: ms(8),
     color: COLORS.red,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(10),
+    fontSize: ms(10),
     includeFontPadding: false,
   },
   pwdCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: _ms(8),
+    columnGap: ms(8),
 
     height: authFieldHeight,
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
-    paddingEnd: _ms(12),
+    paddingEnd: ms(12),
     borderRadius: 8,
   },
   pwdInput: {
@@ -242,11 +242,11 @@ const styles = StyleSheet.create({
     height: authFieldHeight,
     color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     includeFontPadding: false,
     borderRadius: 8,
     flex: 1,
-    paddingStart: _ms(12),
+    paddingStart: ms(12),
   },
   forgotPWDBTN: {
     alignItems: 'flex-end',
@@ -254,14 +254,14 @@ const styles = StyleSheet.create({
   },
   forgotPasswordString: {
     color: COLORS.red,
-    fontSize: _ms(10.5),
+    fontSize: ms(10.5),
     includeFontPadding: false,
   },
   orCont: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    columnGap: _ms(12),
+    columnGap: ms(12),
     // backgroundColor: _color.yellow,
   },
   horizontalView: {
@@ -271,12 +271,12 @@ const styles = StyleSheet.create({
   },
   orString: {
     color: COLORS.textSecondary,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansMedium,
   },
   signInString: {
     color: COLORS.primary,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansMedium,
     marginLeft: -6,
   },

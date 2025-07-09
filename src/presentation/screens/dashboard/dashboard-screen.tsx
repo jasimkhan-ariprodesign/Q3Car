@@ -7,8 +7,8 @@ import {IconButton, SafeAreaWrapper} from '../../components';
 import {
   COLORS,
   WINDOW_HEIGHT,
-  _isIOS,
-  _ms,
+  isIOS,
+  ms,
   SCREENS,
   COMMON_STYLES,
   _useCustomSafeAreaInsets,
@@ -71,8 +71,8 @@ const DashboardScreen = () => {
   //   main view
   return (
     <>
-      <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
-        <SafeAreaWrapper edges={_isIOS() ? ['left', 'right'] : undefined}>
+      <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={isIOS() ? 'padding' : 'height'}>
+        <SafeAreaWrapper edges={isIOS() ? ['left', 'right'] : undefined}>
           {/* map here */}
           {_renderMap()}
 
@@ -96,6 +96,6 @@ const getStyles = (insets: EdgeInsets) =>
     drawerBTNCont: {
       position: 'absolute',
       top: insets?.top || 0,
-      left: _ms(24),
+      left: ms(24),
     },
   });

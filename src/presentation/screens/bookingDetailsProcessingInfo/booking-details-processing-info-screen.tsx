@@ -2,7 +2,7 @@ import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {COLORS, COMMON_STYLES, _isIOS, _ms, _useCustomSafeAreaInsets} from '../../../misc';
+import {COLORS, COMMON_STYLES, isIOS, ms, _useCustomSafeAreaInsets} from '../../../misc';
 import {IconButton, SafeAreaWrapper} from '../../components';
 import ContentCont from './components/contentCont/content-cont';
 import RenderMap from './components/renderMap/render-map';
@@ -55,8 +55,8 @@ const BookingDetailsProcessingInfoScreen = () => {
 
   // main view
   return (
-    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
-      <SafeAreaWrapper edges={_isIOS() ? ['left', 'right'] : undefined}>
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={isIOS() ? 'padding' : 'height'}>
+      <SafeAreaWrapper edges={isIOS() ? ['left', 'right'] : undefined}>
         {/* map here */}
         {_renderMap()}
 
@@ -82,6 +82,6 @@ const getStyles = (insets: EdgeInsets) =>
     drawerBTNCont: {
       position: 'absolute',
       top: insets?.top || 0,
-      left: _ms(24),
+      left: ms(24),
     },
   });

@@ -1,6 +1,6 @@
 import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
-import {COLORS, _isIOS, _ms, _mvs, SCREENS, COMMON_STYLES} from '../../../misc';
+import {COLORS, isIOS, ms, mvs, SCREENS, COMMON_STYLES} from '../../../misc';
 import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../components';
 import {_fonts} from '../../../assets';
 import {_vehicleTypes} from '../../../constant';
@@ -80,48 +80,48 @@ const SelectCarType = () => {
 
 export default SelectCarType;
 
-const gapAndMargin = _mvs(20);
+const gapAndMargin = mvs(20);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
   spaceBetweenView: {
     rowGap: gapAndMargin,
-    paddingHorizontal: _ms(18),
-    paddingTop: _mvs(12),
+    paddingHorizontal: ms(18),
+    paddingTop: mvs(12),
   },
   title: {
     color: COLORS.textPrimary,
     fontFamily: _fonts.workSansMedium,
-    fontSize: _ms(16),
+    fontSize: ms(16),
     includeFontPadding: false,
   },
   desc: {
     color: COLORS.textPrimary,
     fontFamily: _fonts.workSansMedium,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     includeFontPadding: false,
     textTransform: 'capitalize',
   },
   requestTowString: {
     color: COLORS.textPrimary,
     fontFamily: _fonts.workSansSemiBold,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     includeFontPadding: false,
   },
   spaceBetweenText: {
-    rowGap: _mvs(4),
+    rowGap: mvs(4),
   },
 
   //   flat list
   flatListCont: {
-    marginTop: _mvs(8),
+    marginTop: mvs(8),
   },
   towBTN: {
     borderWidth: bdrWidth,
     borderColor: COLORS.transparent,
     backgroundColor: COLORS.offWhite,
-    marginBottom: _mvs(12),
-    padding: _ms(8),
+    marginBottom: mvs(12),
+    padding: ms(8),
     borderRadius: 4,
     flexDirection: 'row',
     alignItems: 'center',
@@ -132,28 +132,28 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     color: COLORS.textPrimary,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansMedium,
     includeFontPadding: false,
   },
   itemSubTitle: {
     color: COLORS.FF8C00,
-    fontSize: _ms(10),
+    fontSize: ms(10),
     fontFamily: _fonts.workSansRegular,
     includeFontPadding: false,
   },
   itemTimeEstimate: {
     color: COLORS.textPrimary,
-    fontSize: _ms(10),
+    fontSize: ms(10),
     fontFamily: _fonts.workSansBold,
     includeFontPadding: false,
   },
   itemIconStyle: {
-    width: _ms(120),
-    height: _ms(48),
+    width: ms(120),
+    height: ms(48),
   },
   bookNowBTN: {
-    marginBottom: _isIOS() ? _mvs(40) : _mvs(50),
-    marginTop: _mvs(8),
+    marginBottom: isIOS() ? mvs(40) : mvs(50),
+    marginTop: mvs(8),
   },
 });

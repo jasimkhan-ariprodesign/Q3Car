@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View, ViewStyle} from 'react-native';
 import React from 'react';
 import {OtpInput} from 'react-native-otp-entry';
-import {COLORS, _ms, _mvs} from '../../misc';
+import {COLORS, ms, mvs} from '../../misc';
 import {_fonts} from '../../assets';
 import {TextButton} from '../../presentation/components';
 import { _logger } from '../../utils';
@@ -15,7 +15,7 @@ interface OTPBoxProp {
 }
 
 const OTPBox: React.FC<OTPBoxProp> = ({
-  otpInpHeight = _ms(36),
+  otpInpHeight = ms(36),
   resendVisible = false,
   onPress,
   containerStyle,
@@ -57,15 +57,15 @@ const Styles = (otpInpHeight: number) => {
     container: {
       alignItems: 'center',
       justifyContent: 'center',
-      rowGap: _mvs(12),
+      rowGap: mvs(12),
     },
     containerStyle: {
       justifyContent: 'center',
-      columnGap: _ms(8),
+      columnGap: ms(8),
     },
     pinCodeContainerStyle: {
       height: otpInpHeight,
-      width: otpInpHeight + _ms(4),
+      width: otpInpHeight + ms(4),
       borderRadius: 8,
       backgroundColor: COLORS.white,
       borderWidth: 1.5,
@@ -77,7 +77,7 @@ const Styles = (otpInpHeight: number) => {
     },
     pinCodeTextStyle: {
       color: COLORS.textPrimary,
-      fontSize: _ms(14),
+      fontSize: ms(14),
       fontFamily: _fonts.workSansMedium,
       includeFontPadding: false,
     },
@@ -91,7 +91,7 @@ const Styles = (otpInpHeight: number) => {
     // text style
     text: {
       color: COLORS.black,
-      fontSize: _ms(12),
+      fontSize: ms(12),
       fontFamily: _fonts.workSansMedium,
     },
     resendButtonCont: {
@@ -106,7 +106,7 @@ const Styles = (otpInpHeight: number) => {
     },
     resendText: {
       color: COLORS.primary,
-      fontSize: _ms(12),
+      fontSize: ms(12),
       fontFamily: _fonts.workSansMedium,
     },
   });

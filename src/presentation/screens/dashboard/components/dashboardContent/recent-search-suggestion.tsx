@@ -1,7 +1,7 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {_fonts, _icons} from '../../../../../assets';
-import {COLORS, _ms, _mvs, COMMON_STYLES} from '../../../../../misc';
+import {COLORS, ms, mvs, COMMON_STYLES} from '../../../../../misc';
 
 interface RecentSearchSuggestionProp {
   title: string;
@@ -30,25 +30,25 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 0.2,
     borderColor: COLORS.EDEDED,
-    height: _mvs(54),
+    height: mvs(54),
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: _ms(16),
-    columnGap: _ms(16),
+    paddingHorizontal: ms(16),
+    columnGap: ms(16),
   },
   title: {
     color: COLORS.black,
     fontFamily: _fonts.poppinsRegular,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     includeFontPadding: false,
   },
   descString: {
     color: COLORS.textSecondary,
     fontFamily: _fonts.poppinsRegular,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     includeFontPadding: false,
   },
   stringCont: {
-    rowGap: _mvs(1),
+    rowGap: mvs(1),
   },
 });

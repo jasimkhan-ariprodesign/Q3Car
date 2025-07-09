@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {_icons} from '../../../assets';
-import {COLORS, _ms, _mvs} from '../../../misc';
+import {COLORS, ms, mvs} from '../../../misc';
 import {useNavigation} from '@react-navigation/native';
 
 interface SecondaryHeaderProps {
@@ -57,18 +57,18 @@ export default SecondaryHeader;
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: _mvs(12),
+    paddingVertical: mvs(12),
     alignSelf: 'flex-start',
   },
   buttonCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: _ms(8),
+    columnGap: ms(8),
     alignSelf: 'flex-start',
   },
   icon: {
-    width: _ms(18),
-    height: _ms(18),
+    width: ms(18),
+    height: ms(18),
     tintColor: COLORS.textPrimary,
   },
 });

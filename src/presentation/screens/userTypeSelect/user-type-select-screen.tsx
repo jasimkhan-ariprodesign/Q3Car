@@ -1,7 +1,7 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {PrimaryButton, SafeAreaWrapper} from '../../components';
-import {COLORS, WINDOW_HEIGHT, _ms, _mvs, SCREENS} from '../../../misc';
+import {COLORS, WINDOW_HEIGHT, ms, mvs, SCREENS} from '../../../misc';
 import {_fonts, _images} from '../../../assets';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -47,13 +47,13 @@ export default UserTypeSelectScreen;
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
-    paddingHorizontal: _ms(22),
-    paddingTop: _mvs(24),
-    rowGap: _mvs(40),
+    paddingHorizontal: ms(22),
+    paddingTop: mvs(24),
+    rowGap: mvs(40),
   },
   title: {
     color: COLORS.black,
-    fontSize: _ms(20),
+    fontSize: ms(20),
     fontFamily: _fonts.workSansRegular,
   },
   imgStyle: {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     height: WINDOW_HEIGHT * 0.4,
   },
   buttonCont: {
-    gap: _mvs(12),
+    gap: mvs(12),
   },
   publishBtn: {
     backgroundColor: COLORS.transparent,

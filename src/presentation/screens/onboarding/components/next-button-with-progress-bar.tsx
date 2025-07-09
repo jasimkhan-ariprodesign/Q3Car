@@ -2,7 +2,7 @@ import {GestureResponderEvent, Image, StyleSheet, TouchableOpacity, View} from '
 import React from 'react';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 import {_icons} from '../../../../assets';
-import {COLORS, COMMON_STYLES, _vs} from '../../../../misc';
+import {COLORS, COMMON_STYLES, vs} from '../../../../misc';
 import { _logger } from '../../../../utils';
 
 interface Prop {
@@ -47,7 +47,7 @@ export default NextButtonWithProgressBar;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    paddingVertical: _vs(30),
+    paddingVertical: vs(30),
   },
   buttonStyle: {
     backgroundColor: COLORS.primary,

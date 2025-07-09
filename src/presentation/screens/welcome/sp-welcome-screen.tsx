@@ -1,6 +1,6 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {COLORS, _ms, _mvs, SCREENS, COMMON_STYLES} from '../../../misc';
+import {COLORS, ms, mvs, SCREENS, COMMON_STYLES} from '../../../misc';
 import {_fonts, _images} from '../../../assets';
 import {CustomBottomShitModal, PrimaryButton, SafeAreaWrapper} from '../../components';
 import LocationPermissionPopup from './components/location-permission-popup';
@@ -70,24 +70,24 @@ const styles = StyleSheet.create({
   img: {
     width: '100%',
     height: '100%',
-    borderBottomLeftRadius: _ms(28),
-    borderBottomRightRadius: _ms(28),
+    borderBottomLeftRadius: ms(28),
+    borderBottomRightRadius: ms(28),
   },
   welcomeString: {
     color: COLORS.primary,
-    fontSize: _ms(20),
+    fontSize: ms(20),
     fontFamily: _fonts.workSansMedium,
     textAlign: 'center',
   },
   welDescString: {
     color: COLORS.black,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansRegular,
     textAlign: 'center',
   },
   btnCont: {
-    paddingHorizontal: _ms(22),
-    rowGap: _mvs(16),
+    paddingHorizontal: ms(22),
+    rowGap: mvs(16),
   },
   logInBtn: {
     backgroundColor: COLORS.transparent,

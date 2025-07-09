@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {COMMON_STYLES, _isIOS, _mvs, _ms, COLORS} from '../../../misc';
+import {COMMON_STYLES, isIOS, mvs, ms, COLORS} from '../../../misc';
 import {SafeAreaWrapper, SecondaryHeader} from '../../components';
 import {SecondaryLoader} from '../../../common';
 import {_fonts, _icons} from '../../../assets';
@@ -123,8 +123,8 @@ const ProfileScreen = () => {
   return (
     <KeyboardAvoidingView
       style={[COMMON_STYLES.flex]}
-      behavior={_isIOS() ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.select({ios: _mvs(8)})}>
+      behavior={isIOS() ? 'padding' : undefined}
+      keyboardVerticalOffset={Platform.select({ios: mvs(8)})}>
       <SafeAreaWrapper>
         <SecondaryHeader containerStyle={styles.backIconStyle} />
 
@@ -155,15 +155,15 @@ const ProfileScreen = () => {
 
 export default ProfileScreen;
 
-const authFieldHeight = _ms(36);
+const authFieldHeight = ms(36);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  backIconStyle: {paddingHorizontal: _ms(18)},
+  backIconStyle: {paddingHorizontal: ms(18)},
   contentContainerStyle: {
-    rowGap: _mvs(18),
-    paddingHorizontal: _ms(20),
-    paddingBottom: _mvs(20),
+    rowGap: mvs(18),
+    paddingHorizontal: ms(20),
+    paddingBottom: mvs(20),
   },
   headerStyle: {
     flexDirection: 'row',
@@ -172,28 +172,28 @@ const styles = StyleSheet.create({
   },
   profileView: {
     backgroundColor: COLORS.transparentBlack1,
-    width: _ms(70),
-    height: _ms(70),
-    borderRadius: _ms(70),
+    width: ms(70),
+    height: ms(70),
+    borderRadius: ms(70),
     borderWidth: 2,
     borderColor: COLORS.white,
   },
   nameString: {
     color: COLORS.textPrimary,
     fontFamily: _fonts.workSansBold,
-    fontSize: _ms(20),
+    fontSize: ms(20),
   },
   profile: {
-    width: _ms(70),
-    height: _ms(70),
-    borderRadius: _ms(70),
+    width: ms(70),
+    height: ms(70),
+    borderRadius: ms(70),
   },
   inputCont: {
-    rowGap: _mvs(4),
+    rowGap: mvs(4),
   },
   labelString: {
     color: COLORS.textSecondary,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     fontFamily: _fonts.workSansBold,
     textTransform: 'uppercase',
   },
@@ -204,16 +204,16 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     height: authFieldHeight,
     color: COLORS.black,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansRegular,
     textAlignVertical: 'center',
-    paddingLeft: _ms(12),
+    paddingLeft: ms(12),
   },
   preferencesCont: {
     borderWidth: bdrWidth,
     borderColor: COLORS.EDEDED,
     borderRadius: 4,
-    padding: _ms(12),
+    padding: ms(12),
     backgroundColor: COLORS.primaryLight,
   },
   switchCont: {
@@ -223,13 +223,13 @@ const styles = StyleSheet.create({
   },
   recieveReceiptsString: {
     color: COLORS.textPrimary,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     fontFamily: _fonts.workSansMedium,
     textTransform: 'uppercase',
   },
   descString: {
     color: COLORS.textDisabled,
-    fontSize: _ms(10),
+    fontSize: ms(10),
     fontFamily: _fonts.workSansRegular,
     maxWidth: '80%',
   },
@@ -243,20 +243,20 @@ const styles = StyleSheet.create({
   },
   socialBTNString: {
     color: COLORS.white,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     fontFamily: _fonts.workSansMedium,
   },
   socialIconStyle: {
     position: 'absolute',
-    left: _ms(12),
+    left: ms(12),
   },
   googleBTN: {
     borderWidth: bdrWidth,
     borderColor: COLORS.EDEDED,
     backgroundColor: COLORS.white,
-    marginTop: _mvs(8),
+    marginTop: mvs(8),
   },
   margTop: {
-    marginTop: _mvs(20),
+    marginTop: mvs(20),
   },
 });

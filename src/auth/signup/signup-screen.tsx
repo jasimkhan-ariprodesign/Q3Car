@@ -11,7 +11,7 @@ import {
 import React, {useState} from 'react';
 import {Formik} from 'formik';
 import {_icons, _fonts} from '../../assets';
-import {COLORS, COMMON_STYLES, _ms, _mvs, _isIOS, SCREENS} from '../../misc';
+import {COLORS, COMMON_STYLES, ms, mvs, isIOS, SCREENS} from '../../misc';
 import {
   SafeAreaWrapper,
   PrimaryHeader,
@@ -27,7 +27,7 @@ import {RootStackParamList} from '../../navigation/types/types';
 import {_hanldeOpenUrlFunc, _logger} from '../../utils';
 import {SecondaryLoader} from '../../common/loaders';
 
-const authFieldHeight = _ms(36);
+const authFieldHeight = ms(36);
 
 const SignupScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -261,7 +261,7 @@ const SignupScreen = () => {
 
   // Main View
   return (
-    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
         <View style={COMMON_STYLES.flex}>
@@ -296,19 +296,19 @@ const SignupScreen = () => {
 
 export default SignupScreen;
 
-const gapAndMargin = _mvs(16);
+const gapAndMargin = mvs(16);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  headerStyle: {paddingHorizontal: _ms(18)},
+  headerStyle: {paddingHorizontal: ms(18)},
   contentContainerStyle: {
     rowGap: gapAndMargin,
-    paddingHorizontal: _ms(18),
+    paddingHorizontal: ms(18),
   },
   title: {
     color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(20),
+    fontSize: ms(20),
   },
   formCont: {
     rowGap: gapAndMargin,
@@ -316,21 +316,21 @@ const styles = StyleSheet.create({
   otpBoxCont: {marginTop: gapAndMargin},
   fullNameInput: {
     padding: 0,
-    paddingStart: _ms(12),
+    paddingStart: ms(12),
     height: authFieldHeight,
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
     borderRadius: 8,
     color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     includeFontPadding: false,
   },
   errorString: {
-    marginStart: _ms(8),
+    marginStart: ms(8),
     color: COLORS.red,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(10),
+    fontSize: ms(10),
     includeFontPadding: false,
   },
   emailCont: {
@@ -341,30 +341,30 @@ const styles = StyleSheet.create({
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
     borderRadius: 8,
-    paddingEnd: _ms(12),
-    columnGap: _ms(8),
+    paddingEnd: ms(12),
+    columnGap: ms(8),
   },
   emailInput: {
     padding: 0,
     height: authFieldHeight,
     color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     includeFontPadding: false,
     borderRadius: 8,
     flex: 1,
-    paddingStart: _ms(12),
+    paddingStart: ms(12),
   },
   verifyCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: _ms(8),
+    columnGap: ms(8),
   },
   verify: {
     color: COLORS.primary,
-    fontSize: _ms(12),
+    fontSize: ms(12),
   },
-  sendOTPCont: {flexDirection: 'row', alignItems: 'center', columnGap: _ms(8)},
+  sendOTPCont: {flexDirection: 'row', alignItems: 'center', columnGap: ms(8)},
   countryCodeBTN: {
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
@@ -373,10 +373,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     height: authFieldHeight,
     borderRadius: 8,
-    minWidth: _ms(52),
+    minWidth: ms(52),
   },
   countryCodeString: {
-    fontSize: _ms(14),
+    fontSize: ms(14),
     color: COLORS.blue,
     fontFamily: _fonts.workSansRegular,
   },
@@ -393,7 +393,7 @@ const styles = StyleSheet.create({
   privacyPolicyCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: _ms(8),
+    gap: ms(8),
   },
   privacyPolicyStringCont: {
     flexDirection: 'row',
@@ -401,16 +401,16 @@ const styles = StyleSheet.create({
   },
   checkCont: {
     backgroundColor: COLORS.white,
-    width: _ms(20),
-    height: _ms(20),
-    borderRadius: _ms(20),
+    width: ms(20),
+    height: ms(20),
+    borderRadius: ms(20),
     borderWidth: 2,
     borderColor: COLORS.black,
     alignItems: 'center',
     justifyContent: 'center',
   },
   termOfServiceString: {
-    fontSize: _ms(12),
+    fontSize: ms(12),
     color: COLORS.B4B4B4,
     fontFamily: _fonts.workSansMedium,
   },
@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    columnGap: _ms(12),
+    columnGap: ms(12),
   },
   horizontalView: {
     height: 1,
@@ -430,21 +430,21 @@ const styles = StyleSheet.create({
   },
   orString: {
     color: COLORS.textSecondary,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansMedium,
   },
   socialBTN: {
     borderWidth: bdrWidth,
     borderColor: COLORS.CFCFCF,
-    width: _ms(48),
-    height: _ms(48),
+    width: ms(48),
+    height: ms(48),
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
   signInString: {
     color: COLORS.primary,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansMedium,
     marginLeft: -6,
   },

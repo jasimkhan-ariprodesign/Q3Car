@@ -10,7 +10,7 @@ import {
 import React, {useState} from 'react';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {COMMON_STYLES, _isIOS, COLORS, _ms, _mvs} from '../../misc';
+import {COMMON_STYLES, isIOS, COLORS, ms, mvs} from '../../misc';
 import {
   SafeAreaWrapper,
   PrimaryHeader,
@@ -21,7 +21,7 @@ import {_fonts, _icons} from '../../assets';
 import {_setPasswordSchema} from '../validations/schemas';
 import { SecondaryLoader } from '../../common';
 
-const authFieldHeight = _ms(36);
+const authFieldHeight = ms(36);
 
 const SetPassword = () => {
   const [formData, setFormData] = useState({
@@ -45,7 +45,7 @@ const SetPassword = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
         <View style={COMMON_STYLES.flex}>
@@ -136,14 +136,14 @@ const SetPassword = () => {
 
 export default SetPassword;
 
-const gapAndMargin = _mvs(16);
+const gapAndMargin = mvs(16);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  headerStyle: {paddingHorizontal: _ms(18)},
+  headerStyle: {paddingHorizontal: ms(18)},
   contentContainerStyle: {
     rowGap: gapAndMargin,
-    paddingHorizontal: _ms(20),
+    paddingHorizontal: ms(20),
   },
   formCont: {
     rowGap: gapAndMargin,
@@ -151,12 +151,12 @@ const styles = StyleSheet.create({
   title: {
     color: COLORS.black,
     fontFamily: _fonts.workSansMedium,
-    fontSize: _ms(20),
+    fontSize: ms(20),
     textAlign: 'center',
   },
   labelString: {
     color: COLORS.textSecondary,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansRegular,
     textAlign: 'center',
   },
@@ -164,12 +164,12 @@ const styles = StyleSheet.create({
   pwdCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: _ms(8),
+    columnGap: ms(8),
 
     height: authFieldHeight,
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
-    paddingEnd: _ms(12),
+    paddingEnd: ms(12),
     borderRadius: 8,
   },
   pwdInput: {
@@ -177,23 +177,23 @@ const styles = StyleSheet.create({
     height: authFieldHeight,
     color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     includeFontPadding: false,
     borderRadius: 8,
     flex: 1,
-    paddingStart: _ms(12),
+    paddingStart: ms(12),
   },
   errorString: {
-    marginStart: _ms(8),
+    marginStart: ms(8),
     color: COLORS.red,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(10),
+    fontSize: ms(10),
     includeFontPadding: false,
   },
 
   pwdSuggestionString: {
     color: COLORS.textDisabled,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     fontFamily: _fonts.workSansMedium,
     marginTop: 4,
     marginLeft: 4,

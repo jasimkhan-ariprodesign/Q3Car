@@ -1,7 +1,7 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {COLORS, _ms, _mvs, COMMON_STYLES, SCREENS} from '../../../misc';
+import {COLORS, ms, mvs, COMMON_STYLES, SCREENS} from '../../../misc';
 import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../components';
 import {SecondaryLoader} from '../../../common';
 import {_fonts, _icons} from '../../../assets';
@@ -74,50 +74,50 @@ const SearchResultScreen = () => {
 
 export default SearchResultScreen;
 
-const gapAndMargin = _mvs(38);
+const gapAndMargin = mvs(38);
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
-    paddingTop: _mvs(28),
-    paddingHorizontal: _ms(18),
+    paddingTop: mvs(28),
+    paddingHorizontal: ms(18),
     rowGap: gapAndMargin,
   },
 
   nameString: {
     color: COLORS.black,
     fontFamily: _fonts.workSansRegular,
-    fontSize: _ms(16),
+    fontSize: ms(16),
     includeFontPadding: false,
     textTransform: 'capitalize',
   },
   dateString: {
     color: COLORS.black,
     fontFamily: _fonts.workSansMedium,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     includeFontPadding: false,
   },
   nameDateDistCont: {
-    gap: _mvs(4),
+    gap: mvs(4),
   },
 
   fromToDestImage: {
-    width: _mvs(18),
-    height: _mvs(46),
-    marginRight: _ms(8),
+    width: mvs(18),
+    height: mvs(46),
+    marginRight: ms(8),
   },
   addressesString: {
     color: COLORS.textPrimary,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansRegular,
   },
   labelString: {
     color: COLORS.textSecondary,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     fontFamily: _fonts.workSansRegular,
   },
   vehicleDetailString: {
     color: COLORS.black,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.workSansMedium,
   },
 });

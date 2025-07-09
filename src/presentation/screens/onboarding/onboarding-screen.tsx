@@ -2,7 +2,7 @@ import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {TextButton, IconButton, SafeAreaWrapper} from '../../components';
-import {COLORS, WINDOW_HEIGHT, _ms, SCREENS, STRINGS, COMMON_STYLES, WINDOW_WIDTH} from '../../../misc';
+import {COLORS, WINDOW_HEIGHT, ms, SCREENS, STRINGS, COMMON_STYLES, WINDOW_WIDTH} from '../../../misc';
 import {_onboardingData} from '../../../constant';
 import {_fonts, _icons} from '../../../assets';
 import NextButtonWithProgressBar from './components/next-button-with-progress-bar';
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: WINDOW_WIDTH,
     top: 0,
-    paddingHorizontal: _ms(24),
+    paddingHorizontal: ms(24),
     justifyContent: 'space-between',
   },
   imageCont: {
@@ -114,16 +114,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    gap: _ms(12),
+    gap: ms(12),
   },
   title: {
     color: COLORS.black,
-    fontSize: _ms(18),
+    fontSize: ms(18),
     fontFamily: _fonts.workSansMedium,
   },
   descTxt: {
     color: COLORS.textPrimary,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     fontFamily: _fonts.workSansMedium,
     textAlign: 'center',
   },

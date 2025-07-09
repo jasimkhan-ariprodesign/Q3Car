@@ -7,7 +7,7 @@ import {
   TextStyle,
   ActivityIndicator,
 } from 'react-native';
-import {COLORS, _ms} from '../../../../misc';
+import {COLORS, ms} from '../../../../misc';
 import {_fonts} from '../../../../assets';
 import { _logger } from '../../../../utils';
 
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.black,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.poppinsRegular,
     includeFontPadding: false,
   },

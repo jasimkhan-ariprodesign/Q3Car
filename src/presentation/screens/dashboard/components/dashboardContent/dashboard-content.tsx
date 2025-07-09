@@ -1,7 +1,7 @@
 import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {_fonts, _icons} from '../../../../../assets';
-import {COLORS, _ms, _mvs, COMMON_STYLES} from '../../../../../misc';
+import {COLORS, ms, mvs, COMMON_STYLES} from '../../../../../misc';
 import RecentSearchSuggestion from './recent-search-suggestion';
 
 interface DashboardContentProp {
@@ -104,23 +104,23 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     backgroundColor: COLORS.white,
-    marginTop: -_mvs(24),
+    marginTop: -mvs(24),
     borderTopRightRadius: 24,
     borderTopLeftRadius: 24,
-    paddingTop: _mvs(8),
+    paddingTop: mvs(8),
   },
   child: {
-    paddingHorizontal: _ms(20),
-    paddingVertical: _mvs(16),
-    rowGap: _mvs(8),
+    paddingHorizontal: ms(20),
+    paddingVertical: mvs(16),
+    rowGap: mvs(8),
   },
   pickupAndDestCont: {
-    rowGap: _mvs(12),
+    rowGap: mvs(12),
     justifyContent: 'center',
   },
   titleString: {
     color: COLORS.black,
-    fontSize: _ms(14),
+    fontSize: ms(14),
     fontFamily: _fonts.poppinsRegular,
   },
 
@@ -129,37 +129,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1.2,
     borderColor: COLORS.EDEDED,
-    padding: _ms(8),
+    padding: ms(8),
     borderRadius: 20,
-    columnGap: _ms(12),
+    columnGap: ms(12),
   },
   pickupPointBTNString: {
     color: COLORS.textPrimary,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     fontFamily: _fonts.poppinsRegular,
     includeFontPadding: false,
   },
   verticalLine: {
-    width: _ms(2),
-    height: _mvs(28),
+    width: ms(2),
+    height: mvs(28),
     position: 'absolute',
-    left: _ms(8 + 11),
+    left: ms(8 + 11),
   },
 
   addressTypeCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: _ms(12),
+    columnGap: ms(12),
   },
   addressBTN: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: _ms(8),
+    gap: ms(8),
     borderWidth: 1.5,
     borderColor: COLORS.EDEDED,
-    paddingHorizontal: _ms(16),
-    paddingVertical: _ms(6),
+    paddingHorizontal: ms(16),
+    paddingVertical: ms(6),
     borderRadius: 50,
   },
   selectedAddBTN: {
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   addressNameString: {
     color: COLORS.textSecondary,
     fontFamily: _fonts.poppinsRegular,
-    fontSize: _ms(12),
+    fontSize: ms(12),
     includeFontPadding: false,
   },
   selectedAddressNameString: {
@@ -182,8 +182,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1.5,
     borderColor: COLORS.EDEDED,
-    width: _ms(34),
-    height: _ms(34),
+    width: ms(34),
+    height: ms(34),
     borderRadius: 50,
   },
 });
