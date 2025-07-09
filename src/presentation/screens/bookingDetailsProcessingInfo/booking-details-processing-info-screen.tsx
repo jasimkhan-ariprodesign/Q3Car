@@ -1,14 +1,87 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
+import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {COLORS, COMMON_STYLES, _isIOS, _ms, _useCustomSafeAreaInsets} from '../../../misc';
+import {IconButton, SafeAreaWrapper} from '../../components';
+import ContentCont from './components/contentCont/content-cont';
+import RenderMap from './components/renderMap/render-map';
+import {EdgeInsets} from 'react-native-safe-area-context';
+import {_icons} from '../../../assets';
+import {RootStackParamList} from '../../../navigation/types/types';
 
 const BookingDetailsProcessingInfoScreen = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const insets = _useCustomSafeAreaInsets();
+  const styles = getStyles(insets);
+
+  const _handleBackClick = () => {
+    navigation.goBack();
+  };
+
+  const _renderOpenDrawerBTN = () => {
+    return (
+      <View style={styles.drawerBTNCont}>
+        <IconButton
+          icon={_icons.angleLeftDark}
+          iconStyle={COMMON_STYLES.size18}
+          onPress={_handleBackClick}
+          disabled={false}
+        />
+      </View>
+    );
+  };
+
+  const _renderMap = () => {
+    return (
+      <View style={styles.mapContainer}>
+        {/* button to go back */}
+        {_renderOpenDrawerBTN()}
+
+        {/* map  */}
+        <RenderMap />
+      </View>
+    );
+  };
+
+  const _renderContentCont = () => {
+    return (
+      //  child for all content in bottom
+      <>
+        <ContentCont />
+      </>
+    );
+  };
+
+  // main view
   return (
-    <View>
-      <Text>BookingDetailsProcessingInfoScreen</Text>
-    </View>
-  )
-}
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+      <SafeAreaWrapper edges={_isIOS() ? ['left', 'right'] : undefined}>
+        {/* map here */}
+        {_renderMap()}
 
-export default BookingDetailsProcessingInfoScreen
+        {/* bottom content here */}
+        {_renderContentCont()}
+      </SafeAreaWrapper>
+    </KeyboardAvoidingView>
+  );
+};
 
-const styles = StyleSheet.create({})
+export default BookingDetailsProcessingInfoScreen;
+
+const getStyles = (insets: EdgeInsets) =>
+  StyleSheet.create({
+    mapContainer: {
+      flex: 1,
+      backgroundColor: COLORS.pink,
+    },
+    // mapContainer: {
+    //   height: WINDOW_HEIGHT * 0.58,
+    //   backgroundColor: COLORS.pink,
+    // },
+    drawerBTNCont: {
+      position: 'absolute',
+      top: insets?.top || 0,
+      left: _ms(24),
+    },
+  });

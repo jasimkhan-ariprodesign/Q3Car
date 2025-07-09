@@ -16,6 +16,8 @@ const SearchResultScreen = () => {
       screen: SCREENS.bookingDetailsProcessingInfoScreen,
     });
   };
+
+  //   main view
   return (
     <SafeAreaWrapper>
       <PrimaryHeader containerStyle={COMMON_STYLES.headerStyle} />
