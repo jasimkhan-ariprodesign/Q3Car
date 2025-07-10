@@ -1,8 +1,8 @@
 import {GestureResponderEvent, Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
-import {_icons} from '../../../../assets';
-import {COLORS, COMMON_STYLES, vs} from '../../../../misc';
+import {ICONS} from '../../../../assets';
+import {COLORS, COMMON_STYLES, VS} from '../../../../misc';
 import { _logger } from '../../../../utils';
 
 interface Prop {
@@ -33,7 +33,7 @@ const NextButtonWithProgressBar = ({onPress, index, dataLength}: Prop) => {
           // _logger.log('fill --> ', fill);
           return (
             <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={styles.buttonStyle}>
-              <Image source={_icons.arrowRight} style={COMMON_STYLES.size20} />
+              <Image source={ICONS.arrowRight} style={COMMON_STYLES.size20} />
             </TouchableOpacity>
           );
         }}
@@ -47,7 +47,7 @@ export default NextButtonWithProgressBar;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    paddingVertical: vs(30),
+    paddingVertical: VS(30),
   },
   buttonStyle: {
     backgroundColor: COLORS.primary,

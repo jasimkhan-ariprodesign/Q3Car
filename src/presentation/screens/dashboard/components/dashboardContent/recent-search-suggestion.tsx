@@ -1,7 +1,7 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {_fonts, _icons} from '../../../../../assets';
-import {COLORS, ms, mvs, COMMON_STYLES} from '../../../../../misc';
+import {FONTS, ICONS} from '../../../../../assets';
+import {COLORS, MS, MVS, COMMON_STYLES} from '../../../../../misc';
 
 interface RecentSearchSuggestionProp {
   title: string;
@@ -12,7 +12,7 @@ const RecentSearchSuggestion: React.FC<RecentSearchSuggestionProp> = ({title, de
   return (
     <View>
       <TouchableOpacity style={styles.BTNStyle}>
-        <Image source={_icons.clockGrey} style={COMMON_STYLES.size22} resizeMode="contain" />
+        <Image source={ICONS.clockGrey} style={COMMON_STYLES.size22} resizeMode="contain" />
         <View style={styles.stringCont}>
           <Text style={styles.title}>{title || ''}</Text>
           <Text style={styles.descString}>{desc || ''}</Text>
@@ -30,25 +30,25 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 0.2,
     borderColor: COLORS.EDEDED,
-    height: mvs(54),
+    height: MVS(54),
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: ms(16),
-    columnGap: ms(16),
+    paddingHorizontal: MS(16),
+    columnGap: MS(16),
   },
   title: {
     color: COLORS.black,
-    fontFamily: _fonts.poppinsRegular,
-    fontSize: ms(14),
+    fontFamily: FONTS.poppinsRegular,
+    fontSize: MS(14),
     includeFontPadding: false,
   },
   descString: {
     color: COLORS.textSecondary,
-    fontFamily: _fonts.poppinsRegular,
-    fontSize: ms(12),
+    fontFamily: FONTS.poppinsRegular,
+    fontSize: MS(12),
     includeFontPadding: false,
   },
   stringCont: {
-    rowGap: mvs(1),
+    rowGap: MVS(1),
   },
 });

@@ -24,9 +24,9 @@ export {
   _height as WINDOW_HEIGHT,
   _width as WINDOW_WIDTH,
 
-  _s as s,
-  _ms as ms,
-  _vs as vs,
-  _mvs as mvs,
+  _s as S,
+  _ms as MS,
+  _vs as VS,
+  _mvs as MVS,
 
 };

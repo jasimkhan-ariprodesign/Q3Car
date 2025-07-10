@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import React from 'react';
 import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../components';
-import {COLORS, isIOS, ms, mvs, SCREENS, STRINGS, COMMON_STYLES} from '../../../misc';
-import {_fonts, _icons} from '../../../assets';
+import {COLORS, isIOS, MS, MVS, SCREENS, STRINGS, COMMON_STYLES} from '../../../misc';
+import {FONTS, ICONS} from '../../../assets';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../navigation/types/types';
@@ -28,7 +28,7 @@ const UploadPictureOfVehicle = () => {
   const _renderCarPhotoContView = () => {
     return (
       <View style={styles.carPhotoCont}>
-        <Image source={_icons.galleryGrey} style={COMMON_STYLES.size24} resizeMode="contain" />
+        <Image source={ICONS.galleryGrey} style={COMMON_STYLES.size24} resizeMode="contain" />
         <Text style={styles.selectFileString}>{STRINGS.selectFile}</Text>
       </View>
     );
@@ -47,7 +47,7 @@ const UploadPictureOfVehicle = () => {
   const _renderOpenCameraBTN = () => {
     return (
       <TouchableOpacity activeOpacity={0.7} style={styles.openCameraBTN}>
-        <Image source={_icons.cameraWhite} style={COMMON_STYLES.size20} resizeMode="contain" />
+        <Image source={ICONS.cameraWhite} style={COMMON_STYLES.size20} resizeMode="contain" />
         <Text style={styles.openCameraString}>{STRINGS.openCameraAndTakePhoto}</Text>
       </TouchableOpacity>
     );
@@ -106,21 +106,21 @@ const UploadPictureOfVehicle = () => {
 
 export default UploadPictureOfVehicle;
 
-const gapAndMargin = mvs(44);
+const gapAndMargin = MVS(44);
 const bdrWidth = 1.2;
 const bdrColor = COLORS.EDEDED;
-const authFieldHeight = ms(36);
+const authFieldHeight = MS(36);
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
     rowGap: gapAndMargin,
-    paddingHorizontal: ms(18),
-    paddingTop: mvs(12),
+    paddingHorizontal: MS(18),
+    paddingTop: MVS(12),
   },
   title: {
     color: COLORS.textPrimary,
-    fontFamily: _fonts.workSansMedium,
-    fontSize: ms(16),
+    fontFamily: FONTS.workSansMedium,
+    fontSize: MS(16),
     includeFontPadding: false,
     textTransform: 'capitalize',
   },
@@ -130,20 +130,20 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    rowGap: mvs(8),
-    minHeight: mvs(160),
+    rowGap: MVS(8),
+    minHeight: MVS(160),
   },
   selectFileString: {
     color: COLORS.textPrimary,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(12),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(12),
     includeFontPadding: false,
   },
   orCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: ms(12),
-    marginHorizontal: ms(2),
+    columnGap: MS(12),
+    marginHorizontal: MS(2),
   },
   horiLine: {
     height: 1.2,
@@ -155,22 +155,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: mvs(34),
+    minHeight: MVS(34),
     borderRadius: 16,
-    columnGap: ms(8),
+    columnGap: MS(8),
   },
   openCameraString: {
     color: COLORS.white,
-    fontFamily: _fonts.workSansBold,
-    fontSize: ms(14),
+    fontFamily: FONTS.workSansBold,
+    fontSize: MS(14),
     includeFontPadding: false,
   },
   inputCont: {
-    rowGap: mvs(4),
+    rowGap: MVS(4),
   },
   labelString: {
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(12),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(12),
     color: COLORS.textPrimary,
     includeFontPadding: false,
   },
@@ -180,11 +180,11 @@ const styles = StyleSheet.create({
     borderColor: bdrColor,
     borderRadius: 4,
     height: authFieldHeight,
-    paddingLeft: ms(12),
+    paddingLeft: MS(12),
 
     color: COLORS.textPrimary,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(14),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(14),
     includeFontPadding: false,
     textAlignVertical: 'center',
   },

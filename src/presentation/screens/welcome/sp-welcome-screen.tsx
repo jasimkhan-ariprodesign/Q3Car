@@ -1,7 +1,7 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {COLORS, ms, mvs, SCREENS, COMMON_STYLES} from '../../../misc';
-import {_fonts, _images} from '../../../assets';
+import {COLORS, MS, MVS, SCREENS, COMMON_STYLES} from '../../../misc';
+import {FONTS, IMAGES} from '../../../assets';
 import {CustomBottomShitModal, PrimaryButton, SafeAreaWrapper} from '../../components';
 import LocationPermissionPopup from './components/location-permission-popup';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -27,7 +27,7 @@ const SPWelcomeScreen = () => {
     <SafeAreaWrapper style={COMMON_STYLES.flex}>
       <View style={COMMON_STYLES.flex}>
         <Image
-          source={_images.spWelcomeScreen}
+          source={IMAGES.spWelcomeScreen}
           style={styles.img}
           resizeMode="cover"
           accessibilityLabel="Tow Truck & Car"
@@ -70,24 +70,24 @@ const styles = StyleSheet.create({
   img: {
     width: '100%',
     height: '100%',
-    borderBottomLeftRadius: ms(28),
-    borderBottomRightRadius: ms(28),
+    borderBottomLeftRadius: MS(28),
+    borderBottomRightRadius: MS(28),
   },
   welcomeString: {
     color: COLORS.primary,
-    fontSize: ms(20),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(20),
+    fontFamily: FONTS.workSansMedium,
     textAlign: 'center',
   },
   welDescString: {
     color: COLORS.black,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansRegular,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansRegular,
     textAlign: 'center',
   },
   btnCont: {
-    paddingHorizontal: ms(22),
-    rowGap: mvs(16),
+    paddingHorizontal: MS(22),
+    rowGap: MVS(16),
   },
   logInBtn: {
     backgroundColor: COLORS.transparent,

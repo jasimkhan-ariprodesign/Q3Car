@@ -7,8 +7,8 @@ import {
   TextStyle,
   ActivityIndicator,
 } from 'react-native';
-import {COLORS, ms} from '../../../../misc';
-import {_fonts} from '../../../../assets';
+import {COLORS, MS} from '../../../../misc';
+import {FONTS} from '../../../../assets';
 import { _logger } from '../../../../utils';
 
 interface ReusableButtonProps {
@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: COLORS.black,
-    fontSize: ms(14),
-    fontFamily: _fonts.poppinsRegular,
+    fontSize: MS(14),
+    fontFamily: FONTS.poppinsRegular,
     includeFontPadding: false,
   },
 });

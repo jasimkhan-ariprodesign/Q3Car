@@ -9,10 +9,10 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {COMMON_STYLES, isIOS, COLORS, mvs, ms, SCREENS} from '../../../misc';
+import {COMMON_STYLES, isIOS, COLORS, MVS, MS, SCREENS} from '../../../misc';
 import {SafeAreaWrapper, PrimaryHeader, IconButton, TextButton} from '../../components';
 import {_inputFieldHeight} from '../../../misc/common-styles';
-import {_fonts, _icons} from '../../../assets';
+import {FONTS, ICONS} from '../../../assets';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../navigation/types/types';
@@ -31,7 +31,7 @@ const SearchScreen = () => {
     return (
       <View style={styles.searchBarParentView}>
         <IconButton
-          icon={_icons.locationBlack}
+          icon={ICONS.locationBlack}
           iconStyle={COMMON_STYLES.size18}
           tintColor={COLORS.textPrimary}
         />
@@ -41,7 +41,7 @@ const SearchScreen = () => {
           style={styles.inputStyle}
         />
         <IconButton
-          icon={_icons.closeBlack}
+          icon={ICONS.closeBlack}
           iconStyle={COMMON_STYLES.size10}
           resizeMode="contain"
           tintColor={COLORS.textPrimary}
@@ -63,7 +63,7 @@ const SearchScreen = () => {
     return (
       <TouchableOpacity onPress={_handleMoveToNextScreen} style={styles.itemBTNStyle}>
         <Image
-          source={_icons.clockGrey}
+          source={ICONS.clockGrey}
           style={[COMMON_STYLES.size16, styles.itemIcon]}
           resizeMode="contain"
           tintColor={COLORS.textPrimary}
@@ -113,22 +113,22 @@ const SearchScreen = () => {
 };
 
 export default SearchScreen;
-const leftSpace = ms(16);
+const leftSpace = MS(16);
 const bWidth = 1.2;
 const bColor = COLORS.textSecondary;
 const bRadius = 8;
 
 const styles = StyleSheet.create({
   container: {
-    rowGap: mvs(12),
+    rowGap: MVS(12),
   },
   headerCont: {
     flexDirection: 'row',
     paddingLeft: leftSpace,
   },
   headerStyle: {
-    paddingTop: isIOS() ? 0 : mvs(12),
-    paddingBottom: isIOS() ? mvs(16) : mvs(16),
+    paddingTop: isIOS() ? 0 : MVS(12),
+    paddingBottom: isIOS() ? MVS(16) : MVS(16),
   },
 
   searchBarParentView: {
@@ -139,17 +139,17 @@ const styles = StyleSheet.create({
     borderColor: bColor,
     borderRadius: bRadius,
     height: _inputFieldHeight,
-    paddingHorizontal: ms(8),
-    columnGap: ms(8),
+    paddingHorizontal: MS(8),
+    columnGap: MS(8),
   },
   inputStyle: {
     padding: 0,
     textAlignVertical: 'center',
     height: _inputFieldHeight,
     flex: 1,
-    fontSize: ms(12),
+    fontSize: MS(12),
     color: COLORS.textPrimary,
-    fontFamily: _fonts.poppinsMedium,
+    fontFamily: FONTS.poppinsMedium,
     includeFontPadding: false,
   },
   titleCont: {
@@ -160,8 +160,8 @@ const styles = StyleSheet.create({
   },
   titleString: {
     color: COLORS.textPrimary,
-    fontSize: ms(14),
-    fontFamily: _fonts.poppinsMedium,
+    fontSize: MS(14),
+    fontFamily: FONTS.poppinsMedium,
     includeFontPadding: false,
   },
   clearAllString: {
@@ -170,25 +170,25 @@ const styles = StyleSheet.create({
 
   //   flatlist
   contentContainerStyle: {
-    rowGap: mvs(16),
+    rowGap: MVS(16),
   },
   itemBTNStyle: {
     marginHorizontal: leftSpace,
     flexDirection: 'row',
-    columnGap: ms(12),
-    paddingVertical: ms(2),
+    columnGap: MS(12),
+    paddingVertical: MS(2),
   },
-  itemIcon: {marginTop: mvs(2)},
+  itemIcon: {marginTop: MVS(2)},
   itemTitleString: {
-    fontSize: ms(14),
+    fontSize: MS(14),
     color: COLORS.textPrimary,
-    fontFamily: _fonts.poppinsMedium,
+    fontFamily: FONTS.poppinsMedium,
     includeFontPadding: false,
   },
   itemDescString: {
-    fontSize: ms(10),
+    fontSize: MS(10),
     color: COLORS.textPrimary,
-    fontFamily: _fonts.poppinsRegular,
+    fontFamily: FONTS.poppinsRegular,
     includeFontPadding: false,
   },
 });

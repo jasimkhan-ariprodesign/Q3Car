@@ -8,12 +8,12 @@ import {
   COLORS,
   WINDOW_HEIGHT,
   isIOS,
-  ms,
+  MS,
   SCREENS,
   COMMON_STYLES,
   _useCustomSafeAreaInsets,
 } from '../../../misc';
-import {_icons} from '../../../assets';
+import {ICONS} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
 import RenderMap from './components/renderMap/render-map';
 import DashboardContent from './components/dashboardContent/dashboard-content';
@@ -38,7 +38,7 @@ const DashboardScreen = () => {
     return (
       <View style={styles.drawerBTNCont}>
         <IconButton
-          icon={_icons.drawer}
+          icon={ICONS.drawer}
           iconStyle={COMMON_STYLES.size36}
           onPress={_handleDrawerToggle}
           disabled={false}
@@ -96,6 +96,6 @@ const getStyles = (insets: EdgeInsets) =>
     drawerBTNCont: {
       position: 'absolute',
       top: insets?.top || 0,
-      left: ms(24),
+      left: MS(24),
     },
   });

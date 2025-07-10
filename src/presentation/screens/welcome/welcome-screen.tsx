@@ -1,7 +1,7 @@
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {COLORS, ms, mvs, SCREENS, COMMON_STYLES, WINDOW_WIDTH} from '../../../misc';
-import {_fonts, _images} from '../../../assets';
+import {COLORS, MS, MVS, SCREENS, COMMON_STYLES, WINDOW_WIDTH} from '../../../misc';
+import {FONTS, IMAGES} from '../../../assets';
 import {CustomBottomShitModal, PrimaryButton, SafeAreaWrapper} from '../../components';
 import LocationPermissionPopup from './components/location-permission-popup';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
@@ -25,7 +25,7 @@ const WelcomeScreen = () => {
 
   return (
     <SafeAreaWrapper style={COMMON_STYLES.flex}>
-      <ImageBackground source={_images.welcomeScreen} style={styles.bgImg}>
+      <ImageBackground source={IMAGES.welcomeScreen} style={styles.bgImg}>
         <View style={styles.btnCont}>
           <PrimaryButton title="Create an account" onPress={_handleCreateAccountClick} />
           <PrimaryButton
@@ -57,25 +57,25 @@ const styles = StyleSheet.create({
   bgImg: {
     flex: 1,
     width: WINDOW_WIDTH,
-    rowGap: mvs(28),
+    rowGap: MVS(28),
     flexDirection: 'column-reverse',
-    paddingBottom: mvs(40),
+    paddingBottom: MVS(40),
   },
   welcomeString: {
     color: COLORS.primary,
-    fontSize: ms(20),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(20),
+    fontFamily: FONTS.workSansMedium,
     textAlign: 'center',
   },
   welDescString: {
     color: COLORS.black,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansRegular,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansRegular,
     textAlign: 'center',
   },
   btnCont: {
-    paddingHorizontal: ms(22),
-    rowGap: mvs(16),
+    paddingHorizontal: MS(22),
+    rowGap: MVS(16),
   },
   logInBtn: {
     backgroundColor: COLORS.transparent,

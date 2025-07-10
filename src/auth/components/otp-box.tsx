@@ -1,8 +1,8 @@
 import {StyleSheet, Text, View, ViewStyle} from 'react-native';
 import React from 'react';
 import {OtpInput} from 'react-native-otp-entry';
-import {COLORS, ms, mvs} from '../../misc';
-import {_fonts} from '../../assets';
+import {COLORS, MS, MVS} from '../../misc';
+import {FONTS} from '../../assets';
 import {TextButton} from '../../presentation/components';
 import { _logger } from '../../utils';
 
@@ -15,7 +15,7 @@ interface OTPBoxProp {
 }
 
 const OTPBox: React.FC<OTPBoxProp> = ({
-  otpInpHeight = ms(36),
+  otpInpHeight = MS(36),
   resendVisible = false,
   onPress,
   containerStyle,
@@ -57,15 +57,15 @@ const Styles = (otpInpHeight: number) => {
     container: {
       alignItems: 'center',
       justifyContent: 'center',
-      rowGap: mvs(12),
+      rowGap: MVS(12),
     },
     containerStyle: {
       justifyContent: 'center',
-      columnGap: ms(8),
+      columnGap: MS(8),
     },
     pinCodeContainerStyle: {
       height: otpInpHeight,
-      width: otpInpHeight + ms(4),
+      width: otpInpHeight + MS(4),
       borderRadius: 8,
       backgroundColor: COLORS.white,
       borderWidth: 1.5,
@@ -77,8 +77,8 @@ const Styles = (otpInpHeight: number) => {
     },
     pinCodeTextStyle: {
       color: COLORS.textPrimary,
-      fontSize: ms(14),
-      fontFamily: _fonts.workSansMedium,
+      fontSize: MS(14),
+      fontFamily: FONTS.workSansMedium,
       includeFontPadding: false,
     },
     focusStickStyle: {
@@ -91,8 +91,8 @@ const Styles = (otpInpHeight: number) => {
     // text style
     text: {
       color: COLORS.black,
-      fontSize: ms(12),
-      fontFamily: _fonts.workSansMedium,
+      fontSize: MS(12),
+      fontFamily: FONTS.workSansMedium,
     },
     resendButtonCont: {
       flexDirection: 'row',
@@ -106,8 +106,8 @@ const Styles = (otpInpHeight: number) => {
     },
     resendText: {
       color: COLORS.primary,
-      fontSize: ms(12),
-      fontFamily: _fonts.workSansMedium,
+      fontSize: MS(12),
+      fontFamily: FONTS.workSansMedium,
     },
   });
 };

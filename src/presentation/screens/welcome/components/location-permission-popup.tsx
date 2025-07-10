@@ -1,13 +1,13 @@
 import {Alert, Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {COLORS, ms, mvs, COMMON_STYLES} from '../../../../misc';
-import {_fonts, _images} from '../../../../assets';
+import {COLORS, MS, MVS, COMMON_STYLES} from '../../../../misc';
+import {FONTS, IMAGES} from '../../../../assets';
 import {PrimaryButton, TextButton} from '../../../components';
 
 const LocationPermissionPopup = ({onPress}: {onPress: any}) => {
   return (
     <View style={styles.container}>
-      <Image source={_images.location} style={styles.imgStyle} />
+      <Image source={IMAGES.location} style={styles.imgStyle} />
       <View>
         <Text style={styles.title}>Enable your location</Text>
         <Text style={styles.descString}>
@@ -35,12 +35,12 @@ export default LocationPermissionPopup;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.white,
-    paddingVertical: mvs(20),
-    paddingHorizontal: ms(12),
+    paddingVertical: MVS(20),
+    paddingHorizontal: MS(12),
     borderRadius: 10,
     minWidth: '80%',
-    rowGap: mvs(22),
-    marginTop: -mvs(50),
+    rowGap: MVS(22),
+    marginTop: -MVS(50),
   },
   imgStyle: {
     ...COMMON_STYLES.size90,
@@ -49,15 +49,15 @@ const styles = StyleSheet.create({
   },
   title: {
     color: COLORS.black,
-    fontSize: ms(16),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(16),
+    fontFamily: FONTS.workSansMedium,
     textAlign: 'center',
-    marginBottom: mvs(4),
+    marginBottom: MVS(4),
   },
   descString: {
     color: COLORS.textPrimary,
-    fontSize: ms(12),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(12),
+    fontFamily: FONTS.workSansMedium,
     textAlign: 'center',
   },
   skipBtn: {

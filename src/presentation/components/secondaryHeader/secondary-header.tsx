@@ -8,8 +8,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import React from 'react';
-import {_icons} from '../../../assets';
-import {COLORS, ms, mvs} from '../../../misc';
+import {ICONS} from '../../../assets';
+import {COLORS, MS, MVS} from '../../../misc';
 import {useNavigation} from '@react-navigation/native';
 
 interface SecondaryHeaderProps {
@@ -47,7 +47,7 @@ const SecondaryHeader: React.FC<SecondaryHeaderProps> = ({
         style={[styles.buttonCont, buttonContStyle]}
         accessibilityLabel="Go back"
         accessibilityRole="button">
-        <Image source={_icons.closeBlack} style={[styles.icon, iconStyle]} resizeMode="contain" />
+        <Image source={ICONS.closeBlack} style={[styles.icon, iconStyle]} resizeMode="contain" />
       </TouchableOpacity>
     </View>
   );
@@ -57,18 +57,18 @@ export default SecondaryHeader;
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: mvs(12),
+    paddingVertical: MVS(12),
     alignSelf: 'flex-start',
   },
   buttonCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: ms(8),
+    columnGap: MS(8),
     alignSelf: 'flex-start',
   },
   icon: {
-    width: ms(18),
-    height: ms(18),
+    width: MS(18),
+    height: MS(18),
     tintColor: COLORS.textPrimary,
   },
 });

@@ -8,9 +8,9 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {COLORS, ms, mvs, SCREENS, COMMON_STYLES} from '../../../misc';
+import {COLORS, MS, MVS, SCREENS, COMMON_STYLES} from '../../../misc';
 import {IconButton, SafeAreaWrapper} from '../../../presentation/components';
-import {_fonts, _icons} from '../../../assets';
+import {FONTS, ICONS} from '../../../assets';
 import {_drawerMenuList} from '../../../constant/drawer-menu-list';
 import {_logger} from '../../../utils';
 import {useNavigation} from '@react-navigation/native';
@@ -49,7 +49,7 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
       <TouchableOpacity onPress={_handleProfileClick} style={styles.profileBTN}>
         <Text style={styles.profileNameString}>Shane Mendoza</Text>
         <IconButton
-          icon={_icons.angleLeftDark}
+          icon={ICONS.angleLeftDark}
           iconStyle={styles.rightArrow}
           tintColor={COLORS.white}
         />
@@ -109,37 +109,37 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
 
 export default CustomDrawerContent;
 
-const leftSpace = ms(24);
+const leftSpace = MS(24);
 const styles = StyleSheet.create({
   profileCont: {
     backgroundColor: COLORS.primary,
     flex: 0,
     padding: leftSpace,
-    rowGap: mvs(6),
+    rowGap: MVS(6),
   },
   profileView: {
     backgroundColor: COLORS.transparentBlack2,
-    width: ms(70),
-    height: ms(70),
-    borderRadius: ms(70),
+    width: MS(70),
+    height: MS(70),
+    borderRadius: MS(70),
     borderWidth: 2,
     borderColor: COLORS.white,
   },
   profile: {
-    width: ms(70),
-    height: ms(70),
-    borderRadius: ms(70),
+    width: MS(70),
+    height: MS(70),
+    borderRadius: MS(70),
   },
   profileBTN: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: mvs(12),
+    marginTop: MVS(12),
   },
   profileNameString: {
     color: COLORS.white,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansBold,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansBold,
   },
   rightArrow: {
     ...COMMON_STYLES.size12,
@@ -147,8 +147,8 @@ const styles = StyleSheet.create({
   },
   phoneString: {
     color: COLORS.FF9391,
-    fontSize: ms(12),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(12),
+    fontFamily: FONTS.workSansMedium,
     includeFontPadding: false,
   },
 
@@ -163,16 +163,16 @@ const styles = StyleSheet.create({
   drawerBTNView: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: ms(12),
-    paddingVertical: mvs(4),
+    columnGap: MS(12),
+    paddingVertical: MVS(4),
     paddingHorizontal: leftSpace / 2,
   },
   titleString: {
     color: COLORS.black,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansSemiBold,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansSemiBold,
   },
   contentContainerStyle: {
-    rowGap: mvs(12),
+    rowGap: MVS(12),
   },
 });

@@ -1,8 +1,8 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {SafeAreaWrapper} from '../../presentation/components';
-import {_fonts, _icons} from '../../assets';
-import {COLORS, ms, mvs, COMMON_STYLES} from '../../misc';
+import {FONTS, ICONS} from '../../assets';
+import {COLORS, MS, MVS, COMMON_STYLES} from '../../misc';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {AppStackParamList} from '../../navigation/types/types';
 import {_logger} from '../../utils';
@@ -15,7 +15,7 @@ const SuccessScreen = () => {
   return (
     <SafeAreaWrapper style={styles.container}>
       <View style={styles.contentCont}>
-        <Image source={_icons.succeccCheck} style={COMMON_STYLES.size82} />
+        <Image source={ICONS.succeccCheck} style={COMMON_STYLES.size82} />
         <Text style={styles.Congratulations}>Congratulations!</Text>
         <Text style={styles.messageString}>{successMsg || ''}</Text>
       </View>
@@ -31,19 +31,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   contentCont: {
-    rowGap: mvs(4),
+    rowGap: MVS(4),
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -mvs(28),
+    marginTop: -MVS(28),
   },
   Congratulations: {
     color: COLORS.primary,
-    fontSize: ms(20),
-    fontFamily: _fonts.workSansRegular,
+    fontSize: MS(20),
+    fontFamily: FONTS.workSansRegular,
   },
   messageString: {
     color: COLORS.textSecondary,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansRegular,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansRegular,
   },
 });

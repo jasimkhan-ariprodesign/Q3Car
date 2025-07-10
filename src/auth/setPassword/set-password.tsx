@@ -10,20 +10,24 @@ import {
 import React, {useState} from 'react';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {COMMON_STYLES, isIOS, COLORS, ms, mvs} from '../../misc';
+import {COMMON_STYLES, isIOS, COLORS, MS, MVS, SCREENS} from '../../misc';
 import {
   SafeAreaWrapper,
   PrimaryHeader,
   IconButton,
   PrimaryButton,
 } from '../../presentation/components';
-import {_fonts, _icons} from '../../assets';
+import {FONTS, ICONS} from '../../assets';
 import {_setPasswordSchema} from '../validations/schemas';
-import { SecondaryLoader } from '../../common';
+import {SecondaryLoader} from '../../common';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../navigation/types/types';
 
-const authFieldHeight = ms(36);
+const authFieldHeight = MS(36);
 
 const SetPassword = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [formData, setFormData] = useState({
     showPasswrod: true,
     showConfirmPassword: true,
@@ -38,10 +42,14 @@ const SetPassword = () => {
     }
   };
 
-  const handleRegister = (values: any) => {
+  const _handleRegister = (values?: any) => {
     // In a real application, you would send this to your backend
-    Alert.alert('Success', `Password set: ${values.password}`);
-    console.log('Form submitted:', values);
+    // Alert.alert('Success', `Password set: ${values.password}`);
+    // console.log('Form submitted:', values);
+
+    navigation.push(SCREENS.drawerNavigator, {
+      screen: SCREENS.dashboardScreen,
+    });
   };
 
   return (
@@ -63,7 +71,7 @@ const SetPassword = () => {
             <Formik
               initialValues={{password: '', confirmPassword: ''}}
               validationSchema={_setPasswordSchema}
-              onSubmit={handleRegister}>
+              onSubmit={_handleRegister}>
               {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
                 <View style={styles.formCont}>
                   <View>
@@ -78,7 +86,7 @@ const SetPassword = () => {
                         secureTextEntry={formData.showPasswrod}
                       />
                       <IconButton
-                        icon={formData.showPasswrod ? _icons.invisible : _icons.visible}
+                        icon={formData.showPasswrod ? ICONS.invisible : ICONS.visible}
                         iconStyle={COMMON_STYLES.size20}
                         onPress={() => _handleShowPassword('password')}
                         disabled={false}
@@ -102,7 +110,7 @@ const SetPassword = () => {
                         secureTextEntry={formData.showConfirmPassword}
                       />
                       <IconButton
-                        icon={formData.showConfirmPassword ? _icons.invisible : _icons.visible}
+                        icon={formData.showConfirmPassword ? ICONS.invisible : ICONS.visible}
                         iconStyle={COMMON_STYLES.size20}
                         onPress={() => _handleShowPassword('confirmPassword')}
                         disabled={false}
@@ -120,7 +128,11 @@ const SetPassword = () => {
                   </View>
 
                   {/* Register Button */}
-                  <PrimaryButton title="Register" onPress={handleSubmit} />
+                  <PrimaryButton
+                    title="Register"
+                    //  onPress={handleSubmit}
+                    onPress={_handleRegister}
+                  />
                 </View>
               )}
             </Formik>
@@ -136,65 +148,65 @@ const SetPassword = () => {
 
 export default SetPassword;
 
-const gapAndMargin = mvs(16);
+const gapAndMargin = MVS(16);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  headerStyle: {paddingHorizontal: ms(18)},
+  headerStyle: {paddingHorizontal: MS(18)},
   contentContainerStyle: {
     rowGap: gapAndMargin,
-    paddingHorizontal: ms(20),
+    paddingHorizontal: MS(20),
   },
   formCont: {
     rowGap: gapAndMargin,
   },
   title: {
     color: COLORS.black,
-    fontFamily: _fonts.workSansMedium,
-    fontSize: ms(20),
+    fontFamily: FONTS.workSansMedium,
+    fontSize: MS(20),
     textAlign: 'center',
   },
   labelString: {
     color: COLORS.textSecondary,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansRegular,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansRegular,
     textAlign: 'center',
   },
 
   pwdCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: ms(8),
+    columnGap: MS(8),
 
     height: authFieldHeight,
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
-    paddingEnd: ms(12),
+    paddingEnd: MS(12),
     borderRadius: 8,
   },
   pwdInput: {
     padding: 0,
     height: authFieldHeight,
     color: COLORS.black,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(12),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(12),
     includeFontPadding: false,
     borderRadius: 8,
     flex: 1,
-    paddingStart: ms(12),
+    paddingStart: MS(12),
   },
   errorString: {
-    marginStart: ms(8),
+    marginStart: MS(8),
     color: COLORS.red,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(10),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(10),
     includeFontPadding: false,
   },
 
   pwdSuggestionString: {
     color: COLORS.textDisabled,
-    fontSize: ms(12),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(12),
+    fontFamily: FONTS.workSansMedium,
     marginTop: 4,
     marginLeft: 4,
   },

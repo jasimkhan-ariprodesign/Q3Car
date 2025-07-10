@@ -8,8 +8,8 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {_fonts, _icons} from '../../assets';
-import {ms, COLORS, mvs, isIOS, COMMON_STYLES, SCREENS} from '../../misc';
+import {FONTS, ICONS} from '../../assets';
+import {MS, COLORS, MVS, isIOS, COMMON_STYLES, SCREENS} from '../../misc';
 import {
   SafeAreaWrapper,
   PrimaryHeader,
@@ -25,7 +25,7 @@ import {AuthStackParamList, RootStackParamList} from '../../navigation/types/typ
 import {StackNavigationProp} from '@react-navigation/stack';
 import {SecondaryLoader} from '../../common/loaders';
 
-const authFieldHeight = ms(36);
+const authFieldHeight = MS(36);
 // CREATE SP LOGIN SEPARATE BECAUSE DESIGN IS DIFFERENT IN FIGMA BUT KEPPING SAME FOR NOW..
 const SPLoginScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -126,7 +126,7 @@ const SPLoginScreen = () => {
                     secureTextEntry={formData.showPasswrod}
                   />
                   <IconButton
-                    icon={formData.showPasswrod ? _icons.invisible : _icons.visible}
+                    icon={formData.showPasswrod ? ICONS.invisible : ICONS.visible}
                     iconStyle={COMMON_STYLES.size20}
                     onPress={_handleShowPassword}
                     disabled={false}
@@ -189,64 +189,64 @@ const SPLoginScreen = () => {
 };
 
 export default SPLoginScreen;
-const gapAndMargin = mvs(20);
+const gapAndMargin = MVS(20);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  headerStyle: {paddingHorizontal: ms(18)},
+  headerStyle: {paddingHorizontal: MS(18)},
   contentContainerStyle: {
     rowGap: gapAndMargin,
-    paddingHorizontal: ms(18),
+    paddingHorizontal: MS(18),
   },
   title: {
     color: COLORS.black,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(20),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(20),
   },
   formCont: {
-    marginTop: mvs(20),
-    rowGap: mvs(12),
+    marginTop: MVS(20),
+    rowGap: MVS(12),
   },
   emailInput: {
     padding: 0,
-    paddingStart: ms(12),
+    paddingStart: MS(12),
     height: authFieldHeight,
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
     borderRadius: 8,
     color: COLORS.black,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(12),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(12),
     includeFontPadding: false,
   },
   errorString: {
-    marginStart: ms(8),
+    marginStart: MS(8),
     color: COLORS.red,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(10),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(10),
     includeFontPadding: false,
   },
   pwdCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: ms(8),
+    columnGap: MS(8),
 
     height: authFieldHeight,
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
-    paddingEnd: ms(12),
+    paddingEnd: MS(12),
     borderRadius: 8,
   },
   pwdInput: {
     padding: 0,
     height: authFieldHeight,
     color: COLORS.black,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(12),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(12),
     includeFontPadding: false,
     borderRadius: 8,
     flex: 1,
-    paddingStart: ms(12),
+    paddingStart: MS(12),
   },
   forgotPWDBTN: {
     alignItems: 'flex-end',
@@ -254,14 +254,14 @@ const styles = StyleSheet.create({
   },
   forgotPasswordString: {
     color: COLORS.red,
-    fontSize: ms(10.5),
+    fontSize: MS(10.5),
     includeFontPadding: false,
   },
   orCont: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    columnGap: ms(12),
+    columnGap: MS(12),
     // backgroundColor: _color.yellow,
   },
   horizontalView: {
@@ -271,13 +271,13 @@ const styles = StyleSheet.create({
   },
   orString: {
     color: COLORS.textSecondary,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansMedium,
   },
   signInString: {
     color: COLORS.primary,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansMedium,
     marginLeft: -6,
   },
 });

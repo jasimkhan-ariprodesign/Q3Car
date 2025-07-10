@@ -56,4 +56,5 @@ export const _color = {
   EDEDED: '#EDEDED',
   FB4A46: '#FB4A46',
   FF8C00: '#FF8C00',
+  _979797: '#979797',
 };

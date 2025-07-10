@@ -1,10 +1,10 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {COLORS, ms, mvs, COMMON_STYLES, SCREENS} from '../../../misc';
+import {COLORS, MS, MVS, COMMON_STYLES, SCREENS} from '../../../misc';
 import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../components';
 import {SecondaryLoader} from '../../../common';
-import {_fonts, _icons} from '../../../assets';
+import {FONTS, ICONS} from '../../../assets';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../navigation/types/types';
 
@@ -32,7 +32,7 @@ const SearchResultScreen = () => {
           </View>
 
           <View style={COMMON_STYLES.row}>
-            <Image source={_icons.fromToDest} style={styles.fromToDestImage} resizeMode="contain" />
+            <Image source={ICONS.fromToDest} style={styles.fromToDestImage} resizeMode="contain" />
 
             {/* address from to Destination */}
             <View style={COMMON_STYLES.spaceBetween}>
@@ -74,50 +74,50 @@ const SearchResultScreen = () => {
 
 export default SearchResultScreen;
 
-const gapAndMargin = mvs(38);
+const gapAndMargin = MVS(38);
 
 const styles = StyleSheet.create({
   contentContainerStyle: {
-    paddingTop: mvs(28),
-    paddingHorizontal: ms(18),
+    paddingTop: MVS(28),
+    paddingHorizontal: MS(18),
     rowGap: gapAndMargin,
   },
 
   nameString: {
     color: COLORS.black,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(16),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(16),
     includeFontPadding: false,
     textTransform: 'capitalize',
   },
   dateString: {
     color: COLORS.black,
-    fontFamily: _fonts.workSansMedium,
-    fontSize: ms(12),
+    fontFamily: FONTS.workSansMedium,
+    fontSize: MS(12),
     includeFontPadding: false,
   },
   nameDateDistCont: {
-    gap: mvs(4),
+    gap: MVS(4),
   },
 
   fromToDestImage: {
-    width: mvs(18),
-    height: mvs(46),
-    marginRight: ms(8),
+    width: MVS(18),
+    height: MVS(46),
+    marginRight: MS(8),
   },
   addressesString: {
     color: COLORS.textPrimary,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansRegular,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansRegular,
   },
   labelString: {
     color: COLORS.textSecondary,
-    fontSize: ms(12),
-    fontFamily: _fonts.workSansRegular,
+    fontSize: MS(12),
+    fontFamily: FONTS.workSansRegular,
   },
   vehicleDetailString: {
     color: COLORS.black,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansMedium,
   },
 });

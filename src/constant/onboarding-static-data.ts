@@ -1,4 +1,4 @@
-import {_images} from '../assets';
+import {IMAGES} from '../assets';
 
 export const _onboardingData = [
   {
@@ -6,7 +6,7 @@ export const _onboardingData = [
     title: 'Anywhere you are',
     description:
       'Sell houses easily with the help of Listenoryx and to make this line big I am writing more.',
-    image: _images.onboarding1,
+    image: IMAGES.onboarding1,
     buttonText: '',
   },
   {
@@ -14,7 +14,7 @@ export const _onboardingData = [
     title: 'At anytime',
     description:
       'Sell houses easily with the help of Listenoryx and to make this line big I am writing more.',
-    image: _images.onboarding2,
+    image: IMAGES.onboarding2,
     buttonText: '',
   },
   {
@@ -22,7 +22,7 @@ export const _onboardingData = [
     title: 'Book your car',
     description:
       'Sell houses easily with the help of Listenoryx and to make this line big I am writing more.',
-    image: _images.onboarding3,
+    image: IMAGES.onboarding3,
     buttonText: 'Go',
   },
 ];

@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {Formik} from 'formik';
-import {_icons, _fonts} from '../../assets';
-import {COLORS, COMMON_STYLES, ms, mvs, isIOS, SCREENS} from '../../misc';
+import {ICONS, FONTS} from '../../assets';
+import {COLORS, COMMON_STYLES, MS, MVS, isIOS, SCREENS} from '../../misc';
 import {
   SafeAreaWrapper,
   PrimaryHeader,
@@ -27,7 +27,7 @@ import {RootStackParamList} from '../../navigation/types/types';
 import {_hanldeOpenUrlFunc, _logger} from '../../utils';
 import {SecondaryLoader} from '../../common/loaders';
 
-const authFieldHeight = ms(36);
+const authFieldHeight = MS(36);
 
 const SignupScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -85,10 +85,10 @@ const SignupScreen = () => {
     return (
       <View style={styles.orCont}>
         <TouchableOpacity style={styles.socialBTN}>
-          <Image source={_icons.google} style={COMMON_STYLES.size22} />
+          <Image source={ICONS.google} style={COMMON_STYLES.size22} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialBTN}>
-          <Image source={_icons.facebook} style={COMMON_STYLES.size24} />
+          <Image source={ICONS.facebook} style={COMMON_STYLES.size24} />
         </TouchableOpacity>
       </View>
     );
@@ -147,7 +147,7 @@ const SignupScreen = () => {
                     />
                     {verificationStatus.emailVerified && (
                       <Image
-                        source={_icons.checkGreen}
+                        source={ICONS.checkGreen}
                         style={COMMON_STYLES.size16}
                         resizeMode="contain"
                       />
@@ -175,7 +175,7 @@ const SignupScreen = () => {
                   <TouchableOpacity style={styles.countryCodeBTN}>
                     <Text>+1</Text>
                     <Image
-                      source={_icons.angleLeftDark}
+                      source={ICONS.angleLeftDark}
                       style={styles.downArrow}
                       resizeMode="contain"
                     />
@@ -191,7 +191,7 @@ const SignupScreen = () => {
                     />
                     {verificationStatus.phoneVerified && (
                       <Image
-                        source={_icons.checkGreen}
+                        source={ICONS.checkGreen}
                         style={COMMON_STYLES.size16}
                         resizeMode="contain"
                       />
@@ -230,7 +230,7 @@ const SignupScreen = () => {
                   onPress={() => setFieldValue('agreeToTerms', !values.agreeToTerms)}
                   style={styles.checkCont}>
                   {values.agreeToTerms && (
-                    <Image source={_icons.check} style={COMMON_STYLES.size10} tintColor={COLORS.black} />
+                    <Image source={ICONS.check} style={COMMON_STYLES.size10} tintColor={COLORS.black} />
                   )}
                 </TouchableOpacity>
                 <View style={styles.privacyPolicyStringCont}>
@@ -296,19 +296,19 @@ const SignupScreen = () => {
 
 export default SignupScreen;
 
-const gapAndMargin = mvs(16);
+const gapAndMargin = MVS(16);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  headerStyle: {paddingHorizontal: ms(18)},
+  headerStyle: {paddingHorizontal: MS(18)},
   contentContainerStyle: {
     rowGap: gapAndMargin,
-    paddingHorizontal: ms(18),
+    paddingHorizontal: MS(18),
   },
   title: {
     color: COLORS.black,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(20),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(20),
   },
   formCont: {
     rowGap: gapAndMargin,
@@ -316,21 +316,21 @@ const styles = StyleSheet.create({
   otpBoxCont: {marginTop: gapAndMargin},
   fullNameInput: {
     padding: 0,
-    paddingStart: ms(12),
+    paddingStart: MS(12),
     height: authFieldHeight,
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
     borderRadius: 8,
     color: COLORS.black,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(12),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(12),
     includeFontPadding: false,
   },
   errorString: {
-    marginStart: ms(8),
+    marginStart: MS(8),
     color: COLORS.red,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(10),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(10),
     includeFontPadding: false,
   },
   emailCont: {
@@ -341,30 +341,30 @@ const styles = StyleSheet.create({
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
     borderRadius: 8,
-    paddingEnd: ms(12),
-    columnGap: ms(8),
+    paddingEnd: MS(12),
+    columnGap: MS(8),
   },
   emailInput: {
     padding: 0,
     height: authFieldHeight,
     color: COLORS.black,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(12),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(12),
     includeFontPadding: false,
     borderRadius: 8,
     flex: 1,
-    paddingStart: ms(12),
+    paddingStart: MS(12),
   },
   verifyCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: ms(8),
+    columnGap: MS(8),
   },
   verify: {
     color: COLORS.primary,
-    fontSize: ms(12),
+    fontSize: MS(12),
   },
-  sendOTPCont: {flexDirection: 'row', alignItems: 'center', columnGap: ms(8)},
+  sendOTPCont: {flexDirection: 'row', alignItems: 'center', columnGap: MS(8)},
   countryCodeBTN: {
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
@@ -373,12 +373,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     height: authFieldHeight,
     borderRadius: 8,
-    minWidth: ms(52),
+    minWidth: MS(52),
   },
   countryCodeString: {
-    fontSize: ms(14),
+    fontSize: MS(14),
     color: COLORS.blue,
-    fontFamily: _fonts.workSansRegular,
+    fontFamily: FONTS.workSansRegular,
   },
   downArrow: {
     ...COMMON_STYLES.size10,
@@ -393,7 +393,7 @@ const styles = StyleSheet.create({
   privacyPolicyCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: ms(8),
+    gap: MS(8),
   },
   privacyPolicyStringCont: {
     flexDirection: 'row',
@@ -401,18 +401,18 @@ const styles = StyleSheet.create({
   },
   checkCont: {
     backgroundColor: COLORS.white,
-    width: ms(20),
-    height: ms(20),
-    borderRadius: ms(20),
+    width: MS(20),
+    height: MS(20),
+    borderRadius: MS(20),
     borderWidth: 2,
     borderColor: COLORS.black,
     alignItems: 'center',
     justifyContent: 'center',
   },
   termOfServiceString: {
-    fontSize: ms(12),
+    fontSize: MS(12),
     color: COLORS.B4B4B4,
-    fontFamily: _fonts.workSansMedium,
+    fontFamily: FONTS.workSansMedium,
   },
   blueTxt: {
     color: COLORS.primary,
@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    columnGap: ms(12),
+    columnGap: MS(12),
   },
   horizontalView: {
     height: 1,
@@ -430,22 +430,22 @@ const styles = StyleSheet.create({
   },
   orString: {
     color: COLORS.textSecondary,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansMedium,
   },
   socialBTN: {
     borderWidth: bdrWidth,
     borderColor: COLORS.CFCFCF,
-    width: ms(48),
-    height: ms(48),
+    width: MS(48),
+    height: MS(48),
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
   signInString: {
     color: COLORS.primary,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansMedium,
     marginLeft: -6,
   },
 });

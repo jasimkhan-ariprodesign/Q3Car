@@ -11,10 +11,10 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {COMMON_STYLES, isIOS, mvs, ms, COLORS} from '../../../misc';
+import {COMMON_STYLES, isIOS, MVS, MS, COLORS} from '../../../misc';
 import {SafeAreaWrapper, SecondaryHeader} from '../../components';
 import {SecondaryLoader} from '../../../common';
-import {_fonts, _icons} from '../../../assets';
+import {FONTS, ICONS} from '../../../assets';
 
 const ProfileScreen = () => {
   const [receiveReceiptEmails, setReceiveReceiptEmails] = useState(false);
@@ -100,7 +100,7 @@ const ProfileScreen = () => {
         {/* facebook button */}
         <TouchableOpacity style={styles.socialBTN}>
           <Image
-            source={_icons.facebookWhite}
+            source={ICONS.facebookWhite}
             style={[COMMON_STYLES.size24, styles.socialIconStyle]}
             resizeMode="contain"
           />
@@ -110,7 +110,7 @@ const ProfileScreen = () => {
         {/* google button */}
         <TouchableOpacity style={[styles.socialBTN, styles.googleBTN]}>
           <Image
-            source={_icons.google}
+            source={ICONS.google}
             style={[COMMON_STYLES.size24, styles.socialIconStyle]}
             resizeMode="contain"
           />
@@ -124,7 +124,7 @@ const ProfileScreen = () => {
     <KeyboardAvoidingView
       style={[COMMON_STYLES.flex]}
       behavior={isIOS() ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.select({ios: mvs(8)})}>
+      keyboardVerticalOffset={Platform.select({ios: MVS(8)})}>
       <SafeAreaWrapper>
         <SecondaryHeader containerStyle={styles.backIconStyle} />
 
@@ -155,15 +155,15 @@ const ProfileScreen = () => {
 
 export default ProfileScreen;
 
-const authFieldHeight = ms(36);
+const authFieldHeight = MS(36);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  backIconStyle: {paddingHorizontal: ms(18)},
+  backIconStyle: {paddingHorizontal: MS(18)},
   contentContainerStyle: {
-    rowGap: mvs(18),
-    paddingHorizontal: ms(20),
-    paddingBottom: mvs(20),
+    rowGap: MVS(18),
+    paddingHorizontal: MS(20),
+    paddingBottom: MVS(20),
   },
   headerStyle: {
     flexDirection: 'row',
@@ -172,29 +172,29 @@ const styles = StyleSheet.create({
   },
   profileView: {
     backgroundColor: COLORS.transparentBlack1,
-    width: ms(70),
-    height: ms(70),
-    borderRadius: ms(70),
+    width: MS(70),
+    height: MS(70),
+    borderRadius: MS(70),
     borderWidth: 2,
     borderColor: COLORS.white,
   },
   nameString: {
     color: COLORS.textPrimary,
-    fontFamily: _fonts.workSansBold,
-    fontSize: ms(20),
+    fontFamily: FONTS.workSansBold,
+    fontSize: MS(20),
   },
   profile: {
-    width: ms(70),
-    height: ms(70),
-    borderRadius: ms(70),
+    width: MS(70),
+    height: MS(70),
+    borderRadius: MS(70),
   },
   inputCont: {
-    rowGap: mvs(4),
+    rowGap: MVS(4),
   },
   labelString: {
     color: COLORS.textSecondary,
-    fontSize: ms(12),
-    fontFamily: _fonts.workSansBold,
+    fontSize: MS(12),
+    fontFamily: FONTS.workSansBold,
     textTransform: 'uppercase',
   },
   nameInputStyle: {
@@ -204,16 +204,16 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     height: authFieldHeight,
     color: COLORS.black,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansRegular,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansRegular,
     textAlignVertical: 'center',
-    paddingLeft: ms(12),
+    paddingLeft: MS(12),
   },
   preferencesCont: {
     borderWidth: bdrWidth,
     borderColor: COLORS.EDEDED,
     borderRadius: 4,
-    padding: ms(12),
+    padding: MS(12),
     backgroundColor: COLORS.primaryLight,
   },
   switchCont: {
@@ -223,14 +223,14 @@ const styles = StyleSheet.create({
   },
   recieveReceiptsString: {
     color: COLORS.textPrimary,
-    fontSize: ms(12),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(12),
+    fontFamily: FONTS.workSansMedium,
     textTransform: 'uppercase',
   },
   descString: {
     color: COLORS.textDisabled,
-    fontSize: ms(10),
-    fontFamily: _fonts.workSansRegular,
+    fontSize: MS(10),
+    fontFamily: FONTS.workSansRegular,
     maxWidth: '80%',
   },
   socialBTN: {
@@ -243,20 +243,20 @@ const styles = StyleSheet.create({
   },
   socialBTNString: {
     color: COLORS.white,
-    fontSize: ms(12),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(12),
+    fontFamily: FONTS.workSansMedium,
   },
   socialIconStyle: {
     position: 'absolute',
-    left: ms(12),
+    left: MS(12),
   },
   googleBTN: {
     borderWidth: bdrWidth,
     borderColor: COLORS.EDEDED,
     backgroundColor: COLORS.white,
-    marginTop: mvs(8),
+    marginTop: MVS(8),
   },
   margTop: {
-    marginTop: mvs(20),
+    marginTop: MVS(20),
   },
 });

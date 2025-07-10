@@ -1,8 +1,8 @@
 import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
-import {COMMON_STYLES, isIOS, COLORS, ms, mvs, SCREENS} from '../../misc';
+import {COMMON_STYLES, isIOS, COLORS, MS, MVS, SCREENS} from '../../misc';
 import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../presentation/components';
-import {_fonts} from '../../assets';
+import {FONTS} from '../../assets';
 import {Formik} from 'formik';
 import {_forgotPasswordSchema} from '../validations/schemas';
 import {_logger} from '../../utils';
@@ -112,49 +112,49 @@ const ForgotPassword = () => {
 
 export default ForgotPassword;
 
-const gapAndMargin = mvs(20);
+const gapAndMargin = MVS(20);
 const bdrWidth = 1.2;
-const authFieldHeight = ms(36);
+const authFieldHeight = MS(36);
 
 const styles = StyleSheet.create({
-  headerStyle: {paddingHorizontal: ms(18)},
+  headerStyle: {paddingHorizontal: MS(18)},
   contentContainerStyle: {
     rowGap: gapAndMargin,
-    paddingHorizontal: ms(18),
+    paddingHorizontal: MS(18),
   },
   title: {
     color: COLORS.black,
-    fontFamily: _fonts.workSansMedium,
-    fontSize: ms(18),
+    fontFamily: FONTS.workSansMedium,
+    fontSize: MS(18),
     textAlign: 'center',
   },
   labelTxt: {
     color: COLORS.textSecondary,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(12),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(12),
     textAlign: 'center',
   },
   formCont: {
-    marginTop: mvs(20),
+    marginTop: MVS(20),
     rowGap: gapAndMargin,
   },
   emailInput: {
     padding: 0,
-    paddingStart: ms(12),
+    paddingStart: MS(12),
     height: authFieldHeight,
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
     borderRadius: 8,
     color: COLORS.black,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(12),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(12),
     includeFontPadding: false,
   },
   errorString: {
-    marginStart: ms(8),
+    marginStart: MS(8),
     color: COLORS.red,
-    fontFamily: _fonts.workSansRegular,
-    fontSize: ms(10),
+    fontFamily: FONTS.workSansRegular,
+    fontSize: MS(10),
     includeFontPadding: false,
   },
   otpBoxCont: {marginTop: gapAndMargin},

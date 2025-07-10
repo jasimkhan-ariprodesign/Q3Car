@@ -2,12 +2,12 @@ import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {COLORS, COMMON_STYLES, isIOS, ms, _useCustomSafeAreaInsets} from '../../../misc';
+import {COLORS, COMMON_STYLES, isIOS, MS, _useCustomSafeAreaInsets} from '../../../misc';
 import {IconButton, SafeAreaWrapper} from '../../components';
 import ContentCont from './components/contentCont/content-cont';
 import RenderMap from './components/renderMap/render-map';
 import {EdgeInsets} from 'react-native-safe-area-context';
-import {_icons} from '../../../assets';
+import {ICONS} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
 
 const BookingDetailsProcessingInfoScreen = () => {
@@ -23,7 +23,7 @@ const BookingDetailsProcessingInfoScreen = () => {
     return (
       <View style={styles.drawerBTNCont}>
         <IconButton
-          icon={_icons.angleLeftDark}
+          icon={ICONS.angleLeftDark}
           iconStyle={COMMON_STYLES.size18}
           onPress={_handleBackClick}
           disabled={false}
@@ -75,13 +75,10 @@ const getStyles = (insets: EdgeInsets) =>
       flex: 1,
       backgroundColor: COLORS.pink,
     },
-    // mapContainer: {
-    //   height: WINDOW_HEIGHT * 0.58,
-    //   backgroundColor: COLORS.pink,
-    // },
+
     drawerBTNCont: {
       position: 'absolute',
       top: insets?.top || 0,
-      left: ms(24),
+      left: MS(24),
     },
   });

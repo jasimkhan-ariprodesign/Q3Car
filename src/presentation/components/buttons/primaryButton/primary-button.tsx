@@ -7,8 +7,8 @@ import {
   TextStyle,
   ActivityIndicator,
 } from 'react-native';
-import {COLORS, ms, mvs} from '../../../../misc';
-import {_fonts} from '../../../../assets';
+import {COLORS, MS, MVS} from '../../../../misc';
+import {FONTS} from '../../../../assets';
 import { _logger } from '../../../../utils';
 
 interface PrimaryButtonProps {
@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: COLORS.primary,
     borderRadius: 8,
-    minHeight: mvs(34),
+    minHeight: MVS(34),
   },
   text: {
     color: COLORS.white,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansMedium,
   },
 });
 

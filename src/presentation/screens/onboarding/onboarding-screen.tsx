@@ -1,12 +1,20 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {TextButton, IconButton, SafeAreaWrapper} from '../../components';
-import {COLORS, WINDOW_HEIGHT, ms, SCREENS, STRINGS, COMMON_STYLES, WINDOW_WIDTH} from '../../../misc';
-import {_onboardingData} from '../../../constant';
-import {_fonts, _icons} from '../../../assets';
-import NextButtonWithProgressBar from './components/next-button-with-progress-bar';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {TextButton, IconButton, SafeAreaWrapper} from '../../components';
+import {
+  COLORS,
+  WINDOW_HEIGHT,
+  MS,
+  SCREENS,
+  STRINGS,
+  COMMON_STYLES,
+  WINDOW_WIDTH,
+} from '../../../misc';
+import {_onboardingData} from '../../../constant';
+import {FONTS, ICONS} from '../../../assets';
+import NextButtonWithProgressBar from './components/next-button-with-progress-bar';
 import {RootStackParamList} from '../../../navigation/types/types';
 
 const OnboardingScreen = () => {
@@ -16,10 +24,12 @@ const OnboardingScreen = () => {
   // _logger.log('index ->', curPageIndex);
 
   const _handleSkipClick = () => {
-    // navigation.push(_screens.userTypeSelectScreen);
-    navigation.push(SCREENS.drawerNavigator, {
-      screen: SCREENS.dashboardScreen,
+    navigation.push(SCREENS.welcomeStack, {
+      screen: SCREENS.userTypeSelectScreen,
     });
+    // navigation.push(SCREENS.drawerNavigator, {
+    //   screen: SCREENS.dashboardScreen,
+    // });
   };
 
   const _handleNextClick = () => {
@@ -61,7 +71,7 @@ const OnboardingScreen = () => {
               </View>
 
               <View style={styles.skipCont}>
-                <IconButton icon={_icons.q3Car} iconStyle={COMMON_STYLES.size54} />
+                <IconButton icon={ICONS.q3Car} iconStyle={COMMON_STYLES.size54} />
                 <TextButton title={STRINGS.skip} onPress={_handleSkipClick} disabled={false} />
               </View>
 
@@ -96,7 +106,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: WINDOW_WIDTH,
     top: 0,
-    paddingHorizontal: ms(24),
+    paddingHorizontal: MS(24),
     justifyContent: 'space-between',
   },
   imageCont: {
@@ -114,17 +124,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    gap: ms(12),
+    gap: MS(12),
   },
   title: {
     color: COLORS.black,
-    fontSize: ms(18),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(18),
+    fontFamily: FONTS.workSansMedium,
   },
   descTxt: {
     color: COLORS.textPrimary,
-    fontSize: ms(12),
-    fontFamily: _fonts.workSansMedium,
+    fontSize: MS(12),
+    fontFamily: FONTS.workSansMedium,
     textAlign: 'center',
   },
 });

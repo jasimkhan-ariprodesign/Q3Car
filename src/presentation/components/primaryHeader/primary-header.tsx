@@ -9,8 +9,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import React from 'react';
-import {_fonts, _icons} from '../../../assets';
-import {COLORS, ms, mvs} from '../../../misc';
+import {FONTS, ICONS} from '../../../assets';
+import {COLORS, MS, MVS} from '../../../misc';
 import {useNavigation} from '@react-navigation/native';
 
 interface PrimaryHeaderProps {
@@ -51,7 +51,7 @@ const PrimaryHeader: React.FC<PrimaryHeaderProps> = ({
         accessibilityLabel="Go back"
         accessibilityRole="button">
         <Image
-          source={_icons.angleLeftDark}
+          source={ICONS.angleLeftDark}
           style={[styles.icon, iconStyle]}
           resizeMode="contain"
         />
@@ -65,23 +65,23 @@ export default PrimaryHeader;
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: mvs(12),
+    paddingVertical: MVS(12),
   },
   buttonCont: {
     flexDirection: 'row',
     alignItems: 'center',
-    columnGap: ms(8),
+    columnGap: MS(8),
     alignSelf: 'flex-start',
   },
   icon: {
-    width: ms(10),
-    height: ms(17),
+    width: MS(10),
+    height: MS(17),
     tintColor: COLORS.textPrimary,
   },
   title: {
     color: COLORS.textPrimary,
-    fontSize: ms(14),
-    fontFamily: _fonts.workSansRegular,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansRegular,
     includeFontPadding: false,
   },
 });
