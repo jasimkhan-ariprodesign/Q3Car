@@ -13,19 +13,19 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
   return (
-    // <Stack.Navigator
-    //   initialRouteName={SCREENS.welcomeStack}
-    //   screenOptions={{
-    //     headerShown: false,
-    //     cardStyle: styles.cardStyle,
-    //     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-    //   }}>
-    //   <Stack.Screen name={SCREENS.welcomeStack} component={WelcomeStack} />
-    //   <Stack.Screen name={SCREENS.authStack} component={AuthStack} />
-    //   <Stack.Screen name={SCREENS.appStack} component={AppStack} />
-    //   <Stack.Screen name={SCREENS.drawerNavigator} component={DrawerNavigator} />
-    // </Stack.Navigator>
-    <BookingDetailsProcessingInfoScreen />
+    <Stack.Navigator
+      initialRouteName={SCREENS.welcomeStack}
+      screenOptions={{
+        headerShown: false,
+        cardStyle: styles.cardStyle,
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+      }}>
+      <Stack.Screen name={SCREENS.welcomeStack} component={WelcomeStack} />
+      <Stack.Screen name={SCREENS.authStack} component={AuthStack} />
+      <Stack.Screen name={SCREENS.appStack} component={AppStack} />
+      <Stack.Screen name={SCREENS.drawerNavigator} component={DrawerNavigator} />
+    </Stack.Navigator>
+    // <BookingDetailsProcessingInfoScreen />
   );
 };
 

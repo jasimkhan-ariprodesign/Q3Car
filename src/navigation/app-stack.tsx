@@ -3,7 +3,15 @@ import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/st
 import {AppStackParamList} from './types/types';
 import {COLORS, SCREENS} from '../misc';
 import {SuccessScreen} from '../common';
-import {BookingDetailsProcessingInfoScreen, ProfileScreen, SearchResultScreen, SearchScreen, SelectCarType, UploadPictureOfVehicle} from '../presentation';
+import {
+  BookingDetailsProcessingInfoScreen,
+  HistoryScreen,
+  ProfileScreen,
+  SearchResultScreen,
+  SearchScreen,
+  SelectCarType,
+  UploadPictureOfVehicle,
+} from '../presentation';
 
 const Stack = createStackNavigator<AppStackParamList>();
 
@@ -17,15 +25,22 @@ const AppStack = () => {
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
       <Stack.Screen name={SCREENS.successScreen} component={SuccessScreen} />
+
+      {/* drawer screens */}
       <Stack.Screen name={SCREENS.profileScreen} component={ProfileScreen} />
+      <Stack.Screen name={SCREENS.historyScreen} component={HistoryScreen} />
 
       <Stack.Group>
         <Stack.Screen name={SCREENS.searchScreen} component={SearchScreen} />
       </Stack.Group>
+
       <Stack.Screen name={SCREENS.selectCarType} component={SelectCarType} />
       <Stack.Screen name={SCREENS.uploadPictureOfVehicle} component={UploadPictureOfVehicle} />
       <Stack.Screen name={SCREENS.searchResultScreen} component={SearchResultScreen} />
-      <Stack.Screen name={SCREENS.bookingDetailsProcessingInfoScreen} component={BookingDetailsProcessingInfoScreen} />
+      <Stack.Screen
+        name={SCREENS.bookingDetailsProcessingInfoScreen}
+        component={BookingDetailsProcessingInfoScreen}
+      />
     </Stack.Navigator>
   );
 };

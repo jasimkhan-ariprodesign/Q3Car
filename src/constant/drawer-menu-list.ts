@@ -1,53 +1,54 @@
 import {_drawerMenuIcons} from '../assets/icons';
+import {SCREENS} from '../misc';
 
-export const _drawerMenuList = [
+export const DRAWER_MENU_LIST = [
   {
     id: '1',
     title: 'My rides',
     icon: _drawerMenuIcons.myRides, // replace with actual icon path
     screenName: 'MyRidesScreen',
-    routeName: 'MyRides',
+    // routeName: 'MyRides',
   },
   {
     id: '2',
     title: 'Promotion',
     icon: _drawerMenuIcons.promotion,
     screenName: 'PromotionScreen',
-    routeName: 'Promotion',
+    // routeName: 'Promotion',
   },
   {
     id: '3',
     title: 'My favorites',
     icon: _drawerMenuIcons.myFavorites,
     screenName: 'FavoritesScreen',
-    routeName: 'MyFavorites',
+    // routeName: 'MyFavorites',
   },
   {
     id: '4',
     title: 'My payment',
     icon: _drawerMenuIcons.myPayment,
     screenName: 'PaymentScreen',
-    routeName: 'MyPayment',
+    // routeName: 'MyPayment',
   },
   {
     id: '5',
     title: 'Notification',
     icon: _drawerMenuIcons.notification,
     screenName: 'NotificationScreen',
-    routeName: 'Notifications',
+    // routeName: 'Notifications',
   },
   {
     id: '6',
     title: 'Support',
     icon: _drawerMenuIcons.support,
     screenName: 'SupportScreen',
-    routeName: 'Support',
+    // routeName: 'Support',
   },
   {
     id: '7',
     title: 'History',
     icon: _drawerMenuIcons.myRides,
     screenName: 'HistoryScreen',
-    routeName: 'History',
+    routeName: SCREENS.historyScreen,
   },
 ];

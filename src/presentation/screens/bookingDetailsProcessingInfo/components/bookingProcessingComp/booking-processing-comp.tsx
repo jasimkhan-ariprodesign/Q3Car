@@ -2,12 +2,20 @@ import {ActivityIndicator, Alert, Image, StyleSheet, Text, View} from 'react-nat
 import React from 'react';
 import SwipeButton from 'rn-swipe-button';
 import {EdgeInsets} from 'react-native-safe-area-context';
-import {MS, MVS, _useCustomSafeAreaInsets, COLORS, COMMON_STYLES} from '../../../../../../../misc';
-import {FONTS, ICONS} from '../../../../../../../assets';
+import {ICONS, FONTS} from '../../../../../assets';
+import {_useCustomSafeAreaInsets, COLORS, COMMON_STYLES, MVS, MS} from '../../../../../misc';
 
-const BookingProcessingComponent = () => {
+interface BookingProcessingComp {
+  onSlide?: Function;
+}
+
+const BookingProcessingComp: React.FC<BookingProcessingComp> = ({onSlide}) => {
   const insets = _useCustomSafeAreaInsets();
   const styles = getStyles(insets);
+
+  const _handleSwipeSuccess = () => {
+    onSlide ? onSlide() : Alert.alert('Success', 'Cancel Action confirmed by swipe');
+  };
 
   const _renderLoaderAndBookingStatusString = () => {
     return (
@@ -20,10 +28,6 @@ const BookingProcessingComponent = () => {
   };
 
   const _renderSwipeToCancelButton = () => {
-    const handleSwipeSuccess = () => {
-      Alert.alert('Success', 'Cancel Action confirmed by swipe');
-    };
-
     const _thumbIconComponent = () => {
       return (
         <>
@@ -53,13 +57,15 @@ const BookingProcessingComponent = () => {
           thumbIconBackgroundColor={COLORS.white}
           thumbIconBorderColor={COLORS.white}
           thumbIconComponent={_thumbIconComponent}
-          onSwipeSuccess={handleSwipeSuccess}
+          onSwipeSuccess={_handleSwipeSuccess}
           finishRemainingSwipeAnimationDuration={300}
           resetAfterSuccessAnimDelay={200}
         />
       </View>
     );
   };
+
+  // main view
   return (
     <View style={styles.container}>
       {/* booking process loader */}
@@ -71,7 +77,7 @@ const BookingProcessingComponent = () => {
   );
 };
 
-export default BookingProcessingComponent;
+export default BookingProcessingComp;
 
 const gap = MVS(18);
 

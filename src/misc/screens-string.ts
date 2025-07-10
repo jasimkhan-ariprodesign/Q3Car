@@ -23,12 +23,14 @@ export const _screens = {
 
   // app
   successScreen: 'SuccessScreen',
-  profileScreen: 'ProfileScreen',
   searchScreen: 'SearchScreen',
   selectCarType: 'SelectCarType',
   uploadPictureOfVehicle: 'UploadPictureOfVehicle',
   searchResultScreen: 'SearchResultScreen',
   bookingDetailsProcessingInfoScreen: 'BookingDetailsProcessingInfoScreen',
+  
+  profileScreen: 'ProfileScreen',
+  historyScreen: 'HistoryScreen',
 
   // modal
   // searchScreen: 'SearchScreen',

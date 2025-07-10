@@ -32,6 +32,7 @@ export type AppStackParamList = {
   UploadPictureOfVehicle: undefined;
   SearchResultScreen: undefined;
   BookingDetailsProcessingInfoScreen: undefined;
+  HistoryScreen: undefined;
 };
 
 export type ModalStackParamList = {

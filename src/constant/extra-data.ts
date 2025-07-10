@@ -59,3 +59,20 @@ export const _recentPlaces = [
     distance: '4.0km',
   },
 ];
+
+export const HISTORY_DATA = [
+  {
+    id: '1',
+    title: 'La Plata',
+    dateTime: '26 Mar-11:20 PM',
+    price: '$20.00',
+    // image: require('./assets/towing-truck.png'), // replace with your local image path
+  },
+  {
+    id: '2',
+    title: 'La Plata',
+    dateTime: '26 Mar-11:20 PM',
+    price: '$20.00',
+    // image: require('./assets/delivery-truck.png'), // replace with your local image path
+  },
+];

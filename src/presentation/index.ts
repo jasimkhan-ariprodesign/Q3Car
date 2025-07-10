@@ -10,6 +10,8 @@ import SelectCarType from './screens/selectCarType/select-car-type';
 import UploadPictureOfVehicle from './screens/uploadPictureOfVehicle/upload-picture-of-vehicle';
 import SearchResultScreen from './screens/searchResultScreen/search-result-screen';
 import BookingDetailsProcessingInfoScreen from './screens/bookingDetailsProcessingInfo/booking-details-processing-info-screen';
+import HistoryScreen from './screens/history/history-screen';
+
 export {
   SplashScreen,
   OnboardingScreen,
@@ -23,4 +25,5 @@ export {
   UploadPictureOfVehicle,
   SearchResultScreen,
   BookingDetailsProcessingInfoScreen,
+  HistoryScreen,
 };

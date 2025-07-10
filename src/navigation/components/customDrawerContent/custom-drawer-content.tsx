@@ -11,11 +11,11 @@ import React from 'react';
 import {COLORS, MS, MVS, SCREENS, COMMON_STYLES} from '../../../misc';
 import {IconButton, SafeAreaWrapper} from '../../../presentation/components';
 import {FONTS, ICONS} from '../../../assets';
-import {_drawerMenuList} from '../../../constant/drawer-menu-list';
+import {DRAWER_MENU_LIST} from '../../../constant/drawer-menu-list';
 import {_logger} from '../../../utils';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../types/types';
+import {AppStackParamList, RootStackParamList} from '../../types/types';
 import {DrawerContentComponentProps} from '@react-navigation/drawer';
 
 const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
@@ -24,9 +24,16 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const _handleProfileClick = () => {
-    prop.navigation.closeDrawer();
+    prop?.navigation?.closeDrawer();
     navigation.navigate(SCREENS.appStack, {
       screen: SCREENS.profileScreen,
+    });
+  };
+
+  const _handleDrawerBTNClick = (route: keyof AppStackParamList) => {
+    prop?.navigation?.closeDrawer();
+    navigation.navigate(SCREENS.appStack, {
+      screen: route,
     });
   };
 
@@ -65,7 +72,7 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
         <TouchableHighlight
           underlayColor={`${COLORS.primary}0D`}
           activeOpacity={0.6}
-          onPress={() => {}}
+          onPress={() => _handleDrawerBTNClick(item?.routeName)}
           style={styles.drawerBTN}>
           <View style={styles.drawerBTNView}>
             <Image source={item?.icon || ''} style={COMMON_STYLES.size16} resizeMode="contain" />
@@ -80,7 +87,7 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
   const _renderDrawerMenuButtons = () => {
     return (
       <FlatList
-        data={_drawerMenuList || []}
+        data={DRAWER_MENU_LIST || []}
         renderItem={_renderItem}
         keyExtractor={(item, index) => item?.id?.toString() || index?.toString()}
         contentContainerStyle={styles.contentContainerStyle}

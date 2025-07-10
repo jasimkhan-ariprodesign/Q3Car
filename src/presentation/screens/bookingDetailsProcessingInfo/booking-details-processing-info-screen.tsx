@@ -2,13 +2,12 @@ import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {EdgeInsets} from 'react-native-safe-area-context';
 import {COLORS, COMMON_STYLES, isIOS, MS, _useCustomSafeAreaInsets} from '../../../misc';
 import {IconButton, SafeAreaWrapper} from '../../components';
-import ContentCont from './components/contentCont/content-cont';
-import RenderMap from './components/renderMap/render-map';
-import {EdgeInsets} from 'react-native-safe-area-context';
 import {ICONS} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
+import {ContentCont, RenderMap} from './components';
 
 const BookingDetailsProcessingInfoScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -19,7 +18,7 @@ const BookingDetailsProcessingInfoScreen = () => {
     navigation.goBack();
   };
 
-  const _renderOpenDrawerBTN = () => {
+  const _renderBackBTN = () => {
     return (
       <View style={styles.drawerBTNCont}>
         <IconButton
@@ -36,7 +35,7 @@ const BookingDetailsProcessingInfoScreen = () => {
     return (
       <View style={styles.mapContainer}>
         {/* button to go back */}
-        {_renderOpenDrawerBTN()}
+        {_renderBackBTN()}
 
         {/* map  */}
         <RenderMap />
