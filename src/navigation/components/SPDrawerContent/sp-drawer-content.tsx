@@ -24,8 +24,8 @@ const SPDrawerContent = (prop: DrawerContentComponentProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const _handleProfileClick = () => {
-    navigation.push(SCREENS.appStack, {
-      screen: SCREENS.profileScreen,
+    navigation.push(SCREENS.SPStack, {
+      screen: SCREENS.SPProfileScreen,
     });
     prop?.navigation?.closeDrawer();
   };

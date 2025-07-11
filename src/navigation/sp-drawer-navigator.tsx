@@ -13,7 +13,7 @@ const SPDrawerNavigator = () => {
       drawerContent={CustomDrawer}
       initialRouteName={SCREENS.SPDashboardScreen}
       screenOptions={() => ({
-        headerShown: true,
+        headerShown: false,
         gestureEnabled: true,
         swipeEnabled: true,
         drawerType: 'front',

@@ -8,6 +8,7 @@ import DrawerNavigator from './drawer-navigator';
 import {RootStackParamList} from './types/types';
 import {COLORS, SCREENS} from '../misc';
 import SPDrawerNavigator from './sp-drawer-navigator';
+import SPStack from './service-provider-stack';
 // import {BookingDetailsProcessingInfoScreen} from '../presentation';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -26,6 +27,7 @@ const RootNavigator = () => {
       <Stack.Screen name={SCREENS.appStack} component={AppStack} />
       <Stack.Screen name={SCREENS.drawerNavigator} component={DrawerNavigator} />
       <Stack.Screen name={SCREENS.SPDrawerNavigator} component={SPDrawerNavigator} />
+      <Stack.Screen name={SCREENS.SPStack} component={SPStack} />
     </Stack.Navigator>
     // <BookingDetailsProcessingInfoScreen />
   );

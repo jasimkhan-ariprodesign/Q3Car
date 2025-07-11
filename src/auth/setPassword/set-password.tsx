@@ -1,15 +1,6 @@
-import {
-  Alert,
-  KeyboardAvoidingView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {useState} from 'react';
 import {Formik} from 'formik';
-import * as Yup from 'yup';
 import {COMMON_STYLES, isIOS, COLORS, MS, MVS, SCREENS} from '../../misc';
 import {
   SafeAreaWrapper,

@@ -45,10 +45,9 @@ export type SPDrawerNavigatorParamList = {
   SPDashboardScreen: undefined;
 };
 
-// not created yet - tow truck as service provider
 export type SPStackParamList = {
   // HomeScreen: undefined;
-  // ProfileScreen: undefined;
+  SPProfileScreen: undefined;
 };
 
 export type RootStackParamList = {

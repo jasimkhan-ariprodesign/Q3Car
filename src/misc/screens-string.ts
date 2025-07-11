@@ -5,6 +5,7 @@ export const _screens = {
   authStack: 'AuthStack',
   appStack: 'AppStack',
   modalStack: 'ModalStack',
+  SPStack: 'SPStack',
 
   // welcome
   splash: 'SplashScreen',
@@ -21,7 +22,7 @@ export const _screens = {
   setPassword: 'SetPassword',
   spLoginScreen: 'SPLoginScreen',
 
-  // app
+  // app stack
   successScreen: 'SuccessScreen',
   searchScreen: 'SearchScreen',
   selectCarType: 'SelectCarType',
@@ -43,4 +44,7 @@ export const _screens = {
   // sp drawer
   SPDrawerNavigator: 'SPDrawerNavigator',
   SPDashboardScreen: 'SPDashboardScreen',
+
+  // sp stack
+  SPProfileScreen: 'SPProfileScreen',
 } as const;

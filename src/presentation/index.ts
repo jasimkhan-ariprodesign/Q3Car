@@ -13,6 +13,7 @@ import BookingDetailsProcessingInfoScreen from './screens/bookingDetailsProcessi
 import HistoryScreen from './screens/history/history-screen';
 import HistoryDetailsScreen from './screens/historyDetails/history-details-screen';
 import SPDashboardScreen from './screens/SPDashboard/sp-dashboard-screen';
+import SPProfileScreen from './screens/SPProfile/sp-profile-screen';
 
 export {
   SplashScreen,
@@ -30,4 +31,5 @@ export {
   HistoryScreen,
   HistoryDetailsScreen,
   SPDashboardScreen,
+  SPProfileScreen,
 };
