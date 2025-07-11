@@ -5,7 +5,7 @@ import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../presentation/
 import {FONTS} from '../../assets';
 import {Formik} from 'formik';
 import {_forgotPasswordSchema} from '../validations/schemas';
-import {_logger} from '../../utils';
+import {logger} from '../../utils';
 import {OTPBox} from '../components';
 import {SecondaryLoader} from '../../common/loaders';
 import {useNavigation} from '@react-navigation/native';
@@ -18,12 +18,12 @@ const ForgotPassword = () => {
   const [otp, setOtp] = useState();
 
   const _handleSubmitClick = (value: any) => {
-    _logger.log('_handleSubmitClick --: ', value);
+    logger.log('_handleSubmitClick --: ', value);
     setCurrentStep('otp');
   };
 
   const _handleVerifyOTPClick = () => {
-    _logger.log('_handleVerifyOTPClick OTP:', otp);
+    logger.log('_handleVerifyOTPClick OTP:', otp);
     navigation.push(SCREENS.appStack, {
       screen: SCREENS.successScreen,
     });
@@ -42,7 +42,7 @@ const ForgotPassword = () => {
           validationSchema={_forgotPasswordSchema}
           onSubmit={_handleSubmitClick}>
           {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
-            _logger.log('values ->', values);
+            // logger.log('values ->', values);
 
             return (
               <View style={styles.formCont}>

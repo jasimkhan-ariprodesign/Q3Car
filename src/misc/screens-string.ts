@@ -39,4 +39,8 @@ export const _screens = {
   // drawer
   drawerNavigator: 'DrawerNavigator',
   dashboardScreen: 'DashboardScreen',
+
+  // sp drawer
+  SPDrawerNavigator: 'SPDrawerNavigator',
+  SPDashboardScreen: 'SPDashboardScreen',
 } as const;

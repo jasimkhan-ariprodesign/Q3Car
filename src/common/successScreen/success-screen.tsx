@@ -5,12 +5,12 @@ import {FONTS, ICONS} from '../../assets';
 import {COLORS, MS, MVS, COMMON_STYLES} from '../../misc';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {AppStackParamList} from '../../navigation/types/types';
-import {_logger} from '../../utils';
+import {logger} from '../../utils';
 
 const SuccessScreen = () => {
   const route = useRoute<RouteProp<AppStackParamList, 'SuccessScreen'>>();
   const {successMsg} = route?.params || {};
-  _logger.log('successMsg ->', successMsg);
+  logger.log('successMsg ->', successMsg);
 
   return (
     <SafeAreaWrapper style={styles.container}>

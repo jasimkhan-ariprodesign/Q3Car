@@ -13,7 +13,7 @@ export type AuthStackParamList = {
   LoginScreen: {fromScreen?: string} | undefined;
   SPSignupScreen: undefined;
   ForgotPassword: undefined;
-  SetPassword: undefined;
+  SetPassword: {userType?: 'customer' | 'service provider'} | undefined;
   SPLoginScreen: undefined;
 };
 
@@ -40,6 +40,11 @@ export type ModalStackParamList = {
   SearchScreen: undefined; // ?? not in use
 };
 
+export type SPDrawerNavigatorParamList = {
+  SPDrawerNavigator: undefined;
+  SPDashboardScreen: undefined;
+};
+
 // not created yet - tow truck as service provider
 export type SPStackParamList = {
   // HomeScreen: undefined;
@@ -51,6 +56,7 @@ export type RootStackParamList = {
   AuthStack: NavigatorScreenParams<AuthStackParamList>;
   DrawerNavigator: NavigatorScreenParams<DrawerNavigatorParamList>;
   AppStack: NavigatorScreenParams<AppStackParamList>;
+  SPDrawerNavigator: NavigatorScreenParams<SPDrawerNavigatorParamList>;
   SPStack: NavigatorScreenParams<SPStackParamList>;
   ModalStack: NavigatorScreenParams<ModalStackParamList>; // ?? not in use
 };

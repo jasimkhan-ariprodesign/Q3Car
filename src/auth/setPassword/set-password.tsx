@@ -20,14 +20,20 @@ import {
 import {FONTS, ICONS} from '../../assets';
 import {_setPasswordSchema} from '../validations/schemas';
 import {SecondaryLoader} from '../../common';
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../navigation/types/types';
+import {AuthStackParamList, RootStackParamList} from '../../navigation/types/types';
+import {logger} from '../../utils';
 
 const authFieldHeight = MS(36);
 
 const SetPassword = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const route = useRoute<RouteProp<AuthStackParamList, 'SetPassword'>>();
+  const {userType} = route?.params || {};
+
+  // logger.log('userType --)--->', userType);
+
   const [formData, setFormData] = useState({
     showPasswrod: true,
     showConfirmPassword: true,
@@ -47,9 +53,15 @@ const SetPassword = () => {
     // Alert.alert('Success', `Password set: ${values.password}`);
     // console.log('Form submitted:', values);
 
-    navigation.push(SCREENS.drawerNavigator, {
-      screen: SCREENS.dashboardScreen,
-    });
+    if (userType === 'service provider') {
+      navigation.push(SCREENS.SPDrawerNavigator, {
+        screen: SCREENS.SPDashboardScreen,
+      });
+    } else {
+      navigation.push(SCREENS.drawerNavigator, {
+        screen: SCREENS.dashboardScreen,
+      });
+    }
   };
 
   return (

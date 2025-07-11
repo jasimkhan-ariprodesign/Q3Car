@@ -4,7 +4,7 @@ import {OtpInput} from 'react-native-otp-entry';
 import {COLORS, MS, MVS} from '../../misc';
 import {FONTS} from '../../assets';
 import {TextButton} from '../../presentation/components';
-import { _logger } from '../../utils';
+import { logger } from '../../utils';
 
 interface OTPBoxProp {
   otpInpHeight?: number;
@@ -27,7 +27,7 @@ const OTPBox: React.FC<OTPBoxProp> = ({
     <View style={[styles.container, containerStyle]}>
       <OtpInput
         numberOfDigits={5}
-        onTextChange={text => _logger.log(text)}
+        onTextChange={text => logger.log(text)}
         autoFocus={false}
         theme={{
           containerStyle: styles.containerStyle,

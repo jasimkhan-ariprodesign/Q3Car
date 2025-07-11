@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {COLORS, MS, MVS} from '../../../../misc';
 import {FONTS} from '../../../../assets';
-import { _logger } from '../../../../utils';
+import { logger } from '../../../../utils';
 
 interface PrimaryButtonProps {
   title?: string;
@@ -24,7 +24,7 @@ interface PrimaryButtonProps {
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   title = '',
-  onPress = () => _logger.log('Primary Button Pressed'),
+  onPress = () => logger.log('Primary Button Pressed'),
   clickable = true,
   buttonStyle = {},
   textStyle = {},

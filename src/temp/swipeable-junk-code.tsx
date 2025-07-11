@@ -145,19 +145,19 @@ import Animated, {useAnimatedStyle, useSharedValue, withTiming} from 'react-nati
 import { ICONS } from '../assets';
 import { COMMON_STYLES } from '../misc';
 import { IconButton } from '../presentation/components';
-import { _logger } from '../utils';
+import { logger } from '../utils';
 
 const SliderButton = () => {
   const END_POSITION = Dimensions.get('screen').width - 90; // Calculating button width
   const onLeft = useSharedValue(true);
   const position = useSharedValue(0);
-  _logger.log('onLeft ->', JSON.stringify(onLeft, null, 2));
+  logger.log('onLeft ->', JSON.stringify(onLeft, null, 2));
   const panGesture = Gesture.Pan() // Defining gesture type to Pan
     .runOnJS(true) // This is required if you want to trigger a function on swipe
     .onUpdate(e => {
       if (onLeft.value) {
         position.value = e.translationX;
-        _logger.log('---=>', (position.value = e.translationX));
+        logger.log('---=>', (position.value = e.translationX));
       } else {
         position.value = END_POSITION + e.translationX;
       }

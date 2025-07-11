@@ -24,7 +24,7 @@ import {privacyPolicyURL, termsOfServiceURL} from '../../constant';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/types/types';
-import {_hanldeOpenUrlFunc, _logger} from '../../utils';
+import {_hanldeOpenUrlFunc, logger} from '../../utils';
 import {SecondaryLoader} from '../../common/loaders';
 
 const authFieldHeight = MS(36);
@@ -36,7 +36,7 @@ const SignupScreen = () => {
     emailVerified: false,
     phoneVerified: false,
   });
-  _logger.log('verificationStatus ->', verificationStatus);
+  logger.log('verificationStatus ->', verificationStatus);
 
   const initialValues = {
     fullName: '',
@@ -112,7 +112,7 @@ const SignupScreen = () => {
         validationSchema={_signupSchema}
         onSubmit={_handleSignup}>
         {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
-          _logger.log('values ->', values);
+          // logger.log('values ->', values);
 
           return (
             <View style={styles.formCont}>

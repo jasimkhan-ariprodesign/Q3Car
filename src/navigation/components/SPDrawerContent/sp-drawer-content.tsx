@@ -8,17 +8,17 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {DrawerContentComponentProps} from '@react-navigation/drawer';
 import {COLORS, MS, MVS, SCREENS, COMMON_STYLES} from '../../../misc';
 import {IconButton, SafeAreaWrapper} from '../../../presentation/components';
 import {FONTS, ICONS} from '../../../assets';
-import {DRAWER_MENU_LIST} from '../../../constant/drawer-menu-list';
 import {logger} from '../../../utils';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {AppStackParamList, RootStackParamList} from '../../types/types';
-import {DrawerContentComponentProps} from '@react-navigation/drawer';
+import {SP_DRAWER_MENU_LIST} from '../../../constant';
 
-const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
+const SPDrawerContent = (prop: DrawerContentComponentProps) => {
   //   _logger.info('prop -->', prop);
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -89,7 +89,7 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
   const _renderDrawerMenuButtons = () => {
     return (
       <FlatList
-        data={DRAWER_MENU_LIST || []}
+        data={SP_DRAWER_MENU_LIST || []}
         renderItem={_renderItem}
         keyExtractor={(item, index) => item?.id?.toString() || index?.toString()}
         contentContainerStyle={styles.contentContainerStyle}
@@ -116,7 +116,7 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
   );
 };
 
-export default CustomDrawerContent;
+export default SPDrawerContent;
 
 const leftSpace = MS(24);
 const styles = StyleSheet.create({

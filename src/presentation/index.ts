@@ -12,6 +12,7 @@ import SearchResultScreen from './screens/searchResultScreen/search-result-scree
 import BookingDetailsProcessingInfoScreen from './screens/bookingDetailsProcessingInfo/booking-details-processing-info-screen';
 import HistoryScreen from './screens/history/history-screen';
 import HistoryDetailsScreen from './screens/historyDetails/history-details-screen';
+import SPDashboardScreen from './screens/SPDashboard/sp-dashboard-screen';
 
 export {
   SplashScreen,
@@ -28,4 +29,5 @@ export {
   BookingDetailsProcessingInfoScreen,
   HistoryScreen,
   HistoryDetailsScreen,
+  SPDashboardScreen,
 };

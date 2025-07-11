@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import React from 'react';
-import {_logger} from '../../../../utils';
+import {logger} from '../../../../utils';
 
 interface IconButtonProp {
   iconBtnStyle?: ViewStyle;
@@ -22,7 +22,7 @@ interface IconButtonProp {
 const IconButton: React.FC<IconButtonProp> = ({
   iconBtnStyle = {},
   iconStyle = {},
-  onPress = () => _logger.log('icon pressed'),
+  onPress = () => logger.log('icon pressed'),
   disabled = true,
   icon,
   resizeMode = 'contain',

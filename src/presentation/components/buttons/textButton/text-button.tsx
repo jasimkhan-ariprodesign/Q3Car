@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {COLORS, MS} from '../../../../misc';
 import {FONTS} from '../../../../assets';
-import { _logger } from '../../../../utils';
+import { logger } from '../../../../utils';
 
 interface ReusableButtonProps {
   title?: string;
@@ -24,7 +24,7 @@ interface ReusableButtonProps {
 
 const TextButton: React.FC<ReusableButtonProps> = ({
   title = 'Button', // Default title
-  onPress = () => _logger.log('Button pressed'), // Default empty function
+  onPress = () => logger.log('Button pressed'), // Default empty function
   clickable = true, // Default true
   buttonStyle = {},
   textStyle = {},

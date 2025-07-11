@@ -2,4 +2,4 @@
 import _logger from './logger/logger';
 import {_hanldeOpenUrlFunc} from './open-url-func/open-url-func';
 
-export {_logger, _hanldeOpenUrlFunc};
+export {_logger as logger, _hanldeOpenUrlFunc};

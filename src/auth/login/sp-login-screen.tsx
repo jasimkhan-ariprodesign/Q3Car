@@ -18,7 +18,7 @@ import {
   PrimaryButton,
 } from '../../presentation/components';
 import {Formik} from 'formik';
-import {_logger} from '../../utils';
+import {logger} from '../../utils';
 import {_loginSchema} from '../validations/schemas';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {AuthStackParamList, RootStackParamList} from '../../navigation/types/types';
@@ -62,7 +62,7 @@ const SPLoginScreen = () => {
   };
 
   const _handleSignIn = (value: any) => {
-    _logger.log('_handleSignup --: ', value);
+    logger.log('_handleSignup --: ', value);
   };
 
   const _renderOrView = () => {
@@ -93,7 +93,7 @@ const SPLoginScreen = () => {
         validationSchema={_loginSchema}
         onSubmit={_handleSignIn}>
         {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
-          _logger.log('values ->', values);
+          // logger.log('values ->', values);
 
           return (
             <View style={styles.formCont}>
