@@ -28,6 +28,7 @@ export const _icons = {
   cameraWhite: require('./camera-white.png'),
   fromToDest: require('./from-to-dest.png'),
   reloadGrey: require('./reload-black.png'),
+  starBlack: require('./star-black.png'),
 };
 
 // drawer icons 👇🏻

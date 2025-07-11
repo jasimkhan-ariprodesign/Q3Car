@@ -11,6 +11,7 @@ import UploadPictureOfVehicle from './screens/uploadPictureOfVehicle/upload-pict
 import SearchResultScreen from './screens/searchResultScreen/search-result-screen';
 import BookingDetailsProcessingInfoScreen from './screens/bookingDetailsProcessingInfo/booking-details-processing-info-screen';
 import HistoryScreen from './screens/history/history-screen';
+import HistoryDetailsScreen from './screens/historyDetails/history-details-screen';
 
 export {
   SplashScreen,
@@ -26,4 +27,5 @@ export {
   SearchResultScreen,
   BookingDetailsProcessingInfoScreen,
   HistoryScreen,
+  HistoryDetailsScreen,
 };

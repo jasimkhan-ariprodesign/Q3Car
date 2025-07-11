@@ -11,6 +11,7 @@ export const _color = {
   lightGray: '#E9ECEF',
   gray: '#ADB5BD',
   darkGray: '#495057',
+  F7F7F7: '#F7F7F7',
 
   // System colors
   red: '#FF3B30',

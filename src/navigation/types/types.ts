@@ -33,6 +33,7 @@ export type AppStackParamList = {
   SearchResultScreen: undefined;
   BookingDetailsProcessingInfoScreen: undefined;
   HistoryScreen: undefined;
+  HistoryDetailsScreen: undefined;
 };
 
 export type ModalStackParamList = {

@@ -28,7 +28,8 @@ export const _screens = {
   uploadPictureOfVehicle: 'UploadPictureOfVehicle',
   searchResultScreen: 'SearchResultScreen',
   bookingDetailsProcessingInfoScreen: 'BookingDetailsProcessingInfoScreen',
-  
+  historyDetailsScreen: 'HistoryDetailsScreen',
+
   profileScreen: 'ProfileScreen',
   historyScreen: 'HistoryScreen',
 

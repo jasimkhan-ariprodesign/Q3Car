@@ -35,6 +35,9 @@ export const _styles = StyleSheet.create({
   centerHorizontal: {
     alignItems: 'center',
   },
+  alignCenter: {
+    alignItems: 'center',
+  },
   alignEnd: {
     alignItems: 'flex-end',
   },

@@ -2,15 +2,29 @@ import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-n
 import React from 'react';
 import {_styles} from '../../../misc/common-styles';
 import {SafeAreaWrapper, PrimaryHeader} from '../../components';
-import {COLORS, COMMON_STYLES, MS, MVS} from '../../../misc';
+import {COLORS, COMMON_STYLES, MS, MVS, SCREENS} from '../../../misc';
 import {HISTORY_DATA} from '../../../constant';
 import {FONTS, ICONS} from '../../../assets';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../navigation/types/types';
 
 const HistoryScreen = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const _handleHistoryDetailOpen = () => {
+    navigation.push(SCREENS.appStack, {
+      screen: SCREENS.historyDetailsScreen,
+    });
+  };
+
   const _renderItem = ({item}: any) => {
     return (
       <View style={styles.itemBTNCont}>
-        <TouchableOpacity activeOpacity={0.9} style={styles.itemBTN}>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={_handleHistoryDetailOpen}
+          style={styles.itemBTN}>
           <View style={styles.itemBTNLeftView}>
             <View style={styles.vehicleIconCont}></View>
 
@@ -63,7 +77,7 @@ export default HistoryScreen;
 
 const styles = StyleSheet.create({
   itemBTNCont: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.F7F7F7,
     marginHorizontal: MS(18),
     elevation: 2,
     shadowColor: COLORS.black,

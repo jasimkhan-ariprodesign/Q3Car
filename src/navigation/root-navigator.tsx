@@ -7,7 +7,7 @@ import AppStack from './app-stack';
 import DrawerNavigator from './drawer-navigator';
 import {RootStackParamList} from './types/types';
 import {COLORS, SCREENS} from '../misc';
-import {BookingDetailsProcessingInfoScreen} from '../presentation';
+// import {BookingDetailsProcessingInfoScreen} from '../presentation';
 
 const Stack = createStackNavigator<RootStackParamList>();
 

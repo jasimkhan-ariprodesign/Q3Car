@@ -5,6 +5,7 @@ import {COLORS, SCREENS} from '../misc';
 import {SuccessScreen} from '../common';
 import {
   BookingDetailsProcessingInfoScreen,
+  HistoryDetailsScreen,
   HistoryScreen,
   ProfileScreen,
   SearchResultScreen,
@@ -41,6 +42,7 @@ const AppStack = () => {
         name={SCREENS.bookingDetailsProcessingInfoScreen}
         component={BookingDetailsProcessingInfoScreen}
       />
+      <Stack.Screen name={SCREENS.historyDetailsScreen} component={HistoryDetailsScreen} />
     </Stack.Navigator>
   );
 };

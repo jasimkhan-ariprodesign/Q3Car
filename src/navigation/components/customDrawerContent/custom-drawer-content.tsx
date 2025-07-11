@@ -24,17 +24,19 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const _handleProfileClick = () => {
-    prop?.navigation?.closeDrawer();
-    navigation.navigate(SCREENS.appStack, {
+    navigation.push(SCREENS.appStack, {
       screen: SCREENS.profileScreen,
     });
+    prop?.navigation?.closeDrawer();
   };
 
   const _handleDrawerBTNClick = (route: keyof AppStackParamList) => {
-    prop?.navigation?.closeDrawer();
-    navigation.navigate(SCREENS.appStack, {
-      screen: route,
-    });
+    if (route) {
+      navigation.push(SCREENS.appStack, {
+        screen: route,
+      });
+      prop?.navigation?.closeDrawer();
+    }
   };
 
   const _renderProfileCont = () => {
@@ -171,7 +173,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     columnGap: MS(12),
-    paddingVertical: MVS(4),
+    paddingVertical: MVS(8),
     paddingHorizontal: leftSpace / 2,
   },
   titleString: {
@@ -180,6 +182,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.workSansSemiBold,
   },
   contentContainerStyle: {
-    rowGap: MVS(12),
+    rowGap: MVS(8),
   },
 });
