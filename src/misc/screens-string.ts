@@ -47,4 +47,5 @@ export const _screens = {
 
   // sp stack
   SPProfileScreen: 'SPProfileScreen',
+  SPUpdateProfile: 'SPUpdateProfile',
 } as const;

@@ -7,7 +7,7 @@ import AppStack from './app-stack';
 import DrawerNavigator from './drawer-navigator';
 import {RootStackParamList} from './types/types';
 import {COLORS, SCREENS} from '../misc';
-import SPDrawerNavigator from './sp-drawer-navigator';
+import SPDrawerNavigator from './service-provider-drawer-navigator';
 import SPStack from './service-provider-stack';
 // import {BookingDetailsProcessingInfoScreen} from '../presentation';
 

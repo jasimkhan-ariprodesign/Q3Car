@@ -2,7 +2,7 @@ import React from 'react';
 import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
 import {COLORS, SCREENS} from '../misc';
 import {SPStackParamList} from './types/types';
-import {SPProfileScreen} from '../presentation';
+import {SPProfileScreen, SPUpdateProfile} from '../presentation';
 
 const Stack = createStackNavigator<SPStackParamList>();
 
@@ -16,6 +16,7 @@ const SPStack = () => {
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
       <Stack.Screen name={SCREENS.SPProfileScreen} component={SPProfileScreen} />
+      <Stack.Screen name={SCREENS.SPUpdateProfile} component={SPUpdateProfile} />
     </Stack.Navigator>
   );
 };

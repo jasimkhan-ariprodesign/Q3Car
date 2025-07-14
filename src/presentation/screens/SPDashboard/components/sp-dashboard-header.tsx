@@ -7,12 +7,18 @@ import {useNavigation} from '@react-navigation/native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {RootStackParamList} from '../../../../navigation/types/types';
 
-const SPDashboardHeader = () => {
+interface SPDashboardHeaderProp {
+  handleOffOn?: Function;
+  netStatus?: string;
+}
+
+const SPDashboardHeader: React.FC<SPDashboardHeaderProp> = ({handleOffOn, netStatus}) => {
   const navigation = useNavigation<DrawerNavigationProp<RootStackParamList>>();
 
   const _handleDrawerToggle = () => {
     navigation.toggleDrawer();
   };
+
   return (
     <View style={styles.headerCont}>
       <View>
@@ -26,10 +32,10 @@ const SPDashboardHeader = () => {
 
       <View>
         <Switch
-          //   value={receiveReceiptEmails}
-          //   onValueChange={() => {
-          //     setReceiveReceiptEmails(!receiveReceiptEmails);
-          //   }}
+          value={netStatus === 'online'}
+          onValueChange={() => {
+            handleOffOn && handleOffOn();
+          }}
           thumbColor={COLORS.white}
           trackColor={{
             false: COLORS.CFCFCF,
@@ -45,11 +51,12 @@ export default SPDashboardHeader;
 
 const styles = StyleSheet.create({
   headerCont: {
-    backgroundColor: 'lime',
+    // backgroundColor: 'lime',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: MS(24),
     justifyContent: 'space-between',
-    paddingVertical: isIOS() ? MVS(8) : MVS(12),
+    paddingVertical: isIOS() ? MVS(4) : MVS(12),
+    paddingBottom: isIOS() ? MVS(8) : MVS(12),
   },
 });

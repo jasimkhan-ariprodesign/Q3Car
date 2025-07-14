@@ -29,6 +29,7 @@ export const _icons = {
   fromToDest: require('./from-to-dest.png'),
   reloadGrey: require('./reload-black.png'),
   starBlack: require('./star-black.png'),
+  moon: require('./moon.png'),
 };
 
 // drawer icons 👇🏻

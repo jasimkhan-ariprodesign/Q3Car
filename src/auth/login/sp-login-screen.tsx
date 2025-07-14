@@ -61,8 +61,11 @@ const SPLoginScreen = () => {
     });
   };
 
-  const _handleSignIn = (value: any) => {
-    logger.log('_handleSignup --: ', value);
+  const _handleSignIn = (value?: any) => {
+    // logger.log('_handleSignup --: ', value);
+    navigation.push(SCREENS.SPDrawerNavigator, {
+      screen: SCREENS.SPDashboardScreen,
+    });
   };
 
   const _renderOrView = () => {
@@ -148,7 +151,11 @@ const SPLoginScreen = () => {
               </View>
 
               {/* sign in button */}
-              <PrimaryButton title="Sign in" onPress={handleSubmit} />
+              <PrimaryButton
+                title="Sign in"
+                // onPress={handleSubmit}
+                onPress={_handleSignIn}
+              />
             </View>
           );
         }}

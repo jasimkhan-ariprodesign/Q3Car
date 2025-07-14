@@ -1,5 +1,5 @@
 import {KeyboardAvoidingView, StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {_useCustomSafeAreaInsets, COLORS, COMMON_STYLES, isIOS, MS, MVS} from '../../../misc';
 import {IconButton, SafeAreaWrapper} from '../../components';
 import {ICONS} from '../../../assets';
@@ -7,15 +7,34 @@ import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/types/types';
 import SPDashboardHeader from './components/sp-dashboard-header';
-import RenderMap from './components/RenderMap';
+import RenderMap from './components/render-map';
+import OfflineMessageIndicator from './components/offline-message-indicator';
+import ContentCont from './components/content-cont';
 
 const SPDashboardScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<RootStackParamList>>();
+  const [netStatus, setNetStatus] = useState<'offline' | 'online'>('offline');
+
+  const _handleOnlineSwitchClick = () => {
+    if (netStatus === 'offline') {
+      setNetStatus('online');
+    } else {
+      setNetStatus('offline');
+    }
+  };
 
   const _renderHeader = () => {
     return (
       <>
-        <SPDashboardHeader />
+        <SPDashboardHeader handleOffOn={_handleOnlineSwitchClick} netStatus={netStatus} />
+      </>
+    );
+  };
+
+  const _renderOfflineMessageCont = () => {
+    return (
+      <>
+        <OfflineMessageIndicator />
       </>
     );
   };
@@ -28,6 +47,14 @@ const SPDashboardScreen = () => {
     );
   };
 
+  const _renderContentCont = () => {
+    return (
+      <>
+        <ContentCont />
+      </>
+    );
+  };
+
   // main view
   return (
     <>
@@ -36,11 +63,14 @@ const SPDashboardScreen = () => {
           {/* header  */}
           {_renderHeader()}
 
+          {/* offline message indicator */}
+          {netStatus === 'offline' && _renderOfflineMessageCont()}
+
           {/* map here */}
           {_renderMap()}
 
           {/* dashboard content */}
-          {/* {_renderContentCont()} */}
+          {_renderContentCont()}
         </SafeAreaWrapper>
       </KeyboardAvoidingView>
     </>

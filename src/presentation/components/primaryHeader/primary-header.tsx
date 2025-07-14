@@ -14,49 +14,87 @@ import {COLORS, MS, MVS} from '../../../misc';
 import {useNavigation} from '@react-navigation/native';
 
 interface PrimaryHeaderProps {
-  disabled?: boolean;
-  onPress?: () => void;
-  title?: string;
+  backDisabled?: boolean;
+  backPressFunction?: () => void;
+  backString?: string;
   containerStyle?: ViewStyle;
-  buttonContStyle?: ViewStyle;
-  iconStyle?: ImageStyle;
-  titleStyle?: TextStyle;
+  backButtonStyle?: ViewStyle;
+  backIconStyle?: ImageStyle;
+  backStringStyle?: TextStyle;
+
+  rightBTNString?: string;
+  rightBTNFunction?: Function;
+  rightBTNDisabled?: boolean;
+  rightBTNStringStyle?: TextStyle;
+  rightBTNStyle?: ViewStyle;
 }
 
 const PrimaryHeader: React.FC<PrimaryHeaderProps> = ({
-  disabled = false,
-  onPress,
-  title = 'Back',
+  backDisabled = false,
+  backPressFunction,
+  backString = 'Back',
   containerStyle,
-  buttonContStyle,
-  iconStyle,
-  titleStyle,
+  backButtonStyle,
+  backIconStyle,
+  backStringStyle,
+
+  rightBTNString,
+  rightBTNFunction,
+  rightBTNDisabled = true,
+  rightBTNStringStyle,
+  rightBTNStyle,
 }) => {
   const navigation = useNavigation();
 
   const handleBackClick = () => {
-    if (onPress) {
-      return onPress();
+    if (backPressFunction) {
+      return backPressFunction();
     }
     navigation.goBack();
   };
 
-  return (
-    <View style={[styles.container, containerStyle]}>
+  const _handleRightButtonClick = () => {
+    rightBTNFunction && rightBTNFunction();
+  };
+
+  const _renderBackButton = () => {
+    return (
       <TouchableOpacity
         onPress={handleBackClick}
         activeOpacity={0.7}
-        disabled={disabled}
-        style={[styles.buttonCont, buttonContStyle]}
+        disabled={backDisabled}
+        style={[styles.buttonCont, backButtonStyle]}
         accessibilityLabel="Go back"
         accessibilityRole="button">
         <Image
           source={ICONS.angleLeftDark}
-          style={[styles.icon, iconStyle]}
+          style={[styles.icon, backIconStyle]}
           resizeMode="contain"
         />
-        <Text style={[styles.title, titleStyle]}>{title || ''}</Text>
+        <Text style={[styles.stringStyle, backStringStyle]}>{backString || ''}</Text>
       </TouchableOpacity>
+    );
+  };
+
+  const _renderRightSideOptionalButton = () => {
+    return (
+      <TouchableOpacity
+        onPress={_handleRightButtonClick}
+        style={[rightBTNStyle]}
+        activeOpacity={rightBTNDisabled ? 1 : 0.7}
+        disabled={backDisabled}>
+        <Text style={[styles.stringStyle, rightBTNStringStyle]}>{rightBTNString || ''}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <View style={[styles.container, containerStyle]}>
+      {/* back button */}
+      {_renderBackButton()}
+
+      {/* right side button - optional */}
+      {_renderRightSideOptionalButton()}
     </View>
   );
 };
@@ -66,19 +104,21 @@ export default PrimaryHeader;
 const styles = StyleSheet.create({
   container: {
     paddingVertical: MVS(12),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   buttonCont: {
     flexDirection: 'row',
     alignItems: 'center',
     columnGap: MS(8),
-    alignSelf: 'flex-start',
   },
   icon: {
     width: MS(10),
     height: MS(17),
     tintColor: COLORS.textPrimary,
   },
-  title: {
+  stringStyle: {
     color: COLORS.textPrimary,
     fontSize: MS(14),
     fontFamily: FONTS.workSansRegular,

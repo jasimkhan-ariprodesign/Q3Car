@@ -46,8 +46,8 @@ export type SPDrawerNavigatorParamList = {
 };
 
 export type SPStackParamList = {
-  // HomeScreen: undefined;
   SPProfileScreen: undefined;
+  SPUpdateProfile: undefined;
 };
 
 export type RootStackParamList = {
