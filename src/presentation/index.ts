@@ -15,6 +15,7 @@ import HistoryDetailsScreen from './screens/historyDetails/history-details-scree
 import SPDashboardScreen from './screens/SPDashboard/sp-dashboard-screen';
 import SPProfileScreen from './screens/SPProfile/sp-profile-screen';
 import SPUpdateProfile from './screens/SPUpdateProfile/sp-update-proflie';
+import SPEarningHistory from './screens/SPEarningHistory/sp-earning-history';
 
 export {
   SplashScreen,
@@ -34,4 +35,5 @@ export {
   SPDashboardScreen,
   SPProfileScreen,
   SPUpdateProfile,
+  SPEarningHistory,
 };

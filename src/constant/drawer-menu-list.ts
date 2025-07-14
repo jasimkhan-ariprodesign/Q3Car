@@ -66,7 +66,7 @@ export const SP_DRAWER_MENU_LIST = [
     title: 'Earnings History',
     icon: _drawerMenuIcons.promotion,
     screenName: 'PromotionScreen',
-    // routeName: 'Promotion',
+    routeName: SCREENS.SPEarningHistory,
   },
   {
     id: '3',
@@ -75,5 +75,4 @@ export const SP_DRAWER_MENU_LIST = [
     screenName: 'FavoritesScreen',
     // routeName: 'MyFavorites',
   },
-
 ];

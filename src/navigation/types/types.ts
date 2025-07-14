@@ -48,6 +48,7 @@ export type SPDrawerNavigatorParamList = {
 export type SPStackParamList = {
   SPProfileScreen: undefined;
   SPUpdateProfile: undefined;
+  SPEarningHistory: undefined;
 };
 
 export type RootStackParamList = {

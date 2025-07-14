@@ -15,7 +15,7 @@ import {COLORS, MS, MVS, SCREENS, COMMON_STYLES} from '../../../misc';
 import {IconButton, SafeAreaWrapper} from '../../../presentation/components';
 import {FONTS, ICONS} from '../../../assets';
 import {logger} from '../../../utils';
-import {AppStackParamList, RootStackParamList} from '../../types/types';
+import {RootStackParamList, SPStackParamList} from '../../types/types';
 import {SP_DRAWER_MENU_LIST} from '../../../constant';
 
 const SPDrawerContent = (prop: DrawerContentComponentProps) => {
@@ -30,9 +30,10 @@ const SPDrawerContent = (prop: DrawerContentComponentProps) => {
     prop?.navigation?.closeDrawer();
   };
 
-  const _handleDrawerBTNClick = (route: keyof AppStackParamList) => {
+  const _handleDrawerBTNClick = (route: keyof SPStackParamList) => {
     if (route) {
-      navigation.push(SCREENS.appStack, {
+      // logger.warn(route)
+      navigation.push(SCREENS.SPStack, {
         screen: route,
       });
       prop?.navigation?.closeDrawer();
