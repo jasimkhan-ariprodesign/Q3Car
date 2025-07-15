@@ -30,6 +30,9 @@ export const _icons = {
   reloadGrey: require('./reload-black.png'),
   starBlack: require('./star-black.png'),
   moon: require('./moon.png'),
+  arrowDownBlack: require('./arrow-down-black.png'),
+  transactionFilter: require('./transaction-filter.png'),
+  calenderBlack: require('./calender-black.png'),
 };
 
 // drawer icons 👇🏻

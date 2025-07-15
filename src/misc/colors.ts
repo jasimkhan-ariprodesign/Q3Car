@@ -33,6 +33,7 @@ export const _color = {
   transparent: 'transparent',
   transparentBlack1: 'rgba(0, 0, 0, 0.1)',
   transparentBlack2: 'rgba(0, 0, 0, 0.2)',
+  transparentBlack4: 'rgba(0, 0, 0, 0.4)',
   transparentBlack5: 'rgba(0, 0, 0, 0.5)',
   transparentBlack9: 'rgba(0, 0, 0, 0.9)',
   transparentWhite1: 'rgba(255, 255, 255, 0.1)',

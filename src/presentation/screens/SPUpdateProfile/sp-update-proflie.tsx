@@ -1,39 +1,41 @@
 import {
-  Button,
   Image,
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React from 'react';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {_isIOS} from '../../../misc/platform';
 import {SafeAreaWrapper, TextButton} from '../../components';
 import {COLORS, COMMON_STYLES, isIOS, MS, MVS} from '../../../misc';
-import {FONTS} from '../../../assets';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {FONTS, ICONS} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
 
-export const _signupSchema = Yup.object().shape({
-  fullName: Yup.string()
-    .min(2, 'Full name is too short')
-    .max(50, 'Full name is too long')
-    .required('Full name is required'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
-  countryCode: Yup.string().required('Required'),
+export const updateProfileSchema = Yup.object().shape({
+  profileAvatar: Yup.string().required('Profile is required'),
+
+  firstName: Yup.string().min(2, 'First name is too short').required('First name is required'),
+  lastName: Yup.string().required('Last name is required'),
+
   phoneNumber: Yup.string()
     .matches(/^[0-9]+$/, 'Must be only digits')
     .min(7, 'Phone number is too short')
     .max(15, 'Phone number is too long')
     .required('Phone number is required'),
-  agreeToTerms: Yup.boolean()
-    .oneOf([true], 'You must accept the terms and conditions')
-    .required('You must accept the terms and conditions'),
+
+  email: Yup.string().email('Invalid email address').required('Email is required'),
+  countryCode: Yup.string().required('Required'),
+
+  gender: Yup.string().required('Gender is required'),
+  birthday: Yup.string().required('Birthday is required'),
 });
 
 const SPUpdateProfile = () => {
@@ -63,13 +65,14 @@ const SPUpdateProfile = () => {
         <Formik
           initialValues={{
             profileAvatar: '',
-            firstName: '',
+            firstName: 'Martha',
             lastName: '',
             phoneNumber: '',
             email: '',
             gender: '',
             birthday: '',
           }}
+          validationSchema={updateProfileSchema}
           onSubmit={values => console.log(values)}>
           {({handleChange, handleBlur, handleSubmit, values}) => (
             <View style={styles.formCont}>
@@ -85,6 +88,13 @@ const SPUpdateProfile = () => {
                       style={styles.profilePic}
                       resizeMode="cover"
                     />
+                    <TouchableOpacity style={styles.profilePicBTN}>
+                      <Image
+                        source={ICONS.cameraWhite}
+                        style={COMMON_STYLES.size32}
+                        resizeMode="contain"
+                      />
+                    </TouchableOpacity>
                   </View>
                   <Text style={styles.editPhotoString}>Edit Photo</Text>
                 </View>
@@ -94,11 +104,18 @@ const SPUpdateProfile = () => {
                     placeholder="First name"
                     placeholderTextColor={COLORS.textDisabled}
                     style={styles.firstNameInput}
+                    value={values.firstName}
+                    onChangeText={handleChange('firstName')}
+                    onBlur={handleBlur('firstName')}
+                    autoCorrect={false}
                   />
                   <TextInput
                     placeholder="Last name"
                     placeholderTextColor={COLORS.textDisabled}
                     style={styles.firstNameInput}
+                    onChangeText={handleChange('lastName')}
+                    onBlur={handleBlur('lastName')}
+                    autoCorrect={false}
                   />
                 </View>
               </View>
@@ -109,12 +126,47 @@ const SPUpdateProfile = () => {
 
               {/* all other details */}
               <View>
+                {/* phone */}
                 <View style={styles.commonView}>
-                  <Text>Phone number</Text>
+                  <Text style={styles.labelString}>Phone number</Text>
+
                   <TextInput
                     placeholder="584-490-9153"
                     placeholderTextColor={COLORS.textDisabled}
-                    // style={styles.firstNameInput}
+                    style={styles.commonInputStyle}
+                  />
+                </View>
+
+                {/* email */}
+                <View style={styles.commonView}>
+                  <Text style={styles.labelString}>Email</Text>
+
+                  <TextInput
+                    placeholder="freeslab88@gmail.com"
+                    placeholderTextColor={COLORS.textDisabled}
+                    style={styles.commonInputStyle}
+                  />
+                </View>
+
+                {/* gender */}
+                <View style={styles.commonView}>
+                  <Text style={styles.labelString}>Gender</Text>
+
+                  <TextInput
+                    placeholder="Female"
+                    placeholderTextColor={COLORS.textDisabled}
+                    style={styles.commonInputStyle}
+                  />
+                </View>
+
+                {/* d-o-b */}
+                <View style={styles.commonView}>
+                  <Text style={styles.labelString}>Birthday</Text>
+
+                  <TextInput
+                    placeholder="April 16, 1988"
+                    placeholderTextColor={COLORS.textDisabled}
+                    style={styles.commonInputStyle}
                   />
                 </View>
               </View>
@@ -194,6 +246,18 @@ const styles = StyleSheet.create({
     height: '99%',
     borderRadius: MS(120),
   },
+  profilePicBTN: {
+    backgroundColor: COLORS.transparentBlack4,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    borderRadius: MS(100),
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1,
+  },
   firstAndLastNameCont: {
     flex: 1,
     marginTop: -MVS(24),
@@ -223,9 +287,31 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.EDEDED,
   },
   commonView: {
+    // backgroundColor: COLORS.offWhite,
     height: inpHeight,
     borderBottomWidth: 1,
     borderColor: COLORS.EDEDED,
     flexDirection: 'row',
+    alignItems: 'center',
+    columnGap: MS(4),
+  },
+  labelString: {
+    color: COLORS.black,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansRegular,
+    includeFontPadding: false,
+    flex: 1,
+  },
+  commonInputStyle: {
+    // backgroundColor: COLORS.pink,
+    padding: 0,
+    height: '98%',
+    color: COLORS.black,
+    fontSize: MS(14),
+    fontFamily: FONTS.workSansRegular,
+    includeFontPadding: false,
+    textAlignVertical: 'center',
+    textAlign: 'right',
+    width: '65%',
   },
 });

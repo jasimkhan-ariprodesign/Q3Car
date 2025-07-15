@@ -76,3 +76,39 @@ export const HISTORY_DATA = [
     // image: require('./assets/delivery-truck.png'), // replace with your local image path
   },
 ];
+
+
+export const EarningsHistoryData = [
+  {
+    id: '1',
+    type: 'Groceries',
+    amount: 120,
+    date: 'Yesterday at 16:34',
+    icon: 'G', // for the circle avatar
+    iconColor: '#FFE5E5', // light red background
+  },
+  {
+    id: '2',
+    type: 'Gas',
+    amount: 205,
+    date: 'Yesterday at 13:03',
+    icon: 'G',
+    iconColor: '#FFE5E5',
+  },
+  {
+    id: '3',
+    type: 'Sneaker sales',
+    amount: 859,
+    date: 'Yesterday at 16:34',
+    icon: 'S',
+    iconColor: '#DFFFE8', // light green background
+  },
+  {
+    id: '4',
+    type: 'Gym',
+    amount: 20,
+    date: 'Wed, 01 Nov 2023 at 09:10',
+    icon: 'G',
+    iconColor: '#FFE5E5',
+  },
+];

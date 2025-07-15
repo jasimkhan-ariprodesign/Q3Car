@@ -1,13 +1,34 @@
 import {StyleSheet} from 'react-native';
 import {_color} from './colors';
 import {_getStatusBarHeight} from './statusbar-height';
-import {ms} from 'react-native-size-matters';
+import {ms, mvs} from 'react-native-size-matters';
 
 const statusBarHeight = _getStatusBarHeight();
 
 export const _inputFieldHeight = ms(36);
 
 export const _styles = StyleSheet.create({
+  // gap
+
+  gapMS4: {
+    gap: ms(4),
+  },
+  gapMS8: {
+    gap: ms(8),
+  },
+  gapMS12: {
+    gap: ms(12),
+  },
+  gapMVS4: {
+    gap: mvs(4),
+  },
+  gapMVS8: {
+    gap: mvs(8),
+  },
+  gapMVS12: {
+    gap: mvs(12),
+  },
+
   // Layout
   flex: {
     flex: 1,
