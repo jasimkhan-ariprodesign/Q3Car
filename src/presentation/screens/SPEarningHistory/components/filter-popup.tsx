@@ -37,7 +37,7 @@ const FilterPopup: React.FC<FilterPopupProp> = ({closePopupFunc}) => {
 
   // main view
   return (
-    <CustomBottomShitModal animationValue={200}>
+    <CustomBottomShitModal animationValue={50}>
       <View style={styles.container}>
         <ScrollView
           showsVerticalScrollIndicator={false}

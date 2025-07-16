@@ -7,6 +7,7 @@ import {FONTS, ICONS} from '../../../assets';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../navigation/types/types';
+import {SecondaryLoader} from '../../../common';
 
 const SPProfileScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -64,10 +65,9 @@ const SPProfileScreen = () => {
     );
   };
 
-  // main view
-  return (
-    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
-      <SafeAreaWrapper>
+  const _renderHeader = () => {
+    return (
+      <>
         <PrimaryHeader
           containerStyle={COMMON_STYLES.headerStyle}
           rightBTNString="Edit"
@@ -75,6 +75,24 @@ const SPProfileScreen = () => {
           rightBTNFunction={_handleEditClick}
           rightBTNDisabled={false}
         />
+      </>
+    );
+  };
+
+  const _renderLoader = () => {
+    return (
+      <>
+        <SecondaryLoader />
+      </>
+    );
+  };
+
+  // main view
+  return (
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+      <SafeAreaWrapper>
+        {/* header */}
+        {_renderHeader()}
         <View style={COMMON_STYLES.flex}>
           <ScrollView
             showsVerticalScrollIndicator={false}
@@ -90,6 +108,9 @@ const SPProfileScreen = () => {
               {_renderInfoCont()}
             </>
           </ScrollView>
+
+          {/* loader  */}
+          {/* {_renderLoader()} */}
         </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>

@@ -1,10 +1,11 @@
-import {FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
-import {SafeAreaWrapper, PrimaryHeader, TextButton} from '../../components';
+import {SafeAreaWrapper, PrimaryHeader} from '../../components';
 import {COLORS, COMMON_STYLES, MS, MVS} from '../../../misc';
 import {FONTS, ICONS} from '../../../assets';
 import {EarningsHistoryData} from '../../../constant';
 import FilterPopup from './components/filter-popup';
+import {SecondaryLoader} from '../../../common';
 
 const SPEarningHistory = () => {
   const [showFilterPopup, setShowFilterPopup] = useState<boolean>(false);
@@ -84,6 +85,14 @@ const SPEarningHistory = () => {
     );
   };
 
+  const _renderLoader = () => {
+    return (
+      <>
+        <SecondaryLoader />
+      </>
+    );
+  };
+
   // main view
   return (
     <SafeAreaWrapper>
@@ -94,6 +103,9 @@ const SPEarningHistory = () => {
 
         {/* earning history list */}
         {_renderEarningHistoryLists()}
+
+        {/* loader */}
+        {/* {_renderLoader()} */}
       </View>
 
       {/* filter pop up */}
@@ -117,18 +129,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: padHori,
     paddingVertical: MVS(8),
     justifyContent: 'space-between',
-    // backgroundColor: 'lime',
   },
   allDownArrowIconCon: {
     flexDirection: 'row',
     alignItems: 'center',
     columnGap: MS(4),
-    // backgroundColor: 'pink',
   },
   downArrowIcon: {
     width: MS(8),
     height: MVS(10),
-    // backgroundColor: 'red',
   },
   allString: {
     color: COLORS.black,

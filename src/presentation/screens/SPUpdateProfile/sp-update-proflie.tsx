@@ -18,7 +18,7 @@ import {SafeAreaWrapper, TextButton} from '../../components';
 import {COLORS, COMMON_STYLES, isIOS, MS, MVS} from '../../../misc';
 import {FONTS, ICONS} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
-import {CameraOrGalleryPopup} from '../../../common';
+import {CameraOrGalleryPopup, SecondaryLoader} from '../../../common';
 
 export const updateProfileSchema = Yup.object().shape({
   profileAvatar: Yup.string().required('Profile is required'),
@@ -198,17 +198,22 @@ const SPUpdateProfile = () => {
         {/* back & done cont */}
         {_renderHeader()}
 
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.contentContainerStyle}>
-          <>
-            {/* content */}
-            {_renderCont()}
-          </>
-        </ScrollView>
+        <View style={COMMON_STYLES.flex}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.contentContainerStyle}>
+            <>
+              {/* content */}
+              {_renderCont()}
+            </>
+          </ScrollView>
 
-        {/* pop to select camera or gallery */}
-        {showProfilePopup && _renderProfilePopup()}
+          {/* pop to select camera or gallery */}
+          {showProfilePopup && _renderProfilePopup()}
+
+          {/* loader */}
+          {/* <SecondaryLoader /> */}
+        </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
   );
