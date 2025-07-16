@@ -35,7 +35,7 @@ const IconButton: React.FC<IconButtonProp> = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      activeOpacity={0.7}
+      activeOpacity={disabled ? 0.9 : 0.5}
       disabled={disabled}
       style={[styles.container, iconBtnStyle]}
       accessibilityRole="button">

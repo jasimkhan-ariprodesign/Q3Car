@@ -1,11 +1,18 @@
 import {FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {SafeAreaWrapper, PrimaryHeader, TextButton} from '../../components';
 import {COLORS, COMMON_STYLES, MS, MVS} from '../../../misc';
 import {FONTS, ICONS} from '../../../assets';
 import {EarningsHistoryData} from '../../../constant';
+import FilterPopup from './components/filter-popup';
 
 const SPEarningHistory = () => {
+  const [showFilterPopup, setShowFilterPopup] = useState<boolean>(false);
+
+  const _handleFilterClick = () => {
+    setShowFilterPopup(prev => !prev);
+  };
+
   const _renderFilterButtonCont = () => {
     return (
       <View style={styles.filterBTNConParentView}>
@@ -14,7 +21,7 @@ const SPEarningHistory = () => {
           <Image source={ICONS.arrowDownBlack} style={styles.downArrowIcon} resizeMode="contain" />
         </View>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={_handleFilterClick}>
           <Image
             source={ICONS.transactionFilter}
             style={COMMON_STYLES.size16}
@@ -69,6 +76,14 @@ const SPEarningHistory = () => {
     );
   };
 
+  const _renderFilterPopup = () => {
+    return (
+      <>
+        <FilterPopup closePopupFunc={_handleFilterClick} />
+      </>
+    );
+  };
+
   // main view
   return (
     <SafeAreaWrapper>
@@ -80,6 +95,9 @@ const SPEarningHistory = () => {
         {/* earning history list */}
         {_renderEarningHistoryLists()}
       </View>
+
+      {/* filter pop up */}
+      {showFilterPopup && _renderFilterPopup()}
     </SafeAreaWrapper>
   );
 };

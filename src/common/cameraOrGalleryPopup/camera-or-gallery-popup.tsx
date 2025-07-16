@@ -5,12 +5,12 @@ import {COLORS, COMMON_STYLES, MS, MVS, useCustomSafeAreaInsets} from '../../mis
 import {EdgeInsets} from 'react-native-safe-area-context';
 import {FONTS, ICONS} from '../../assets';
 
-interface CameraOrGalleryPopup {
+interface CameraOrGalleryPopupProp {
   closePopupFunc?: Function;
   activeOpacity?: number;
 }
 
-const CameraOrGalleryPopup: React.FC<CameraOrGalleryPopup> = ({
+const CameraOrGalleryPopup: React.FC<CameraOrGalleryPopupProp> = ({
   closePopupFunc,
   activeOpacity = 0.5,
 }) => {
@@ -24,6 +24,7 @@ const CameraOrGalleryPopup: React.FC<CameraOrGalleryPopup> = ({
     <CustomBottomShitModal animationValue={200} backdropStyle={styles.backdropStyle}>
       <View style={styles.container}>
         <Pressable onPress={_handleClosePopupFunc} style={COMMON_STYLES.flex} />
+
         <View style={styles.buttonCont}>
           <TouchableOpacity style={styles.commonBTN} activeOpacity={activeOpacity}>
             <Image
