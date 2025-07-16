@@ -74,7 +74,7 @@ const getStyle = (insets: EdgeInsets) =>
       rowGap: MVS(12),
 
       ...COMMON_STYLES.shadow4,
-      borderWidth: 1,
+      borderTopWidth: 1,
       borderColor: COLORS.lightGray,
     },
 
