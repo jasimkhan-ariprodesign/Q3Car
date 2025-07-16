@@ -3,7 +3,7 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {EdgeInsets} from 'react-native-safe-area-context';
-import {_useCustomSafeAreaInsets, COLORS, COMMON_STYLES, isIOS, MS} from '../../../misc';
+import {useCustomSafeAreaInsets, COLORS, COMMON_STYLES, isIOS, MS} from '../../../misc';
 import {IconButton, SafeAreaWrapper} from '../../components';
 import {ICONS} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
@@ -12,7 +12,7 @@ import ContentCont from './components/contentCont/content-cont';
 
 const HistoryDetailsScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const insets = _useCustomSafeAreaInsets();
+  const insets = useCustomSafeAreaInsets();
   const styles = getStyles(insets);
 
   const _handleBackClick = () => {

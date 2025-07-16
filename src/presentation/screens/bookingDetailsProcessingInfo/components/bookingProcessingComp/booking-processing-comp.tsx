@@ -3,14 +3,14 @@ import React from 'react';
 import SwipeButton from 'rn-swipe-button';
 import {EdgeInsets} from 'react-native-safe-area-context';
 import {ICONS, FONTS} from '../../../../../assets';
-import {_useCustomSafeAreaInsets, COLORS, COMMON_STYLES, MVS, MS} from '../../../../../misc';
+import {useCustomSafeAreaInsets, COLORS, COMMON_STYLES, MVS, MS} from '../../../../../misc';
 
 interface BookingProcessingComp {
   onSlide?: Function;
 }
 
 const BookingProcessingComp: React.FC<BookingProcessingComp> = ({onSlide}) => {
-  const insets = _useCustomSafeAreaInsets();
+  const insets = useCustomSafeAreaInsets();
   const styles = getStyles(insets);
 
   const _handleSwipeSuccess = () => {

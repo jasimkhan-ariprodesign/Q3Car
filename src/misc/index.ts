@@ -16,7 +16,7 @@ export {
   _styles as COMMON_STYLES,
 
   _getStatusBarHeight,
-  _useCustomSafeAreaInsets,
+  _useCustomSafeAreaInsets as useCustomSafeAreaInsets,
 
   _screens as SCREENS,
   _strings as STRINGS,

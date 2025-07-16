@@ -11,7 +11,7 @@ import {
   MS,
   SCREENS,
   COMMON_STYLES,
-  _useCustomSafeAreaInsets,
+  useCustomSafeAreaInsets,
 } from '../../../misc';
 import {ICONS} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
@@ -21,7 +21,7 @@ import DashboardContent from './components/dashboardContent/dashboard-content';
 const DashboardScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<RootStackParamList>>();
 
-  const insets = _useCustomSafeAreaInsets();
+  const insets = useCustomSafeAreaInsets();
   const styles = getStyles(insets);
 
   const _handleDrawerToggle = () => {

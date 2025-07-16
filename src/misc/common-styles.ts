@@ -9,7 +9,6 @@ export const _inputFieldHeight = ms(36);
 
 export const _styles = StyleSheet.create({
   // gap
-
   gapMS4: {
     gap: ms(4),
   },
@@ -27,6 +26,37 @@ export const _styles = StyleSheet.create({
   },
   gapMVS12: {
     gap: mvs(12),
+  },
+
+  // shadow color
+
+  shadow1: {
+    elevation: 1,
+    shadowColor: _color.black,
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    shadowOffset: {width: 0, height: 0},
+  },
+  shadow2: {
+    elevation: 2,
+    shadowColor: _color.black,
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    shadowOffset: {width: 0, height: 0},
+  },
+  shadow3: {
+    elevation: 3,
+    shadowColor: _color.black,
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    shadowOffset: {width: 0, height: 0},
+  },
+  shadow4: {
+    elevation: 4,
+    shadowColor: _color.black,
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    shadowOffset: {width: 0, height: 0},
   },
 
   // Layout

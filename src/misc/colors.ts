@@ -35,10 +35,15 @@ export const _color = {
   transparentBlack2: 'rgba(0, 0, 0, 0.2)',
   transparentBlack4: 'rgba(0, 0, 0, 0.4)',
   transparentBlack5: 'rgba(0, 0, 0, 0.5)',
+  transparentBlack6: 'rgba(0, 0, 0, 0.6)',
+  transparentBlack8: 'rgba(0, 0, 0, 0.8)',
   transparentBlack9: 'rgba(0, 0, 0, 0.9)',
   transparentWhite1: 'rgba(255, 255, 255, 0.1)',
   transparentWhite2: 'rgba(255, 255, 255, 0.2)',
+  transparentWhite4: 'rgba(255, 255, 255, 0.4)',
   transparentWhite5: 'rgba(255, 255, 255, 0.5)',
+  transparentWhite6: 'rgba(255, 255, 255, 0.6)',
+  transparentWhite8: 'rgba(255, 255, 255, 0.8)',
   transparentWhite9: 'rgba(255, 255, 255, 0.9)',
 
   // Text colors

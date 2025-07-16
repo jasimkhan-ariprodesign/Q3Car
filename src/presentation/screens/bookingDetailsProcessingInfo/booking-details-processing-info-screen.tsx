@@ -3,7 +3,7 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {EdgeInsets} from 'react-native-safe-area-context';
-import {COLORS, COMMON_STYLES, isIOS, MS, _useCustomSafeAreaInsets} from '../../../misc';
+import {COLORS, COMMON_STYLES, isIOS, MS, useCustomSafeAreaInsets} from '../../../misc';
 import {IconButton, SafeAreaWrapper} from '../../components';
 import {ICONS} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
@@ -11,7 +11,7 @@ import {ContentCont, RenderMap} from './components';
 
 const BookingDetailsProcessingInfoScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const insets = _useCustomSafeAreaInsets();
+  const insets = useCustomSafeAreaInsets();
   const styles = getStyles(insets);
 
   const _handleBackClick = () => {

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {useNavigation} from '@react-navigation/native';
@@ -18,6 +18,7 @@ import {SafeAreaWrapper, TextButton} from '../../components';
 import {COLORS, COMMON_STYLES, isIOS, MS, MVS} from '../../../misc';
 import {FONTS, ICONS} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
+import {CameraOrGalleryPopup} from '../../../common';
 
 export const updateProfileSchema = Yup.object().shape({
   profileAvatar: Yup.string().required('Profile is required'),
@@ -40,9 +41,14 @@ export const updateProfileSchema = Yup.object().shape({
 
 const SPUpdateProfile = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const [showProfilePopup, setShowProfilePopup] = useState<boolean>(false);
 
   const _handleCancelClick = () => {
     navigation?.goBack();
+  };
+
+  const _handleProfileClick = () => {
+    setShowProfilePopup(prev => !prev);
   };
 
   const _renderHeader = () => {
@@ -88,7 +94,7 @@ const SPUpdateProfile = () => {
                       style={styles.profilePic}
                       resizeMode="cover"
                     />
-                    <TouchableOpacity style={styles.profilePicBTN}>
+                    <TouchableOpacity onPress={_handleProfileClick} style={styles.profilePicBTN}>
                       <Image
                         source={ICONS.cameraWhite}
                         style={COMMON_STYLES.size32}
@@ -177,6 +183,14 @@ const SPUpdateProfile = () => {
     );
   };
 
+  const _renderProfilePopup = () => {
+    return (
+      <>
+        <CameraOrGalleryPopup closePopupFunc={_handleProfileClick} />
+      </>
+    );
+  };
+
   //   main view
   return (
     <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
@@ -192,6 +206,9 @@ const SPUpdateProfile = () => {
             {_renderCont()}
           </>
         </ScrollView>
+
+        {/* pop to select camera or gallery */}
+        {showProfilePopup && _renderProfilePopup()}
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
   );
