@@ -62,5 +62,24 @@
 		<string>WorkSans-Regular.ttf</string>
 		<string>WorkSans-SemiBold.ttf</string>
 	</array>
+	<!-- camera permission -->
+	<key>NSCameraUsageDescription</key>
+  	<string>We need access to the camera to allow you to take pictures.</string>
+
+	<!-- location permission -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+  	<string>We need your location permission to provide better services.</string>
+
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  	<string>We need your location permission to provide better services.</string>
+
+	<key>NSLocationAlwaysUsageDescription</key>
+  	<string>We need your location permission to provide better services.</string>
+
+	<!-- library permission -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to photo library to let you upload photos.</string>
+
+
 </dict>
 </plist>
