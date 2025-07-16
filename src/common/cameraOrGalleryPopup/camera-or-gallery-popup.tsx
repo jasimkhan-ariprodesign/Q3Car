@@ -8,18 +8,28 @@ import {FONTS, ICONS} from '../../assets';
 interface CameraOrGalleryPopupProp {
   closePopupFunc?: Function;
   activeOpacity?: number;
+  onSelectImageType?: (type: 'Camera' | 'Gallery') => void;
 }
 
 const CameraOrGalleryPopup: React.FC<CameraOrGalleryPopupProp> = ({
   closePopupFunc,
   activeOpacity = 0.5,
+  onSelectImageType,
 }) => {
   const insets = useCustomSafeAreaInsets();
   const styles = getStyle(insets);
+
   const _handleClosePopupFunc = () => {
     closePopupFunc && closePopupFunc();
   };
 
+  const _handleCameraClick = () => {
+    onSelectImageType && onSelectImageType('Camera');
+  };
+
+  const _handleGalleryClick = () => {
+    onSelectImageType && onSelectImageType('Gallery');
+  };
   return (
     <CustomBottomShitModal animationValue={200} backdropStyle={styles.backdropStyle}>
       <View style={styles.container}>
@@ -37,7 +47,10 @@ const CameraOrGalleryPopup: React.FC<CameraOrGalleryPopupProp> = ({
             <Text style={styles.commonString}>{'Camera'}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.commonBTN} activeOpacity={activeOpacity}>
+          <TouchableOpacity
+            onPress={_handleGalleryClick}
+            style={styles.commonBTN}
+            activeOpacity={activeOpacity}>
             <Image
               source={ICONS.galleryGrey}
               style={COMMON_STYLES.size14}

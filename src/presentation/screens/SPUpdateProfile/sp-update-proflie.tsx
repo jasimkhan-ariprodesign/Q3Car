@@ -1,5 +1,6 @@
 import {
   Image,
+  ImageSourcePropType,
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
@@ -8,8 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
-import {Formik} from 'formik';
+import React, {useRef, useState} from 'react';
+import {Formik, FormikProps} from 'formik';
 import * as Yup from 'yup';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -19,6 +20,8 @@ import {COLORS, COMMON_STYLES, isIOS, MS, MVS} from '../../../misc';
 import {FONTS, ICONS} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
 import {CameraOrGalleryPopup, SecondaryLoader} from '../../../common';
+import {launchGalleryUtil, logger} from '../../../utils';
+import {getDefaultUiState, getInitialLoadingState, UiState} from '../../../utils/uiState/ui-state';
 
 export const updateProfileSchema = Yup.object().shape({
   profileAvatar: Yup.string().required('Profile is required'),
@@ -39,9 +42,24 @@ export const updateProfileSchema = Yup.object().shape({
   birthday: Yup.string().required('Birthday is required'),
 });
 
+type FormValues = {
+  profileAvatar: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+  gender: string;
+  birthday: string;
+};
+
 const SPUpdateProfile = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const defaultState: UiState<any> = getDefaultUiState();
+  const formikRef = useRef<FormikProps<FormValues>>(null);
+
   const [showProfilePopup, setShowProfilePopup] = useState<boolean>(false);
+  const [uiStateUpdateProfile, setUiStateUpdateProfile] = useState<UiState<any>>(defaultState);
+  logger.log('uiStateUpdateProfile --> ', JSON.stringify(uiStateUpdateProfile));
 
   const _handleCancelClick = () => {
     navigation?.goBack();
@@ -49,6 +67,45 @@ const SPUpdateProfile = () => {
 
   const _handleProfileClick = () => {
     setShowProfilePopup(prev => !prev);
+  };
+
+  const _handleProfileSelect = async (type: 'Camera' | 'Gallery') => {
+    try {
+      let selectedImageURI: string | null = null;
+
+      if (type === 'Gallery') {
+        setUiStateUpdateProfile(getInitialLoadingState());
+        selectedImageURI = await launchGalleryUtil({
+          mediaType: 'photo',
+          quality: 0.5,
+          maxWidth: 360,
+          maxHeight: 360,
+        });
+      }
+
+      // if (type === 'Camera') {
+      //   selectedImageURI = await launchCameraUtil({
+      //     mediaType: 'photo',
+      //     quality: 0.5,
+      //     maxWidth: 360,
+      //     maxHeight: 360,
+      //   });
+      // }
+
+      if (!selectedImageURI) {
+        logger.log('No image was selected or captured');
+        return;
+      }
+
+      // logger.warn(selectedImageURI);
+      if (formikRef?.current?.setFieldValue) {
+        formikRef.current?.setFieldValue('profileAvatar', selectedImageURI);
+      }
+    } catch (error) {
+      logger.log('handleLaunchGallery Error ', error);
+    } finally {
+      setUiStateUpdateProfile(getDefaultUiState());
+    }
   };
 
   const _renderHeader = () => {
@@ -69,6 +126,7 @@ const SPUpdateProfile = () => {
     return (
       <>
         <Formik
+          innerRef={formikRef}
           initialValues={{
             profileAvatar: '',
             firstName: 'Martha',
@@ -88,13 +146,14 @@ const SPUpdateProfile = () => {
                 <View>
                   <View style={styles.profilePicCont}>
                     <Image
-                      source={{
-                        uri: 'https://i.pinimg.com/736x/b8/99/00/b8990034ff80c63eb42d27cdff0f7f24.jpg',
-                      }}
+                      source={{uri: values?.profileAvatar || undefined}}
                       style={styles.profilePic}
                       resizeMode="cover"
                     />
-                    <TouchableOpacity onPress={_handleProfileClick} style={styles.profilePicBTN}>
+                    <TouchableOpacity
+                      onPress={_handleProfileClick}
+                      // onPress={() => _handleProfileUpload('Gallery')}
+                      style={styles.profilePicBTN}>
                       <Image
                         source={ICONS.cameraWhite}
                         style={COMMON_STYLES.size32}
@@ -186,7 +245,18 @@ const SPUpdateProfile = () => {
   const _renderProfilePopup = () => {
     return (
       <>
-        <CameraOrGalleryPopup closePopupFunc={_handleProfileClick} />
+        <CameraOrGalleryPopup
+          closePopupFunc={_handleProfileClick}
+          onSelectImageType={_handleProfileSelect}
+        />
+      </>
+    );
+  };
+
+  const _renderLoader = () => {
+    return (
+      <>
+        <SecondaryLoader />
       </>
     );
   };
@@ -212,7 +282,7 @@ const SPUpdateProfile = () => {
           {showProfilePopup && _renderProfilePopup()}
 
           {/* loader */}
-          {/* <SecondaryLoader /> */}
+          {uiStateUpdateProfile?.isLoading && _renderLoader()}
         </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
