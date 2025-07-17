@@ -70,7 +70,6 @@ const SPUpdateProfile = () => {
 
   const _handleProfileSelect = async (type: 'Camera' | 'Gallery') => {
     setUiStateUpdateProfile(getInitialLoadingState());
-    _handleProfileClick();
     try {
       const launchFn = type === 'Camera' ? launchCameraUtil : launchGalleryUtil;
       const selectedImageURI = await launchFn();
@@ -84,6 +83,7 @@ const SPUpdateProfile = () => {
     } catch (error) {
       logger.log('handleProfileSelect Error', error);
     } finally {
+      _handleProfileClick();
       setUiStateUpdateProfile(getDefaultUiState());
     }
   };

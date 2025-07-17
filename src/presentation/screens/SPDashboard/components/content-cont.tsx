@@ -1,9 +1,10 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import { COLORS } from '../../../../misc';
 
 const ContentCont = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>ContentCont</Text>
     </View>
   );
@@ -11,4 +12,9 @@ const ContentCont = () => {
 
 export default ContentCont;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    // flex: 1,
+    backgroundColor: COLORS.info,
+  },
+});

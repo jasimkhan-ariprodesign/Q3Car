@@ -1,8 +1,7 @@
-import {KeyboardAvoidingView, StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native';
+import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
-import {useCustomSafeAreaInsets, COLORS, COMMON_STYLES, isIOS, MS, MVS} from '../../../misc';
-import {IconButton, SafeAreaWrapper} from '../../components';
-import {ICONS} from '../../../assets';
+import {COLORS, COMMON_STYLES, isIOS} from '../../../misc';
+import {SafeAreaWrapper} from '../../components';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/types/types';
