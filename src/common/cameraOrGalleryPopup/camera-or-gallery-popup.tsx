@@ -1,7 +1,7 @@
 import {Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {CustomBottomShitModal} from '../../presentation/components';
-import {COLORS, COMMON_STYLES, MS, MVS, useCustomSafeAreaInsets} from '../../misc';
+import {COLORS, COMMON_STYLES, isIOS, MS, MVS, useCustomSafeAreaInsets} from '../../misc';
 import {EdgeInsets} from 'react-native-safe-area-context';
 import {FONTS, ICONS} from '../../assets';
 
@@ -13,7 +13,7 @@ interface CameraOrGalleryPopupProp {
 
 const CameraOrGalleryPopup: React.FC<CameraOrGalleryPopupProp> = ({
   closePopupFunc,
-  activeOpacity = 0.5,
+  activeOpacity = 0.6,
   onSelectImageType,
 }) => {
   const insets = useCustomSafeAreaInsets();
@@ -30,13 +30,17 @@ const CameraOrGalleryPopup: React.FC<CameraOrGalleryPopupProp> = ({
   const _handleGalleryClick = () => {
     onSelectImageType && onSelectImageType('Gallery');
   };
+
   return (
     <CustomBottomShitModal animationValue={200} backdropStyle={styles.backdropStyle}>
       <View style={styles.container}>
         <Pressable onPress={_handleClosePopupFunc} style={COMMON_STYLES.flex} />
 
         <View style={styles.buttonCont}>
-          <TouchableOpacity style={styles.commonBTN} activeOpacity={activeOpacity}>
+          <TouchableOpacity
+            onPress={_handleCameraClick}
+            style={styles.commonBTN}
+            activeOpacity={activeOpacity}>
             <Image
               source={ICONS.cameraWhite}
               style={COMMON_STYLES.size14}
@@ -86,7 +90,7 @@ const getStyle = (insets: EdgeInsets) =>
       borderTopRightRadius: 24,
       rowGap: MVS(12),
 
-      ...COMMON_STYLES.shadow4,
+      ...(isIOS() ? COMMON_STYLES.shadow4 : {}),
       borderTopWidth: 1,
       borderColor: COLORS.lightGray,
     },

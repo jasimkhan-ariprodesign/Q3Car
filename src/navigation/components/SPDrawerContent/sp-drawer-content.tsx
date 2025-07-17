@@ -69,7 +69,7 @@ const SPDrawerContent = (prop: DrawerContentComponentProps) => {
 
   //   drawer list render
   const _renderItem = ({item, index}: {item: any; index: number}) => {
-    logger.log('item -->', item);
+    // logger.log('item -->', item);
     return (
       <View>
         <TouchableHighlight

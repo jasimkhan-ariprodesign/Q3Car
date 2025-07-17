@@ -1,6 +1,5 @@
 import {
   Image,
-  ImageSourcePropType,
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
@@ -20,10 +19,10 @@ import {COLORS, COMMON_STYLES, isIOS, MS, MVS} from '../../../misc';
 import {FONTS, ICONS} from '../../../assets';
 import {RootStackParamList} from '../../../navigation/types/types';
 import {CameraOrGalleryPopup, SecondaryLoader} from '../../../common';
-import {launchGalleryUtil, logger} from '../../../utils';
+import {launchCameraUtil, launchGalleryUtil, logger} from '../../../utils';
 import {getDefaultUiState, getInitialLoadingState, UiState} from '../../../utils/uiState/ui-state';
 
-export const updateProfileSchema = Yup.object().shape({
+export const _updateProfileSchema = Yup.object().shape({
   profileAvatar: Yup.string().required('Profile is required'),
 
   firstName: Yup.string().min(2, 'First name is too short').required('First name is required'),
@@ -59,7 +58,7 @@ const SPUpdateProfile = () => {
 
   const [showProfilePopup, setShowProfilePopup] = useState<boolean>(false);
   const [uiStateUpdateProfile, setUiStateUpdateProfile] = useState<UiState<any>>(defaultState);
-  logger.log('uiStateUpdateProfile --> ', JSON.stringify(uiStateUpdateProfile));
+  logger.log('uiStateUpdateProfile --> ', uiStateUpdateProfile);
 
   const _handleCancelClick = () => {
     navigation?.goBack();
@@ -70,39 +69,20 @@ const SPUpdateProfile = () => {
   };
 
   const _handleProfileSelect = async (type: 'Camera' | 'Gallery') => {
+    setUiStateUpdateProfile(getInitialLoadingState());
+    _handleProfileClick();
     try {
-      let selectedImageURI: string | null = null;
-
-      if (type === 'Gallery') {
-        setUiStateUpdateProfile(getInitialLoadingState());
-        selectedImageURI = await launchGalleryUtil({
-          mediaType: 'photo',
-          quality: 0.5,
-          maxWidth: 360,
-          maxHeight: 360,
-        });
-      }
-
-      // if (type === 'Camera') {
-      //   selectedImageURI = await launchCameraUtil({
-      //     mediaType: 'photo',
-      //     quality: 0.5,
-      //     maxWidth: 360,
-      //     maxHeight: 360,
-      //   });
-      // }
+      const launchFn = type === 'Camera' ? launchCameraUtil : launchGalleryUtil;
+      const selectedImageURI = await launchFn();
 
       if (!selectedImageURI) {
         logger.log('No image was selected or captured');
         return;
       }
 
-      // logger.warn(selectedImageURI);
-      if (formikRef?.current?.setFieldValue) {
-        formikRef.current?.setFieldValue('profileAvatar', selectedImageURI);
-      }
+      formikRef.current?.setFieldValue?.('profileAvatar', selectedImageURI);
     } catch (error) {
-      logger.log('handleLaunchGallery Error ', error);
+      logger.log('handleProfileSelect Error', error);
     } finally {
       setUiStateUpdateProfile(getDefaultUiState());
     }
@@ -136,7 +116,7 @@ const SPUpdateProfile = () => {
             gender: '',
             birthday: '',
           }}
-          validationSchema={updateProfileSchema}
+          validationSchema={_updateProfileSchema}
           onSubmit={values => console.log(values)}>
           {({handleChange, handleBlur, handleSubmit, values}) => (
             <View style={styles.formCont}>
@@ -151,8 +131,8 @@ const SPUpdateProfile = () => {
                       resizeMode="cover"
                     />
                     <TouchableOpacity
+                      activeOpacity={0.7}
                       onPress={_handleProfileClick}
-                      // onPress={() => _handleProfileUpload('Gallery')}
                       style={styles.profilePicBTN}>
                       <Image
                         source={ICONS.cameraWhite}
@@ -254,18 +234,14 @@ const SPUpdateProfile = () => {
   };
 
   const _renderLoader = () => {
-    return (
-      <>
-        <SecondaryLoader />
-      </>
-    );
+    return <SecondaryLoader />;
   };
 
   //   main view
   return (
     <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
-        {/* back & done cont */}
+        {/* back & done container view */}
         {_renderHeader()}
 
         <View style={COMMON_STYLES.flex}>
@@ -299,7 +275,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: MS(18),
   },
   haderCon: {
-    // backgroundColor: 'skyblue',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -326,7 +301,7 @@ const styles = StyleSheet.create({
     columnGap: MS(12),
   },
   profilePicCont: {
-    backgroundColor: COLORS.offWhite,
+    backgroundColor: COLORS.white,
     width: MS(100),
     height: MS(100),
     borderRadius: MS(100),
@@ -339,7 +314,7 @@ const styles = StyleSheet.create({
     borderRadius: MS(120),
   },
   profilePicBTN: {
-    backgroundColor: COLORS.transparentBlack4,
+    backgroundColor: COLORS.transparentBlack2,
     position: 'absolute',
     top: 0,
     bottom: 0,
@@ -373,13 +348,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: MVS(8),
   },
-
   horiLine: {
     height: 1,
     backgroundColor: COLORS.EDEDED,
   },
   commonView: {
-    // backgroundColor: COLORS.offWhite,
     height: inpHeight,
     borderBottomWidth: 1,
     borderColor: COLORS.EDEDED,
@@ -395,7 +368,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   commonInputStyle: {
-    // backgroundColor: COLORS.pink,
     padding: 0,
     height: '98%',
     color: COLORS.black,

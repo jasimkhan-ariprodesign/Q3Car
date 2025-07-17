@@ -4,8 +4,9 @@ import {_hanldeOpenUrlFunc} from './open-url-func/open-url-func';
 import {launchGalleryUtil} from './launchGalleryUtil/launch-gallery-util';
 import {getDefaultUiState} from './uiState/ui-state';
 import {getInitialLoadingState} from './uiState/ui-state';
+import {launchCameraUtil} from './launchCameraUtil/launch-camera-util';
 // import
 
-export {_logger as logger, _hanldeOpenUrlFunc, launchGalleryUtil};
+export {_logger as logger, _hanldeOpenUrlFunc, launchGalleryUtil, launchCameraUtil};
 
 export {getDefaultUiState, getInitialLoadingState};
