@@ -1,0 +1,39 @@
+import {_drawerMenuIcons} from './drawer-menu-icons';
+
+export const _icons = {
+  q3Car: require('./q3Car.png'),
+  arrowRight: require('./arrow-right.png'),
+  angleLeftDark: require('./angle-left-dark.png'),
+  checkGreen: require('./check-green.png'),
+  check: require('./check.png'),
+  facebook: require('./facebook.png'),
+  google: require('./google.png'),
+  invisible: require('./invisible.png'),
+  visible: require('./visible.png'),
+  succeccCheck: require('./succeccCheck.png'),
+  drawer: require('./drawer.png'),
+  circleBlue: require('./circle-blue.png'),
+  verticalLine: require('./vertical-line.png'),
+  locationRed: require('./location-red.png'),
+  closeBlack: require('./close-black.png'),
+  facebookWhite: require('./facebook-white.png'),
+  saveGrey: require('./save-grey.png'),
+  angleRightGrey: require('./angle-right-grey.png'),
+  clockGrey: require('./clock-grey.png'),
+  locationBlack: require('./location-black.png'),
+  smallCar: require('./small-car.png'),
+  suvCar: require('./suv-car.png'),
+  truck: require('./truck.png'),
+  galleryGrey: require('./gallery-grey.png'),
+  cameraWhite: require('./camera-white.png'),
+  fromToDest: require('./from-to-dest.png'),
+  reloadGrey: require('./reload-black.png'),
+  starBlack: require('./star-black.png'),
+  moon: require('./moon.png'),
+  arrowDownBlack: require('./arrow-down-black.png'),
+  transactionFilter: require('./transaction-filter.png'),
+  calenderBlack: require('./calender-black.png'),
+};
+
+// drawer icons 👇🏻
+export {_drawerMenuIcons};
