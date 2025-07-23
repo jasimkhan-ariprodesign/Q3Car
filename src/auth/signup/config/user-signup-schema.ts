@@ -10,7 +10,7 @@ export const SignupSchema = Yup.object().shape({
     .email('Invalid email address')
     .required('Email is required'),
   countryCode: Yup.string().required('Required'),
-  phoneNumber: Yup.string()
+  phone: Yup.string()
     .matches(/^[0-9]+$/, 'Must be only digits')
     .min(7, 'Phone number is too short')
     .max(15, 'Phone number is too long')

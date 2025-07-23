@@ -26,6 +26,7 @@ import { RootStackParamList } from '../../navigation/types/types';
 import { _hanldeOpenUrlFunc, logger } from '../../utils';
 import { SecondaryLoader } from '../../common/loaders';
 import { SignupSchema, UserSignupIntialValues } from './config';
+import { userSignupAction } from './hooks';
 
 const authFieldHeight = MS(36);
 
@@ -37,7 +38,10 @@ const SignupScreen = () => {
     phoneVerified: false,
   });
 
-  logger.log('verificationStatus ->', verificationStatus);
+  const { signupUiState, registerUser } = userSignupAction();
+  logger.log('signupUiState -->', signupUiState);
+
+  // logger.log('verificationStatus ->', verificationStatus);
 
   const _handleEmailVerify = () => {
     setVerificationStatus(prev => ({ ...prev, emailVerified: true }));
@@ -47,12 +51,12 @@ const SignupScreen = () => {
     setVerificationStatus(prev => ({ ...prev, phoneVerified: true }));
   };
 
-  const _handleSignup = () => {
-    // const _handleSignup = (value: any) => {
-    // _logger.log('_handleSignup --: ', value);
-    navigation.push(SCREENS.authStack, {
-      screen: SCREENS.setPassword,
-    });
+  const _handleSignup = (value: any) => {
+    // logger.log('_handleSignup --: ', value);
+    // navigation.push(SCREENS.authStack, {
+    //   screen: SCREENS.setPassword,
+    // });
+    registerUser(value);
   };
 
   const _handleSignInClick = () => {
@@ -222,8 +226,8 @@ const SignupScreen = () => {
 
               {/* signup button */}
               <PrimaryButton
-                // onPress={handleSubmit}
-                onPress={_handleSignup}
+                onPress={handleSubmit}
+                // onPress={_handleSignup}
                 title="Sign up"
                 buttonStyle={true ? styles.SignupBTN : undefined}
                 textStyle={true ? styles.SignupString : undefined}
@@ -277,6 +281,15 @@ const SignupScreen = () => {
     );
   };
 
+  const _renderLoader = () => {
+    return (
+      <>
+        {/*  */}
+        {signupUiState.isLoading && <SecondaryLoader />}
+      </>
+    );
+  };
+
   // Main View
   return (
     <KeyboardAvoidingView
@@ -309,7 +322,7 @@ const SignupScreen = () => {
             {_renderSignInButton()}
           </ScrollView>
           {/* loader */}
-          {/* <SecondaryLoader /> */}
+          {_renderLoader()}
         </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
