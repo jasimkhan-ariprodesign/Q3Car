@@ -8,24 +8,24 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
-import {Formik} from 'formik';
-import {ICONS, FONTS} from '../../assets';
-import {COLORS, COMMON_STYLES, MS, MVS, isIOS, SCREENS} from '../../misc';
+import React, { useState } from 'react';
+import { Formik } from 'formik';
+import { ICONS, FONTS } from '../../assets';
+import { COLORS, COMMON_STYLES, MS, MVS, isIOS, SCREENS } from '../../misc';
 import {
   SafeAreaWrapper,
   PrimaryHeader,
   TextButton,
   PrimaryButton,
 } from '../../presentation/components';
-import {OTPBox} from '../components';
-import {_signupSchema} from '../validations';
-import {privacyPolicyURL, termsOfServiceURL} from '../../constant';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../navigation/types/types';
-import {_hanldeOpenUrlFunc, logger} from '../../utils';
-import {SecondaryLoader} from '../../common/loaders';
+import { OTPBox } from '../components';
+import { privacyPolicyURL, termsOfServiceURL } from '../../constant';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../navigation/types/types';
+import { _hanldeOpenUrlFunc, logger } from '../../utils';
+import { SecondaryLoader } from '../../common/loaders';
+import { SignupSchema, UserSignupIntialValues } from './config';
 
 const authFieldHeight = MS(36);
 
@@ -36,22 +36,15 @@ const SignupScreen = () => {
     emailVerified: false,
     phoneVerified: false,
   });
+
   logger.log('verificationStatus ->', verificationStatus);
 
-  const initialValues = {
-    fullName: '',
-    email: '',
-    countryCode: '+1',
-    phoneNumber: '',
-    agreeToTerms: true,
-  };
-
   const _handleEmailVerify = () => {
-    setVerificationStatus(prev => ({...prev, emailVerified: true}));
+    setVerificationStatus(prev => ({ ...prev, emailVerified: true }));
   };
 
   const _handlePhoneVerify = () => {
-    setVerificationStatus(prev => ({...prev, phoneVerified: true}));
+    setVerificationStatus(prev => ({ ...prev, phoneVerified: true }));
   };
 
   const _handleSignup = () => {
@@ -108,10 +101,19 @@ const SignupScreen = () => {
   const _renderFormik = () => {
     return (
       <Formik
-        initialValues={initialValues}
-        validationSchema={_signupSchema}
-        onSubmit={_handleSignup}>
-        {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
+        initialValues={UserSignupIntialValues}
+        validationSchema={SignupSchema}
+        onSubmit={_handleSignup}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          setFieldValue,
+        }) => {
           // logger.log('values ->', values);
 
           return (
@@ -127,9 +129,11 @@ const SignupScreen = () => {
                   style={styles.fullNameInput}
                   autoCorrect={false}
                 />
-                {errors.fullName && touched.fullName && typeof errors.fullName === 'string' && (
-                  <Text style={styles.errorString}>{errors.fullName}</Text>
-                )}
+                {errors.fullName &&
+                  touched.fullName &&
+                  typeof errors.fullName === 'string' && (
+                    <Text style={styles.errorString}>{errors.fullName}</Text>
+                  )}
               </View>
 
               {/* email */}
@@ -161,9 +165,11 @@ const SignupScreen = () => {
                     disabled={false}
                   />
                 </View>
-                {errors.email && touched.email && typeof errors.email === 'string' && (
-                  <Text style={styles.errorString}>{errors.email}</Text>
-                )}
+                {errors.email &&
+                  touched.email &&
+                  typeof errors.email === 'string' && (
+                    <Text style={styles.errorString}>{errors.email}</Text>
+                  )}
                 <View style={styles.otpBoxCont}>
                   <OTPBox otpInpHeight={authFieldHeight} />
                 </View>
@@ -184,9 +190,9 @@ const SignupScreen = () => {
                     <TextInput
                       placeholder="000 000 0000"
                       placeholderTextColor={COLORS.textPrimary}
-                      value={values.phoneNumber}
-                      onChangeText={handleChange('phoneNumber')}
-                      onBlur={handleBlur('phoneNumber')}
+                      value={values.phone}
+                      onChangeText={handleChange('phone')}
+                      onBlur={handleBlur('phone')}
                       style={styles.emailInput}
                     />
                     {verificationStatus.phoneVerified && (
@@ -204,10 +210,10 @@ const SignupScreen = () => {
                     disabled={false}
                   />
                 </View>
-                {errors.phoneNumber &&
-                  touched.phoneNumber &&
-                  typeof errors.phoneNumber === 'string' && (
-                    <Text style={styles.errorString}>{errors.phoneNumber}</Text>
+                {errors.phone &&
+                  touched.phone &&
+                  typeof errors.phone === 'string' && (
+                    <Text style={styles.errorString}>{errors.phone}</Text>
                   )}
                 <View style={styles.otpBoxCont}>
                   <OTPBox otpInpHeight={authFieldHeight} />
@@ -227,25 +233,37 @@ const SignupScreen = () => {
               <View style={styles.privacyPolicyCont}>
                 <TouchableOpacity
                   activeOpacity={0.7}
-                  onPress={() => setFieldValue('agreeToTerms', !values.agreeToTerms)}
-                  style={styles.checkCont}>
+                  onPress={() =>
+                    setFieldValue('agreeToTerms', !values.agreeToTerms)
+                  }
+                  style={styles.checkCont}
+                >
                   {values.agreeToTerms && (
-                    <Image source={ICONS.check} style={COMMON_STYLES.size10} tintColor={COLORS.black} />
+                    <Image
+                      source={ICONS.check}
+                      style={COMMON_STYLES.size10}
+                      tintColor={COLORS.black}
+                    />
                   )}
                 </TouchableOpacity>
                 <View style={styles.privacyPolicyStringCont}>
-                  <Text style={styles.termOfServiceString}>By signing up. you agree to the </Text>
+                  <Text style={styles.termOfServiceString}>
+                    By signing up. you agree to the{' '}
+                  </Text>
                   <TouchableOpacity
                     onPress={() => {
                       _hanldeOpenUrlFunc(termsOfServiceURL);
-                    }}>
+                    }}
+                  >
                     <Text style={[styles.termOfServiceString, styles.blueTxt]}>
                       Terms of service{' '}
                     </Text>
                   </TouchableOpacity>
 
                   <Text style={styles.termOfServiceString}>and </Text>
-                  <TouchableOpacity onPress={() => _hanldeOpenUrlFunc(privacyPolicyURL)}>
+                  <TouchableOpacity
+                    onPress={() => _hanldeOpenUrlFunc(privacyPolicyURL)}
+                  >
                     <Text style={[styles.termOfServiceString, styles.blueTxt]}>
                       Privacy policy.
                     </Text>
@@ -261,13 +279,17 @@ const SignupScreen = () => {
 
   // Main View
   return (
-    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={isIOS() ? 'padding' : 'height'}>
+    <KeyboardAvoidingView
+      style={COMMON_STYLES.flex}
+      behavior={isIOS() ? 'padding' : 'height'}
+    >
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
         <View style={COMMON_STYLES.flex}>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.contentContainerStyle}>
+            contentContainerStyle={styles.contentContainerStyle}
+          >
             <View>
               <Text style={styles.title}>
                 Hello!{'\n'}Signup to {'\n'}get started
@@ -300,7 +322,7 @@ const gapAndMargin = MVS(16);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  headerStyle: {paddingHorizontal: MS(18)},
+  headerStyle: { paddingHorizontal: MS(18) },
   contentContainerStyle: {
     rowGap: gapAndMargin,
     paddingHorizontal: MS(18),
@@ -313,7 +335,7 @@ const styles = StyleSheet.create({
   formCont: {
     rowGap: gapAndMargin,
   },
-  otpBoxCont: {marginTop: gapAndMargin},
+  otpBoxCont: { marginTop: gapAndMargin },
   fullNameInput: {
     padding: 0,
     paddingStart: MS(12),
@@ -364,7 +386,7 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontSize: MS(12),
   },
-  sendOTPCont: {flexDirection: 'row', alignItems: 'center', columnGap: MS(8)},
+  sendOTPCont: { flexDirection: 'row', alignItems: 'center', columnGap: MS(8) },
   countryCodeBTN: {
     borderWidth: bdrWidth,
     borderColor: COLORS.black,
@@ -382,7 +404,7 @@ const styles = StyleSheet.create({
   },
   downArrow: {
     ...COMMON_STYLES.size10,
-    transform: [{rotate: '-90deg'}],
+    transform: [{ rotate: '-90deg' }],
   },
   SignupBTN: {
     backgroundColor: COLORS.CFCFCF,
