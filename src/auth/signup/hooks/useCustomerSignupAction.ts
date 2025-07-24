@@ -4,6 +4,7 @@ import { getDefaultUiState, getInitialLoadingState, UiState } from '../../../uti
 import { SignUpInitialValuesEntity } from '../entities/user-signup-entity';
 import { postRequest } from '../../../app';
 import { logAxiosError, logger } from '../../../utils';
+import { AUTH_ENDPOINTS } from '../../../app/api/endpoints';
 
 export const useCustomerSignupAction = () => {
   const defaultSignupState: UiState<any> = getDefaultUiState();
@@ -21,8 +22,8 @@ export const useCustomerSignupAction = () => {
     };
     // _logger.warn('body', JSON.stringify(body, null, 1));
     try {
-      const result = await postRequest('/auth/start/register', body);
-      logger.log('User registered:', result);
+      const result = await postRequest(AUTH_ENDPOINTS.REGISTER_CUSTOMER, body);
+      logger.log('registerUser result: ', result);
 
       if (result) {
         setSignupUiState({

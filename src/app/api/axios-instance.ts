@@ -43,12 +43,11 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   response => {
-    logger.log('response ->', response)
-    logger.log('response data->', response.data)
+    // logger.log('response ->', response)
     return response;
   },
   async (error: AxiosError) => {
-    // logger.warn('instance error: ', error?.response || error);
+    // logger.log('instance error: ', error?.response || error);
     /* ... same refresh logic as before ... */
     return Promise.reject(error);
   },

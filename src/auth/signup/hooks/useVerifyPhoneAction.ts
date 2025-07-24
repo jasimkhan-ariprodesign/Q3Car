@@ -5,29 +5,30 @@ import { logAxiosError, logger } from '../../../utils';
 import { postRequest } from '../../../app';
 import { AUTH_ENDPOINTS } from '../../../app/api/endpoints';
 
-export const useVerifyEmailAction = () => {
-  const defaultVerifyEmailState: UiState<any> = getDefaultUiState();
+export const useVerifyPhoneAction = () => {
+  const defaultVerifyPhoneState: UiState<any> = getDefaultUiState();
 
-  const [verifyEmailUiState, setVerifyEmailUiState] = useState<UiState<any>>(defaultVerifyEmailState);
+  const [verifyPhoneUiState, setVerifyPhoneUiState] = useState<UiState<any>>(defaultVerifyPhoneState);
 
-  const verifyEmail = async (email: string) => {
-    setVerifyEmailUiState(getInitialLoadingState());
+  const verifyPhoneNumber = async (phone: string) => {
+    setVerifyPhoneUiState(getInitialLoadingState());
     const body = {
-      to: email,
+      phoneNumber: phone,
+      purpose: 'verifyPhone',
     };
 
     try {
-      const response = await postRequest(AUTH_ENDPOINTS.SEND_OTP_TO_EMAIL, body);
+      const response = await postRequest(AUTH_ENDPOINTS.SEND_OTP_TO_PHONE, body);
 
       if (response?.data) {
-        setVerifyEmailUiState({
+        setVerifyPhoneUiState({
           isLoading: false,
           data: response.data,
           error: undefined,
         });
       }
     } catch (error: AxiosError | any) {
-      setVerifyEmailUiState({
+      setVerifyPhoneUiState({
         isLoading: false,
         data: undefined,
         error: error,
@@ -36,7 +37,7 @@ export const useVerifyEmailAction = () => {
   };
 
   return {
-    verifyEmailUiState,
-    verifyEmail,
+    verifyPhoneUiState,
+    verifyPhoneNumber,
   };
 };
