@@ -19,7 +19,7 @@ import { privacyPolicyURL, termsOfServiceURL } from '../../constant';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/types/types';
-import appAlert, { _hanldeOpenUrlFunc, logger } from '../../utils';
+import appAlert, { _hanldeOpenUrlFunc, logger, showToast } from '../../utils';
 import { SecondaryLoader } from '../../common/loaders';
 import { SignupSchema, UserSignupIntialValues } from './config';
 import { useCustomerSignupAction, useVerifyEmailAction } from './hooks';
@@ -326,16 +326,28 @@ const SignupScreen = () => {
             <Button
               title="hello"
               onPress={() => {
-                Toast.show({
-                  // type: 'success',
-                  // iconSize: 0,
-                  icon: null,
-                  iconColor: COLORS.transparent,
-                  text1: 'Main message',
-                  text2: 'Secondary message',
-                  position: 'top',
-                  visibilityTime: 2000,
-                });
+                showToast({ text1: 'check', text2: 'egehejekk' });
+                // Toast.show({
+                //   type: 'success',
+                //   text1: 'Custom Toast',
+                //   text2: 'With many options',
+                //   position: 'bottom',
+                //   style: {backgroundColor: 'red'},
+                //   visibilityTime: 5000,
+                //   autoHide: true,
+                //   backgroundColor: '#333',
+                //   textColor: '#fff',
+                //   iconColor: '#4CAF50',
+                //   iconSize: 14,
+                //   progressBarColor: '#4CAF50',
+                //   theme: 'dark',
+                //   // Custom close icon options
+                //   closeIcon: 'times-circle',
+                //   closeIconFamily: 'FontAwesome',
+                //   closeIconSize: 20,
+                //   closeIconColor: '#fff',
+                //   showProgressBar: false
+                // });
               }}
             />
           </ScrollView>
