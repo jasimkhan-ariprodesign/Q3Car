@@ -1,20 +1,14 @@
 import { useState } from 'react';
 import { AxiosError } from 'axios';
-import {
-  getDefaultUiState,
-  getInitialLoadingState,
-  UiState,
-} from '../../../utils/uiState/ui-state';
+import { getDefaultUiState, getInitialLoadingState, UiState } from '../../../utils/uiState/ui-state';
 import { SignUpInitialValuesEntity } from '../entities/user-signup-entity';
-import _logger from '../../../utils/logger/logger';
 import { postRequest } from '../../../app';
 import { logAxiosError, logger } from '../../../utils';
 
-export const userSignupAction = () => {
+export const useCustomerSignupAction = () => {
   const defaultSignupState: UiState<any> = getDefaultUiState();
 
-  const [signupUiState, setSignupUiState] =
-    useState<UiState<any>>(defaultSignupState);
+  const [signupUiState, setSignupUiState] = useState<UiState<any>>(defaultSignupState);
 
   const registerUser = async (values: SignUpInitialValuesEntity) => {
     setSignupUiState(getInitialLoadingState());
@@ -27,8 +21,9 @@ export const userSignupAction = () => {
     };
     // _logger.warn('body', JSON.stringify(body, null, 1));
     try {
-      const result = await postRequest('/auth/register', body);
+      const result = await postRequest('/auth/start/register', body);
       logger.log('User registered:', result);
+
       if (result) {
         setSignupUiState({
           isLoading: false,

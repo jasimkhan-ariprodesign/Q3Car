@@ -26,29 +26,27 @@ import { RootStackParamList } from '../../navigation/types/types';
 import { _hanldeOpenUrlFunc, logger } from '../../utils';
 import { SecondaryLoader } from '../../common/loaders';
 import { SignupSchema, UserSignupIntialValues } from './config';
-import { userSignupAction } from './hooks';
+import { useCustomerSignupAction } from './hooks';
 
 const authFieldHeight = MS(36);
 
 const SignupScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  const [verificationStatus, setVerificationStatus] = useState({
-    emailVerified: false,
-    phoneVerified: false,
+  const [showOtpBox, setShowOtpBox] = useState({
+    email: false,
+    phone: false,
   });
 
-  const { signupUiState, registerUser } = userSignupAction();
+  const { signupUiState, registerUser } = useCustomerSignupAction();
   logger.log('signupUiState -->', signupUiState);
 
-  // logger.log('verificationStatus ->', verificationStatus);
-
   const _handleEmailVerify = () => {
-    setVerificationStatus(prev => ({ ...prev, emailVerified: true }));
+    setShowOtpBox(prev => ({ ...prev, email: true }));
   };
 
   const _handlePhoneVerify = () => {
-    setVerificationStatus(prev => ({ ...prev, phoneVerified: true }));
+    setShowOtpBox(prev => ({ ...prev, phone: true }));
   };
 
   const _handleSignup = (value: any) => {
@@ -118,7 +116,7 @@ const SignupScreen = () => {
           handleSubmit,
           setFieldValue,
         }) => {
-          // logger.log('values ->', values);
+          logger.log('errors ->', errors);
 
           return (
             <View style={styles.formCont}>
@@ -153,7 +151,7 @@ const SignupScreen = () => {
                       style={styles.emailInput}
                       autoCorrect={false}
                     />
-                    {verificationStatus.emailVerified && (
+                    {values.isEmailVerified && (
                       <Image
                         source={ICONS.checkGreen}
                         style={COMMON_STYLES.size16}
@@ -162,21 +160,36 @@ const SignupScreen = () => {
                     )}
                   </View>
 
-                  <TextButton
-                    title="Verify"
-                    textStyle={styles.verify}
-                    onPress={_handleEmailVerify}
-                    disabled={false}
-                  />
-                </View>
-                {errors.email &&
-                  touched.email &&
-                  typeof errors.email === 'string' && (
-                    <Text style={styles.errorString}>{errors.email}</Text>
+                  {!values.isEmailVerified && (
+                    <TextButton
+                      title="Verify"
+                      textStyle={styles.verify}
+                      onPress={_handleEmailVerify}
+                      disabled={false}
+                    />
                   )}
-                <View style={styles.otpBoxCont}>
-                  <OTPBox otpInpHeight={authFieldHeight} />
                 </View>
+
+                {touched.email && (
+                  <>
+                    {errors.email && typeof errors.email === 'string' && (
+                      <Text style={styles.errorString}>{errors.email}</Text>
+                    )}
+                    {!errors.email &&
+                      errors.isEmailVerified &&
+                      typeof errors.isEmailVerified === 'string' && (
+                        <Text style={styles.errorString}>
+                          {errors.isEmailVerified}
+                        </Text>
+                      )}
+                  </>
+                )}
+
+                {showOtpBox.email && (
+                  <View style={styles.otpBoxCont}>
+                    <OTPBox otpInpHeight={authFieldHeight} />
+                  </View>
+                )}
               </View>
 
               {/* phone number */}
@@ -190,6 +203,7 @@ const SignupScreen = () => {
                       resizeMode="contain"
                     />
                   </TouchableOpacity>
+
                   <View style={styles.emailCont}>
                     <TextInput
                       placeholder="000 000 0000"
@@ -199,7 +213,8 @@ const SignupScreen = () => {
                       onBlur={handleBlur('phone')}
                       style={styles.emailInput}
                     />
-                    {verificationStatus.phoneVerified && (
+
+                    {values.isPhoneVerified && (
                       <Image
                         source={ICONS.checkGreen}
                         style={COMMON_STYLES.size16}
@@ -207,21 +222,37 @@ const SignupScreen = () => {
                       />
                     )}
                   </View>
-                  <TextButton
-                    title="Send OTP"
-                    textStyle={styles.verify}
-                    onPress={_handlePhoneVerify}
-                    disabled={false}
-                  />
-                </View>
-                {errors.phone &&
-                  touched.phone &&
-                  typeof errors.phone === 'string' && (
-                    <Text style={styles.errorString}>{errors.phone}</Text>
+
+                  {!values.isPhoneVerified && (
+                    <TextButton
+                      title="Send OTP"
+                      textStyle={styles.verify}
+                      onPress={_handlePhoneVerify}
+                      disabled={false}
+                    />
                   )}
-                <View style={styles.otpBoxCont}>
-                  <OTPBox otpInpHeight={authFieldHeight} />
                 </View>
+
+                {touched.phone && (
+                  <>
+                    {errors.phone && typeof errors.phone === 'string' && (
+                      <Text style={styles.errorString}>{errors.phone}</Text>
+                    )}
+                    {!errors.phone &&
+                      errors.isPhoneVerified &&
+                      typeof errors.isPhoneVerified === 'string' && (
+                        <Text style={styles.errorString}>
+                          {errors.isPhoneVerified}
+                        </Text>
+                      )}
+                  </>
+                )}
+
+                {showOtpBox.phone && (
+                  <View style={styles.otpBoxCont}>
+                    <OTPBox otpInpHeight={authFieldHeight} />
+                  </View>
+                )}
               </View>
 
               {/* signup button */}
@@ -234,45 +265,58 @@ const SignupScreen = () => {
               />
 
               {/* term of service - privacy policy */}
-              <View style={styles.privacyPolicyCont}>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  onPress={() =>
-                    setFieldValue('agreeToTerms', !values.agreeToTerms)
-                  }
-                  style={styles.checkCont}
-                >
-                  {values.agreeToTerms && (
-                    <Image
-                      source={ICONS.check}
-                      style={COMMON_STYLES.size10}
-                      tintColor={COLORS.black}
-                    />
-                  )}
-                </TouchableOpacity>
-                <View style={styles.privacyPolicyStringCont}>
-                  <Text style={styles.termOfServiceString}>
-                    By signing up. you agree to the{' '}
-                  </Text>
+              <View>
+                <View style={styles.privacyPolicyCont}>
                   <TouchableOpacity
-                    onPress={() => {
-                      _hanldeOpenUrlFunc(termsOfServiceURL);
-                    }}
+                    activeOpacity={0.7}
+                    onPress={() =>
+                      setFieldValue('agreeToTerms', !values.agreeToTerms)
+                    }
+                    style={styles.checkCont}
                   >
-                    <Text style={[styles.termOfServiceString, styles.blueTxt]}>
-                      Terms of service{' '}
-                    </Text>
+                    {values.agreeToTerms && (
+                      <Image
+                        source={ICONS.check}
+                        style={COMMON_STYLES.size10}
+                        tintColor={COLORS.black}
+                      />
+                    )}
                   </TouchableOpacity>
 
-                  <Text style={styles.termOfServiceString}>and </Text>
-                  <TouchableOpacity
-                    onPress={() => _hanldeOpenUrlFunc(privacyPolicyURL)}
-                  >
-                    <Text style={[styles.termOfServiceString, styles.blueTxt]}>
-                      Privacy policy.
+                  <View style={styles.privacyPolicyStringCont}>
+                    <Text style={styles.termOfServiceString}>
+                      By signing up. you agree to the{' '}
                     </Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        _hanldeOpenUrlFunc(termsOfServiceURL);
+                      }}
+                    >
+                      <Text
+                        style={[styles.termOfServiceString, styles.blueTxt]}
+                      >
+                        Terms of service{' '}
+                      </Text>
+                    </TouchableOpacity>
+
+                    <Text style={styles.termOfServiceString}>and </Text>
+                    <TouchableOpacity
+                      onPress={() => _hanldeOpenUrlFunc(privacyPolicyURL)}
+                    >
+                      <Text
+                        style={[styles.termOfServiceString, styles.blueTxt]}
+                      >
+                        Privacy policy.
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
+                {errors.agreeToTerms &&
+                  typeof errors.agreeToTerms === 'string' && (
+                    <Text style={styles.errorString}>
+                      {errors.agreeToTerms}
+                    </Text>
+                  )}
               </View>
             </View>
           );
@@ -311,7 +355,7 @@ const SignupScreen = () => {
             {_renderOrView()}
 
             {/* social buttons */}
-            {_renderSocialButtons()}
+            {/* {_renderSocialButtons()} */}
 
             {/* sign in button */}
             {_renderSignInButton()}
