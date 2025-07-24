@@ -282,12 +282,7 @@ const SignupScreen = () => {
   };
 
   const _renderLoader = () => {
-    return (
-      <>
-        {/*  */}
-        {signupUiState.isLoading && <SecondaryLoader />}
-      </>
-    );
+    return <>{signupUiState.isLoading && <SecondaryLoader />}</>;
   };
 
   // Main View

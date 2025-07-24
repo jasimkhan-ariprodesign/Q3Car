@@ -1,11 +1,13 @@
 // sare function rahenge jaise - custom hooks, permission functions etc
 import _logger from './logger/logger';
-import { _hanldeOpenUrlFunc } from './open-url-func/open-url-func';
+import { _hanldeOpenUrlFunc } from './openUrlFunc/open-url-func';
 import { launchGalleryUtil } from './launchGalleryUtil/launch-gallery-util';
 import { getDefaultUiState } from './uiState/ui-state';
 import { getInitialLoadingState } from './uiState/ui-state';
 import { launchCameraUtil } from './launchCameraUtil/launch-camera-util';
 import { getTokenUtil } from './getTokenUtil/get-token-util';
+import { logAxiosError } from './logAxiosError/log-axios-error';
+import appAlert from './appAlert/app-alert';
 // import
 
 export {
@@ -14,6 +16,9 @@ export {
   launchGalleryUtil,
   launchCameraUtil,
   getTokenUtil,
+  logAxiosError,
 };
 
 export { getDefaultUiState, getInitialLoadingState };
+
+export default appAlert;

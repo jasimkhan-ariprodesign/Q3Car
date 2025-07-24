@@ -19,7 +19,7 @@ import {RootStackParamList, SPStackParamList} from '../../types/types';
 import {SP_DRAWER_MENU_LIST} from '../../../constant';
 
 const SPDrawerContent = (prop: DrawerContentComponentProps) => {
-  //   _logger.info('prop -->', prop);
+  //   _logger.log('prop -->', prop);
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 

@@ -8,4 +8,6 @@ export const UserSignupIntialValues: SignUpInitialValuesEntity = {
   agreeToTerms: true,
   avatar: '',
   userType: 'Customer',
+  isEmailVerified: false,
+  isPhoneVerified: false,
 };

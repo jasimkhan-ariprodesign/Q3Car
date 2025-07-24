@@ -19,7 +19,7 @@ import {AppStackParamList, RootStackParamList} from '../../types/types';
 import {DrawerContentComponentProps} from '@react-navigation/drawer';
 
 const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
-  //   _logger.info('prop -->', prop);
+  //   _logger.log('prop -->', prop);
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 

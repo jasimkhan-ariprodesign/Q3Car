@@ -6,4 +6,6 @@ export interface SignUpInitialValuesEntity {
   agreeToTerms: boolean;
   avatar: string;
   userType: string;
+  isEmailVerified: boolean;
+  isPhoneVerified: boolean;
 }

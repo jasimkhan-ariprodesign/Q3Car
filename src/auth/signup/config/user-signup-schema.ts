@@ -18,4 +18,8 @@ export const SignupSchema = Yup.object().shape({
   agreeToTerms: Yup.boolean()
     .oneOf([true], 'You must accept the terms and conditions')
     .required('You must accept the terms and conditions'),
+
+  isEmailVerified: Yup.boolean().oneOf([true], 'Email is not verified'),
+
+  isPhoneVerified: Yup.boolean().oneOf([true], 'Phone number is not verified'),
 });

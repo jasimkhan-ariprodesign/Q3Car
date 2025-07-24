@@ -14,7 +14,8 @@ export default SecondaryLoader;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: COLORS.transparentBlack1,
+    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+    // backgroundColor: COLORS.transparentBlack1,
     position: 'absolute',
     top: 0,
     left: 0,

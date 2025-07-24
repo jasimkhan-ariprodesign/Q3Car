@@ -45,10 +45,10 @@ api.interceptors.response.use(
   response => {
     logger.log('response ->', response)
     logger.log('response data->', response.data)
-    return response.data;
+    return response;
   },
   async (error: AxiosError) => {
-    logger.error('instance error: ', error?.response || error);
+    // logger.warn('instance error: ', error?.response || error);
     /* ... same refresh logic as before ... */
     return Promise.reject(error);
   },

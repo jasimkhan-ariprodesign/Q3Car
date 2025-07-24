@@ -19,7 +19,7 @@ export const getRequest = async (
     };
 
     const response = await ApiService.api.get(endpoint, config as any);
-    return response;
+    return response.data;
   } catch (error: any) {
     // logger.log('GET Request Error:', error?.response || error);
     throw error?.response ?? error;
@@ -41,7 +41,7 @@ export const postRequest = async (
     };
 
     const response = await ApiService.api.post(endpoint, body, config as any);
-    return response;
+    return response.data;
   } catch (error: any) {
     // logger.log('POST Request Error:', error?.response || error);
     throw error?.response ?? error;
@@ -63,7 +63,7 @@ export const putRequest = async (
     };
 
     const response = await ApiService.api.put(endpoint, body, config as any);
-    return response;
+    return response.data;
   } catch (error: any) {
     // logger.log('PUT Request Error:', error?.response || error);
     throw error?.response ?? error;
@@ -118,7 +118,7 @@ export const patchRequest = async (
     };
 
     const response = await ApiService.api.patch(endpoint, body, config);
-    return response;
+    return response.data;
   } catch (error: any) {
     // logger.log('PATCH Request Error:', error?.response || error);
     throw error?.response ?? error;
@@ -146,7 +146,7 @@ export const postMultipartFormData = async (
     };
 
     const response = await ApiService.api.post(endpoint, formData, config);
-    return response;
+    return response.data;
   } catch (error: any) {
     // logger.log('Multipart POST Error:', error?.response || error);
     throw error?.response ?? error;

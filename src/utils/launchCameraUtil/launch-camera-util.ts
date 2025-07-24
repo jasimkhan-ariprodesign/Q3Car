@@ -34,7 +34,7 @@ export const launchCameraUtil = async (
     const response = await launchCamera(launchOptions);
 
     if (response?.didCancel) {
-      logger.info('User cancelled camera operation.');
+      logger.log('User cancelled camera operation.');
       return null;
     }
 
@@ -60,7 +60,7 @@ export const launchCameraUtil = async (
       return capturedImageURI;
     }
 
-    logger.info('No image was captured.');
+    logger.log('No image was captured.');
     return null;
   } catch (error) {
     logger.log('Unexpected error in launchCameraUtil:', error);

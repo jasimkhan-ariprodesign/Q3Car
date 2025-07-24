@@ -35,7 +35,7 @@ export const launchGalleryUtil = async (
     const response = await launchImageLibrary(launchOptions);
 
     if (response?.didCancel) {
-      logger.info('User cancelled image selection.');
+      logger.log('User cancelled image selection.');
       return null;
     }
 
@@ -61,7 +61,7 @@ export const launchGalleryUtil = async (
     }
 
     // Handle no image selected
-    logger.info('No image selected.');
+    logger.log('No image selected.');
     return null;
   } catch (error) {
     logger.log('Unexpected error in launchGalleryUtil:', error);

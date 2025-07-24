@@ -13,7 +13,6 @@ import {Formik, FormikProps} from 'formik';
 import * as Yup from 'yup';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {_isIOS} from '../../../misc/platform';
 import {SafeAreaWrapper, TextButton} from '../../components';
 import {COLORS, COMMON_STYLES, isIOS, MS, MVS} from '../../../misc';
 import {FONTS, ICONS} from '../../../assets';
@@ -239,7 +238,7 @@ const SPUpdateProfile = () => {
 
   //   main view
   return (
-    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={_isIOS() ? 'padding' : 'height'}>
+    <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
         {/* back & done container view */}
         {_renderHeader()}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AxiosError } from 'axios';
 import {
   getDefaultUiState,
   getInitialLoadingState,
@@ -7,6 +8,7 @@ import {
 import { SignUpInitialValuesEntity } from '../entities/user-signup-entity';
 import _logger from '../../../utils/logger/logger';
 import { postRequest } from '../../../app';
+import { logAxiosError, logger } from '../../../utils';
 
 export const userSignupAction = () => {
   const defaultSignupState: UiState<any> = getDefaultUiState();
@@ -23,10 +25,10 @@ export const userSignupAction = () => {
       avatar: values.avatar,
       userType: values.userType,
     };
-    _logger.warn('body', JSON.stringify(body, null, 1));
+    // _logger.warn('body', JSON.stringify(body, null, 1));
     try {
       const result = await postRequest('/auth/register', body);
-      console.log('User registered:', result);
+      logger.log('User registered:', result);
       if (result) {
         setSignupUiState({
           isLoading: false,
@@ -34,12 +36,12 @@ export const userSignupAction = () => {
           error: undefined,
         });
       }
-    } catch (err) {
-      console.log('Registration failed:', err);
+    } catch (error: AxiosError | any) {
+      logAxiosError('registerUser error: ', error);
       setSignupUiState({
         isLoading: false,
         data: undefined,
-        error: err,
+        error: error,
       });
     }
   };
