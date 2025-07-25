@@ -30,7 +30,7 @@ export const showToast = ({
   text1,
   text2,
   position = 'top',
-  visibilityTime = 800,
+  visibilityTime = 1500,
   textColor,
   backgroundColor,
   theme = 'dark',
@@ -68,11 +68,11 @@ export const showToast = ({
     },
     onHide() {
       onHide?.();
-      logger.log('Toast was hide!');
+      // logger.log('Toast was hide!');
     },
     onShow() {
       onShow?.();
-      logger.log('Toast was showed!');
+      // logger.log('Toast was showed!');
     },
   });
 };

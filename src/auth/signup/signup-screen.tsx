@@ -1,6 +1,6 @@
 import { Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import React, { useRef, useState } from 'react';
-import { Formik } from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
+import { Formik, FormikProps } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -12,7 +12,7 @@ import { SignupSchema, UserSignupIntialValues } from './config';
 import { privacyPolicyURL, termsOfServiceURL } from '../../constant';
 import { SignUpInitialValuesEntity } from './entities/user-signup-entity';
 import { COLORS, COMMON_STYLES, MS, MVS, isIOS, SCREENS } from '../../misc';
-import { _hanldeOpenUrlFunc, logger, appAlert } from '../../utils';
+import { _hanldeOpenUrlFunc, logger, appAlert, useCountDownTimer, showToast } from '../../utils';
 import { useCustomerSignupAction, useVerifyEmailAction, useVerifyPhoneAction } from './hooks';
 import { SafeAreaWrapper, PrimaryHeader, TextButton, PrimaryButton, CountryCodePicker } from '../../presentation/components';
 
@@ -21,17 +21,31 @@ const authFieldHeight = MS(36);
 const SignupScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const formikRef = useRef<FormikProps<SignUpInitialValuesEntity>>(null);
+  const otpRef = useRef<any>(null);
 
   const [showOtpBox, setShowOtpBox] = useState({
     email: false,
     phone: false,
   });
 
-  const { signupUiState, registerUser } = useCustomerSignupAction();
-  const { verifyEmailUiState, verifyEmail } = useVerifyEmailAction();
-  const {verifyPhoneUiState, verifyPhoneNumber} = useVerifyPhoneAction();
+  const [otpManager, setOtpManager] = useState({
+    emailOtp: '',
+    phoneOtp: '',
+    email: '',
+  });
 
-  const _handleEmailVerify = async (values: SignUpInitialValuesEntity) => {
+  const { startTimer, timeLeft } = useCountDownTimer(60);
+
+  const { signupUiState, registerUser } = useCustomerSignupAction();
+  const { verifyEmailUiState, verifyEmail, verifyEmailOtp } = useVerifyEmailAction();
+  const { verifyPhoneUiState, verifyPhoneNumber } = useVerifyPhoneAction();
+  // logger.log('verifyEmailUiState EMAIL -------<> ', JSON.stringify(verifyEmailUiState));
+  logger.log('verifyPhoneUiState PHONE -------<> ', JSON.stringify(verifyPhoneUiState, null, 4));
+
+  const _handleSendOtpToEmail = async (values: SignUpInitialValuesEntity, validateField: any, setFieldTouched: any) => {
+    await setFieldTouched('email', true);
+    await validateField('email');
     const emailOnlySchema = SignupSchema.pick(['email']);
     const email = values.email;
 
@@ -39,19 +53,45 @@ const SignupScreen = () => {
 
     if (isValidEmail) {
       await verifyEmail(values.email);
+      startTimer();
       setShowOtpBox(prev => ({ ...prev, email: true }));
     }
   };
 
-  const _handlePhoneVerify = async (values: SignUpInitialValuesEntity) => {
+  const _handeverifyEmailOtp = async (email: string) => {
+    if (otpManager.emailOtp.length < 5) {
+      return showToast({ text1: 'invalid otp', type: 'error' });
+    }
+    const { success } = await verifyEmailOtp(email, otpManager.emailOtp);
+    setOtpManager(prev => ({ ...prev, emailOtp: '' }));
+    otpRef.current?.clear();
+    if (success) {
+      setShowOtpBox(prev => ({ ...prev, email: false }));
+      formikRef.current?.setFieldValue('isEmailVerified', true);
+    }
+  };
+
+  useEffect(() => {
+    if (otpManager.emailOtp.length === 5) {
+      _handeverifyEmailOtp(otpManager.email);
+    }
+  }, [otpManager.emailOtp]);
+
+  const handleEmailOptInput = (otp: string) => {
+    setOtpManager(prev => ({ ...prev, emailOtp: otp }));
+  };
+
+  const _handleSendOtpToPhone = async (values: SignUpInitialValuesEntity, validateField: any, setFieldTouched: any) => {
+    await setFieldTouched('phone', true);
+    await validateField('phone');
     const phoneOnlySchema = SignupSchema.pick(['phone']);
     const phone = values.phone;
 
     const isValidPhone = await phoneOnlySchema.isValid({ phone });
 
     if (isValidPhone) {
-      appAlert.alert('its working');
-      // setShowOtpBox(prev => ({ ...prev, phone: true }));
+      await verifyPhoneNumber(values.phone, values.countryCode);
+      setShowOtpBox(prev => ({ ...prev, phone: true }));
     }
   };
 
@@ -99,7 +139,12 @@ const SignupScreen = () => {
 
   const _renderFormik = () => {
     return (
-      <Formik initialValues={UserSignupIntialValues} validationSchema={SignupSchema} onSubmit={_handleSignup}>
+      <Formik
+        innerRef={formikRef}
+        initialValues={UserSignupIntialValues}
+        validationSchema={SignupSchema}
+        onSubmit={_handleSignup}
+      >
         {({
           values,
           errors,
@@ -111,7 +156,6 @@ const SignupScreen = () => {
           validateField,
           setFieldTouched,
         }) => {
-          logger.debug('values-->', values);
           const setDialCode = (dial_code: string) => {
             setFieldValue('countryCode', dial_code);
             bottomSheetModalRef.current?.close();
@@ -143,10 +187,14 @@ const SignupScreen = () => {
                       placeholder="Email"
                       placeholderTextColor={COLORS.textPrimary}
                       value={values.email}
-                      onChangeText={handleChange('email')}
+                      onChangeText={text => {
+                        handleChange('email')(text);
+                        setOtpManager(prev => ({ ...prev, email: text }));
+                      }}
                       onBlur={handleBlur('email')}
                       style={styles.emailInput}
                       autoCorrect={false}
+                      keyboardType="email-address"
                     />
                     {values.isEmailVerified && (
                       <Image source={ICONS.checkGreen} style={COMMON_STYLES.size16} resizeMode="contain" />
@@ -156,7 +204,7 @@ const SignupScreen = () => {
                   <TextButton
                     title="Verify"
                     textStyle={styles.verify}
-                    onPress={() => _handleEmailVerify(values)}
+                    onPress={() => _handleSendOtpToEmail(values, validateField, setFieldTouched)}
                     disabled={false}
                   />
                 </View>
@@ -174,7 +222,14 @@ const SignupScreen = () => {
 
                 {showOtpBox.email && (
                   <View style={styles.otpBoxCont}>
-                    <OTPBox otpInpHeight={authFieldHeight} />
+                    <OTPBox
+                      otpInpHeight={authFieldHeight}
+                      handleOptInput={handleEmailOptInput}
+                      timeLeft={timeLeft}
+                      resendFunction={() => _handleSendOtpToEmail(values, validateField, setFieldTouched)}
+                      sendFunction={() => _handeverifyEmailOtp(values.email)}
+                      otpRef={otpRef}
+                    />
                   </View>
                 )}
               </View>
@@ -205,7 +260,7 @@ const SignupScreen = () => {
                   <TextButton
                     title="Send OTP"
                     textStyle={styles.verify}
-                    onPress={() => _handlePhoneVerify(values)}
+                    onPress={() => _handleSendOtpToPhone(values, validateField, setFieldTouched)}
                     disabled={false}
                   />
                 </View>
@@ -272,7 +327,6 @@ const SignupScreen = () => {
               </View>
 
               {/* country code picker */}
-
               <CountryCodePicker bottomSheetModalRef={bottomSheetModalRef} setDialCode={setDialCode} />
             </View>
           );
@@ -282,7 +336,7 @@ const SignupScreen = () => {
   };
 
   const _renderLoader = () => {
-    if (signupUiState.isLoading || verifyEmailUiState.isLoading) {
+    if (signupUiState.isLoading || verifyEmailUiState.isLoading || verifyPhoneUiState.isLoading) {
       return <SecondaryLoader />;
     }
     return null;

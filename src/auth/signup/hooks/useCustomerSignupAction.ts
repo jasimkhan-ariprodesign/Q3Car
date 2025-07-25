@@ -23,7 +23,7 @@ export const useCustomerSignupAction = () => {
     // _logger.warn('body', JSON.stringify(body, null, 1));
     try {
       const result = await postRequest(AUTH_ENDPOINTS.REGISTER_CUSTOMER, body);
-      logger.log('registerUser result: ', result);
+      logger.log('registerUser response: ', result);
 
       if (result) {
         setSignupUiState({

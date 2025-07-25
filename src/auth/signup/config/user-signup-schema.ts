@@ -11,7 +11,7 @@ export const SignupSchema = Yup.object().shape({
     .required('Email is required'),
   countryCode: Yup.string().required('Required'),
   phone: Yup.string()
-    .matches(/^[0-9]+$/, 'Must be only digits')
+    .matches(/^[0-9]+$/, 'Must be only numbers')
     .min(7, 'Phone number is too short')
     .max(15, 'Phone number is too long')
     .required('Phone number is required'),
