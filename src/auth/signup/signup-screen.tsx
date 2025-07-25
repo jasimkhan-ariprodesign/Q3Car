@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { ICONS, FONTS } from '../../assets';
 import { COLORS, COMMON_STYLES, MS, MVS, isIOS, SCREENS } from '../../misc';
@@ -93,19 +93,6 @@ const SignupScreen = () => {
     );
   };
 
-  const _renderSocialButtons = () => {
-    return (
-      <View style={styles.orCont}>
-        <TouchableOpacity style={styles.socialBTN}>
-          <Image source={ICONS.google} style={COMMON_STYLES.size22} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialBTN}>
-          <Image source={ICONS.facebook} style={COMMON_STYLES.size24} />
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
   const _renderSignInButton = () => {
     return (
       <View style={styles.orCont}>
@@ -131,7 +118,7 @@ const SignupScreen = () => {
           validateField,
           setFieldTouched,
         }) => {
-          logger.debug('values-->', values)
+          logger.debug('values-->', values);
           return (
             <View style={styles.formCont}>
               {/* full name */}
@@ -335,9 +322,6 @@ const SignupScreen = () => {
 
             {/* or */}
             {_renderOrView()}
-
-            {/* social buttons */}
-            {/* {_renderSocialButtons()} */}
 
             {/* sign in button */}
             {_renderSignInButton()}
