@@ -1,8 +1,9 @@
-import {_onboardingData} from './onboarding-static-data';
-import {termsOfServiceURL, privacyPolicyURL} from './urls';
-import {_vehicleTypes, _recentPlaces, HISTORY_DATA} from './extra-data';
-import {SP_DRAWER_MENU_LIST} from './drawer-menu-list';
+import { _onboardingData } from './onboarding-static-data';
+import { termsOfServiceURL, privacyPolicyURL } from './urls';
+import { _vehicleTypes, _recentPlaces, HISTORY_DATA } from './extra-data';
+import { SP_DRAWER_MENU_LIST } from './drawer-menu-list';
 import { EarningsHistoryData } from './extra-data';
+import { COUNTRY_CODE } from './country-code-json';
 
 export {
   _onboardingData,
@@ -12,5 +13,6 @@ export {
   _recentPlaces,
   HISTORY_DATA,
   SP_DRAWER_MENU_LIST,
-  EarningsHistoryData
+  EarningsHistoryData,
+  COUNTRY_CODE,
 };

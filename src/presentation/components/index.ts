@@ -5,6 +5,7 @@ import PrimaryButton from './buttons/primaryButton/primary-button';
 import CustomBottomShitModal from './customBottomShitModal/custom-bottom-shit-modal';
 import PrimaryHeader from './primaryHeader/primary-header';
 import SecondaryHeader from './secondaryHeader/secondary-header';
+import CountryCodePicker from './countryCodePicker/country-code-picker';
 
 export {
   SafeAreaWrapper,
@@ -14,4 +15,5 @@ export {
   CustomBottomShitModal,
   PrimaryHeader,
   SecondaryHeader,
+  CountryCodePicker,
 };

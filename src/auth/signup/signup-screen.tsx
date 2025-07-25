@@ -1,34 +1,26 @@
-import {
-  Image,
-  KeyboardAvoidingView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, { useState } from 'react';
+import { Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useRef, useState } from 'react';
 import { Formik } from 'formik';
-import { ICONS, FONTS } from '../../assets';
-import { COLORS, COMMON_STYLES, MS, MVS, isIOS, SCREENS } from '../../misc';
-import { SafeAreaWrapper, PrimaryHeader, TextButton, PrimaryButton } from '../../presentation/components';
-import { OTPBox } from '../components';
-import { privacyPolicyURL, termsOfServiceURL } from '../../constant';
 import { useNavigation } from '@react-navigation/native';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../navigation/types/types';
-import appAlert, { _hanldeOpenUrlFunc, logger, showToast } from '../../utils';
+import { OTPBox } from '../components';
+import { ICONS, FONTS } from '../../assets';
 import { SecondaryLoader } from '../../common/loaders';
+import { RootStackParamList } from '../../navigation/types/types';
 import { SignupSchema, UserSignupIntialValues } from './config';
-import { useCustomerSignupAction, useShowCountryCodePicker, useVerifyEmailAction } from './hooks';
+import { privacyPolicyURL, termsOfServiceURL } from '../../constant';
 import { SignUpInitialValuesEntity } from './entities/user-signup-entity';
-import CountryPicker, { Country } from 'react-native-country-picker-modal';
+import { COLORS, COMMON_STYLES, MS, MVS, isIOS, SCREENS } from '../../misc';
+import { _hanldeOpenUrlFunc, logger, appAlert } from '../../utils';
+import { useCustomerSignupAction, useVerifyEmailAction, useVerifyPhoneAction } from './hooks';
+import { SafeAreaWrapper, PrimaryHeader, TextButton, PrimaryButton, CountryCodePicker } from '../../presentation/components';
 
 const authFieldHeight = MS(36);
 
 const SignupScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const [showOtpBox, setShowOtpBox] = useState({
     email: false,
@@ -37,10 +29,7 @@ const SignupScreen = () => {
 
   const { signupUiState, registerUser } = useCustomerSignupAction();
   const { verifyEmailUiState, verifyEmail } = useVerifyEmailAction();
-  const { showCountryCodeUiState, hideCountryCodePicker, showCountryCodePicker } = useShowCountryCodePicker();
-
-  // logger.log('signupUiState -->', signupUiState);
-  // logger.log('verifyEmailUiState -->', verifyEmailUiState);
+  const {verifyPhoneUiState, verifyPhoneNumber} = useVerifyPhoneAction();
 
   const _handleEmailVerify = async (values: SignUpInitialValuesEntity) => {
     const emailOnlySchema = SignupSchema.pick(['email']);
@@ -72,6 +61,10 @@ const SignupScreen = () => {
     //   screen: SCREENS.setPassword,
     // });
     registerUser(value);
+  };
+
+  const _showCountryCodePicker = () => {
+    bottomSheetModalRef.current?.present();
   };
 
   const _handleSignInClick = () => {
@@ -119,6 +112,11 @@ const SignupScreen = () => {
           setFieldTouched,
         }) => {
           logger.debug('values-->', values);
+          const setDialCode = (dial_code: string) => {
+            setFieldValue('countryCode', dial_code);
+            bottomSheetModalRef.current?.close();
+          };
+
           return (
             <View style={styles.formCont}>
               {/* full name */}
@@ -184,7 +182,7 @@ const SignupScreen = () => {
               {/* phone number */}
               <View>
                 <View style={styles.sendOTPCont}>
-                  <TouchableOpacity onPress={showCountryCodePicker} style={styles.countryCodeBTN}>
+                  <TouchableOpacity onPress={_showCountryCodePicker} style={styles.countryCodeBTN}>
                     <Text>{values.countryCode}</Text>
                     <Image source={ICONS.angleLeftDark} style={styles.downArrow} resizeMode="contain" />
                   </TouchableOpacity>
@@ -274,22 +272,8 @@ const SignupScreen = () => {
               </View>
 
               {/* country code picker */}
-              {showCountryCodeUiState.visible && (
-                <CountryPicker
-                  countryCode="IN"
-                  onSelect={(country: Country) => {
-                    setFieldValue('countryCode', `+${country.callingCode?.[0]}`);
-                    hideCountryCodePicker();
-                  }}
-                  visible={showCountryCodeUiState.visible}
-                  withFilter
-                  withEmoji
-                  withFlag
-                  containerButtonStyle={{ backgroundColor: 'red' }}
-                  onClose={hideCountryCodePicker}
-                  withCallingCode
-                />
-              )}
+
+              <CountryCodePicker bottomSheetModalRef={bottomSheetModalRef} setDialCode={setDialCode} />
             </View>
           );
         }}
@@ -414,7 +398,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     height: authFieldHeight,
     borderRadius: 8,
-    minWidth: MS(52),
+    minWidth: MS(56),
   },
   countryCodeString: {
     fontSize: MS(14),

@@ -7,7 +7,7 @@ import { getInitialLoadingState } from './uiState/ui-state';
 import { launchCameraUtil } from './launchCameraUtil/launch-camera-util';
 import { getTokenUtil } from './getTokenUtil/get-token-util';
 import { logAxiosError } from './logAxiosError/log-axios-error';
-import appAlert from './appAlert/app-alert';
+import { appAlert } from './appAlert/app-alert';
 import { showToast } from './toast/toast';
 // import
 
@@ -19,8 +19,7 @@ export {
   getTokenUtil,
   logAxiosError,
   showToast,
+  appAlert,
 };
 
 export { getDefaultUiState, getInitialLoadingState };
-
-export default appAlert;

@@ -1,6 +1,6 @@
 import { Alert, AlertButton } from 'react-native';
 
-const appAlert = {
+export const appAlert = {
   alert: (message: string, title?: string) => {
     Alert.alert(title || '', message);
   },
@@ -29,4 +29,3 @@ const appAlert = {
   },
 };
 
-export default appAlert;

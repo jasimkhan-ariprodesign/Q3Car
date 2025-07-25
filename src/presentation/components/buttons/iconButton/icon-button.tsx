@@ -1,20 +1,13 @@
-import {
-  Image,
-  ImageSourcePropType,
-  ImageStyle,
-  StyleSheet,
-  TouchableOpacity,
-  ViewStyle,
-} from 'react-native';
+import { Image, ImageSourcePropType, ImageStyle, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
 import React from 'react';
-import {logger} from '../../../../utils';
+import { logger } from '../../../../utils';
 
 interface IconButtonProp {
   iconBtnStyle?: ViewStyle;
   iconStyle?: ImageStyle;
   onPress?: () => void;
   disabled?: boolean;
-  icon?: ImageSourcePropType | {uri: string};
+  icon?: ImageSourcePropType | { uri: string };
   resizeMode?: 'contain' | 'cover' | 'center' | 'stretch';
   tintColor?: string;
 }
@@ -38,7 +31,8 @@ const IconButton: React.FC<IconButtonProp> = ({
       activeOpacity={disabled ? 0.9 : 0.5}
       disabled={disabled}
       style={[styles.container, iconBtnStyle]}
-      accessibilityRole="button">
+      accessibilityRole="button"
+    >
       <Image
         source={icon}
         style={[iconStyle]}
