@@ -1,5 +1,4 @@
 import {
-  Button,
   Image,
   KeyboardAvoidingView,
   ScrollView,
@@ -22,9 +21,9 @@ import { RootStackParamList } from '../../navigation/types/types';
 import appAlert, { _hanldeOpenUrlFunc, logger, showToast } from '../../utils';
 import { SecondaryLoader } from '../../common/loaders';
 import { SignupSchema, UserSignupIntialValues } from './config';
-import { useCustomerSignupAction, useVerifyEmailAction } from './hooks';
+import { useCustomerSignupAction, useShowCountryCodePicker, useVerifyEmailAction } from './hooks';
 import { SignUpInitialValuesEntity } from './entities/user-signup-entity';
-import ToastManager, { Toast } from 'toastify-react-native';
+import CountryPicker, { Country } from 'react-native-country-picker-modal';
 
 const authFieldHeight = MS(36);
 
@@ -38,6 +37,7 @@ const SignupScreen = () => {
 
   const { signupUiState, registerUser } = useCustomerSignupAction();
   const { verifyEmailUiState, verifyEmail } = useVerifyEmailAction();
+  const { showCountryCodeUiState, hideCountryCodePicker, showCountryCodePicker } = useShowCountryCodePicker();
 
   // logger.log('signupUiState -->', signupUiState);
   // logger.log('verifyEmailUiState -->', verifyEmailUiState);
@@ -131,6 +131,7 @@ const SignupScreen = () => {
           validateField,
           setFieldTouched,
         }) => {
+          logger.debug('values-->', values)
           return (
             <View style={styles.formCont}>
               {/* full name */}
@@ -196,8 +197,8 @@ const SignupScreen = () => {
               {/* phone number */}
               <View>
                 <View style={styles.sendOTPCont}>
-                  <TouchableOpacity style={styles.countryCodeBTN}>
-                    <Text>+1</Text>
+                  <TouchableOpacity onPress={showCountryCodePicker} style={styles.countryCodeBTN}>
+                    <Text>{values.countryCode}</Text>
                     <Image source={ICONS.angleLeftDark} style={styles.downArrow} resizeMode="contain" />
                   </TouchableOpacity>
 
@@ -284,6 +285,24 @@ const SignupScreen = () => {
                   <Text style={styles.errorString}>{errors.agreeToTerms}</Text>
                 )}
               </View>
+
+              {/* country code picker */}
+              {showCountryCodeUiState.visible && (
+                <CountryPicker
+                  countryCode="IN"
+                  onSelect={(country: Country) => {
+                    setFieldValue('countryCode', `+${country.callingCode?.[0]}`);
+                    hideCountryCodePicker();
+                  }}
+                  visible={showCountryCodeUiState.visible}
+                  withFilter
+                  withEmoji
+                  withFlag
+                  containerButtonStyle={{ backgroundColor: 'red' }}
+                  onClose={hideCountryCodePicker}
+                  withCallingCode
+                />
+              )}
             </View>
           );
         }}
@@ -322,35 +341,8 @@ const SignupScreen = () => {
 
             {/* sign in button */}
             {_renderSignInButton()}
-
-            <Button
-              title="hello"
-              onPress={() => {
-                showToast({ text1: 'check', text2: 'egehejekk' });
-                // Toast.show({
-                //   type: 'success',
-                //   text1: 'Custom Toast',
-                //   text2: 'With many options',
-                //   position: 'bottom',
-                //   style: {backgroundColor: 'red'},
-                //   visibilityTime: 5000,
-                //   autoHide: true,
-                //   backgroundColor: '#333',
-                //   textColor: '#fff',
-                //   iconColor: '#4CAF50',
-                //   iconSize: 14,
-                //   progressBarColor: '#4CAF50',
-                //   theme: 'dark',
-                //   // Custom close icon options
-                //   closeIcon: 'times-circle',
-                //   closeIconFamily: 'FontAwesome',
-                //   closeIconSize: 20,
-                //   closeIconColor: '#fff',
-                //   showProgressBar: false
-                // });
-              }}
-            />
           </ScrollView>
+
           {/* loader */}
           {_renderLoader()}
         </View>

@@ -1,5 +1,6 @@
 import { Toast } from 'toastify-react-native';
 import { COLORS, MS } from '../../misc';
+import { logger } from '..';
 
 type ToastType = 'success' | 'error' | 'info' | 'warn' | 'default';
 
@@ -19,14 +20,17 @@ interface ToastOptions {
   closeIconColor?: string;
   closeIconSize?: number;
   progressBarColor?: string;
+  onPress?: () => void;
+  onHide?: () => void;
+  onShow?: () => void;
 }
 
 export const showToast = ({
   type = 'success',
   text1,
   text2,
-  position = 'center',
-  visibilityTime = 2000,
+  position = 'top',
+  visibilityTime = 800,
   textColor,
   backgroundColor,
   theme = 'dark',
@@ -37,6 +41,9 @@ export const showToast = ({
   closeIconColor = COLORS.transparent,
   closeIconSize = MS(20),
   progressBarColor = COLORS.transparent,
+  onPress,
+  onHide,
+  onShow,
 }: ToastOptions) => {
   Toast.show({
     type,
@@ -56,35 +63,16 @@ export const showToast = ({
     progressBarColor,
     onPress() {
       Toast.hide();
-      console.warn('onPress');
+      onPress?.();
+      logger.log('Toast was pressed!');
     },
     onHide() {
-      console.warn('close');
+      onHide?.();
+      logger.log('Toast was hide!');
     },
     onShow() {
-      console.warn('show');
-        
+      onShow?.();
+      logger.log('Toast was showed!');
     },
   });
 };
-
-// // Toast.show({
-// //           type: 'success',
-// //           text1: 'Custom Toast',
-// //           text2: 'With many options',
-// //           position: 'bottom',
-// //           visibilityTime: 5000,
-// //           autoHide: true,
-// //           backgroundColor: '#333',
-// //           textColor: '#fff',
-// //           iconColor: '#4CAF50',
-// //           iconSize: 14,
-// //           progressBarColor: '#4CAF50',
-// //           theme: 'dark',
-// //           // Custom close icon options
-// //           closeIcon: 'times-circle',
-// //           closeIconFamily: 'FontAwesome',
-// //           closeIconSize: 20,
-// //           closeIconColor: '#fff',
-
-// //         });
