@@ -16,16 +16,17 @@ export const useVerifyEmailAction = () => {
 
   // send otp to email function
   const verifyEmail = async (email: string) => {
+    if (!email) {
+      return showToast({ text1: 'email not found', type: 'error' });
+    }
+
     setVerifyEmailUiState(getInitialLoadingState());
+
     const body = {
       to: email,
     };
 
     try {
-      if (!email) {
-        return showToast({ text1: 'email not found', type: 'error' });
-      }
-
       const response = await postRequest(AUTH_ENDPOINTS.SEND_OTP_TO_EMAIL, body);
 
       if (response) {

@@ -1,11 +1,11 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {PrimaryButton, SafeAreaWrapper} from '../../components';
-import {COLORS, WINDOW_HEIGHT, MS, MVS, SCREENS} from '../../../misc';
-import {FONTS, IMAGES} from '../../../assets';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../../navigation/types/types';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { FONTS, IMAGES } from '../../../assets';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { PrimaryButton, SafeAreaWrapper } from '../../components';
+import { RootStackParamList } from '../../../navigation/types/types';
+import { COLORS, WINDOW_HEIGHT, MS, MVS, SCREENS } from '../../../misc';
 
 const UserTypeSelectScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();

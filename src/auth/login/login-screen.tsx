@@ -1,36 +1,23 @@
-import {
-  KeyboardAvoidingView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {useState} from 'react';
-import {FONTS, ICONS} from '../../assets';
-import {MS, COLORS, MVS, isIOS, COMMON_STYLES, SCREENS} from '../../misc';
-import {
-  SafeAreaWrapper,
-  PrimaryHeader,
-  TextButton,
-  IconButton,
-  PrimaryButton,
-} from '../../presentation/components';
-import {Formik} from 'formik';
-import {logger} from '../../utils';
-import {_loginSchema} from '../validations/schemas';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {AuthStackParamList, RootStackParamList} from '../../navigation/types/types';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {SecondaryLoader} from '../../common/loaders';
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Formik } from 'formik';
+import { FONTS, ICONS } from '../../assets';
+import { logger, resetNestedNavigation } from '../../utils';
+import { _loginSchema } from '../validations/schemas';
+import { SecondaryLoader } from '../../common/loaders';
+import { MS, COLORS, MVS, isIOS, COMMON_STYLES, SCREENS } from '../../misc';
+import { AuthStackParamList, RootStackParamList } from '../../navigation/types/types';
+import { SafeAreaWrapper, PrimaryHeader, TextButton, IconButton, PrimaryButton } from '../../presentation/components';
+import { useLoginAction } from './hooks';
 
 const authFieldHeight = MS(36);
 
 const LoginScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<AuthStackParamList, 'LoginScreen'>>();
-  const {fromScreen} = route?.params || {};
+  const { fromScreen } = route?.params || {};
 
   const [formData, setFormData] = useState({
     showPasswrod: true,
@@ -41,8 +28,11 @@ const LoginScreen = () => {
     password: '',
   };
 
+  const { loginUiState, loginUser } = useLoginAction();
+  logger.log('loginUiState : ', loginUiState);
+
   const _handleShowPassword = () => {
-    setFormData(prev => ({...prev, showPasswrod: !formData.showPasswrod}));
+    setFormData(prev => ({ ...prev, showPasswrod: !formData.showPasswrod }));
   };
 
   const _handleSignUpClick = () => {
@@ -61,8 +51,19 @@ const LoginScreen = () => {
     });
   };
 
-  const _handleSignIn = (value: any) => {
-    logger.log('_handleSignup --: ', value);
+  const _handleSignIn = async (value: any) => {
+    const phoneOrEmail = value.email;
+    const password = value?.password;
+
+    const { success } = await loginUser({ phoneOrEmail, password });
+
+    if (success) {
+      resetNestedNavigation({
+        navigation,
+        parentRouteName: SCREENS.drawerNavigator,
+        targetRouteName: SCREENS.dashboardScreen,
+      });
+    }
   };
 
   const _renderOrView = () => {
@@ -88,25 +89,21 @@ const LoginScreen = () => {
 
   const _renderFormik = () => {
     return (
-      <Formik
-        initialValues={initialValues}
-        validationSchema={_loginSchema}
-        onSubmit={_handleSignIn}>
-        {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
-          // logger.log('values ->', values);
-
+      <Formik initialValues={initialValues} validationSchema={_loginSchema} onSubmit={_handleSignIn}>
+        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => {
           return (
             <View style={styles.formCont}>
               {/* email */}
               <View>
                 <TextInput
-                  placeholder="Email or Phone Number"
+                  placeholder="Email or Phone Number (with country code)"
                   placeholderTextColor={COLORS.textPrimary}
                   value={values.email}
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   style={styles.emailInput}
                   autoCorrect={false}
+                  autoCapitalize="none"
                 />
                 {errors.email && touched.email && typeof errors.email === 'string' && (
                   <Text style={styles.errorString}>{errors.email}</Text>
@@ -156,14 +153,20 @@ const LoginScreen = () => {
     );
   };
 
+  const _renderLoader = () => {
+    if (loginUiState.isLoading) {
+      return <SecondaryLoader />;
+    }
+    return null;
+  };
+
+  // main view
   return (
     <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
         <View style={COMMON_STYLES.flex}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.contentContainerStyle}>
+          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainerStyle}>
             <View>
               <Text style={styles.title}>
                 Hello!{'\n'}Sign in to{'\n'}get started
@@ -181,7 +184,7 @@ const LoginScreen = () => {
           </ScrollView>
 
           {/* loader */}
-          {/* <SecondaryLoader /> */}
+          {_renderLoader()}
         </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
@@ -193,7 +196,7 @@ const gapAndMargin = MVS(20);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  headerStyle: {paddingHorizontal: MS(18)},
+  headerStyle: { paddingHorizontal: MS(18) },
   contentContainerStyle: {
     rowGap: gapAndMargin,
     paddingHorizontal: MS(18),

@@ -44,7 +44,7 @@ const SignupScreen = () => {
   const { verifyPhoneUiState, verifyPhoneNumber, verifyPhoneNumOtp } = useVerifyPhoneAction();
   // logger.debug('verifyEmailUiState EMAIL -------<> ', JSON.stringify(verifyEmailUiState));
   // logger.log('verifyPhoneUiState PHONE -------<> ', JSON.stringify(verifyPhoneUiState, null, 4));
-  logger.log('signupUiState  -------<> ', JSON.stringify(signupUiState, null, 4));
+  // logger.log('signupUiState  -------<> ', JSON.stringify(signupUiState, null, 4));
 
   const _handleSendOtpToEmail = async (values: SignUpInitialValuesEntity, validateField: any, setFieldTouched: any) => {
     await setFieldTouched('email', true);
@@ -120,6 +120,7 @@ const SignupScreen = () => {
 
   const _handleSignup = async (value: SignUpInitialValuesEntity) => {
     const { success } = await registerUser(value);
+
     if (success) {
       navigation.push(SCREENS.authStack, {
         screen: SCREENS.setPassword,
@@ -201,6 +202,7 @@ const SignupScreen = () => {
                   onBlur={handleBlur('fullName')}
                   style={styles.fullNameInput}
                   autoCorrect={false}
+                  autoCapitalize="words"
                 />
                 {errors.fullName && touched.fullName && typeof errors.fullName === 'string' && (
                   <Text style={styles.errorString}>{errors.fullName}</Text>
@@ -223,6 +225,7 @@ const SignupScreen = () => {
                       style={styles.emailInput}
                       autoCorrect={false}
                       keyboardType="email-address"
+                      autoCapitalize="none"
                     />
                     {values.isEmailVerified && (
                       <Image source={ICONS.checkGreen} style={COMMON_STYLES.size16} resizeMode="contain" />

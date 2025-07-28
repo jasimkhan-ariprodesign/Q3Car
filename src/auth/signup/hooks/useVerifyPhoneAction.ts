@@ -16,15 +16,18 @@ export const useVerifyPhoneAction = () => {
 
   // send otp to phone
   const verifyPhoneNumber = async (phone: string, countryCode: string) => {
+    if (!phone) {
+      return showToast({ text1: 'phone number not found', type: 'error' });
+    }
+
     setVerifyPhoneUiState(getInitialLoadingState());
+
     const body = {
       phoneNumber: `${countryCode}${phone}`,
       purpose: 'verifyPhone',
     };
 
-    if (!phone) {
-      return showToast({ text1: 'phone number not found', type: 'error' });
-    }
+
     try {
       const response = await postRequest(AUTH_ENDPOINTS.SEND_OTP_TO_PHONE, body);
 

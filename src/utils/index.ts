@@ -14,6 +14,7 @@ import { showApiErrorMessage } from './showApiErrorMessage/show-api-error-messag
 import { storeUserData } from './authStorage/auth-storage';
 import { getUserData } from './authStorage/auth-storage';
 import { resetUserData } from './authStorage/auth-storage';
+import { resetNestedNavigation } from './resetNestedNavigation/reset-nested-navigation';
 // import
 
 export {
@@ -27,6 +28,7 @@ export {
   appAlert,
   useCountDownTimer,
   showApiErrorMessage,
+  resetNestedNavigation,
 };
 
 export { storeUserData, getUserData, resetUserData };

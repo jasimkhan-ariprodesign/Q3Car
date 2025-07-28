@@ -13,6 +13,7 @@ export const useCustomerSignupAction = () => {
 
   const registerUser = async (values: SignUpInitialValuesEntity) => {
     setSignupUiState(getInitialLoadingState());
+
     const body = {
       fullName: values.fullName,
       email: values.email,

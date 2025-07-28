@@ -7,8 +7,8 @@ import { logger } from '../../utils';
 import { FONTS, ICONS } from '../../assets';
 import { useSetPasswordAction } from './hooks';
 import { SecondaryLoader } from '../../common';
-import { COMMON_STYLES, isIOS, COLORS, MS, MVS, SCREENS } from '../../misc';
 import { _setPasswordSchema } from '../validations/schemas';
+import { COMMON_STYLES, isIOS, COLORS, MS, MVS, SCREENS } from '../../misc';
 import { AuthStackParamList, RootStackParamList } from '../../navigation/types/types';
 import { SafeAreaWrapper, PrimaryHeader, IconButton, PrimaryButton } from '../../presentation/components';
 
@@ -26,10 +26,6 @@ const SetPassword = () => {
 
   const { setpasswordUiState, setPasswordFunc } = useSetPasswordAction();
 
-  logger.warn('userType --)--->', userType);
-  logger.warn('phone --)--->', phone);
-  logger.log('setpasswordUiState --::', setpasswordUiState);
-
   const _handleShowPassword = (keyName: string) => {
     if (keyName === 'password') {
       setFormData(prev => ({ ...prev, showPasswrod: !formData.showPasswrod }));
@@ -40,18 +36,24 @@ const SetPassword = () => {
   };
 
   const _handleRegister = async (values: any) => {
-    const { success } = await setPasswordFunc(values?.password, phone || '');
-    logger.log('---------------------', success);
+    const { success } = await setPasswordFunc(phone || '', values?.password);
     if (success) {
-      // if (userType === 'service provider') {
-      //   navigation.push(SCREENS.SPDrawerNavigator, {
-      //     screen: SCREENS.SPDashboardScreen,
-      //   });
-      // } else {
-      //   navigation.push(SCREENS.drawerNavigator, {
-      //     screen: SCREENS.dashboardScreen,
-      //   });
-      // }
+      if (userType === 'service provider') {
+        // navigation.push(SCREENS.SPDrawerNavigator, {
+        //   screen: SCREENS.SPDashboardScreen,
+        // });
+         navigation.push(SCREENS.authStack, {
+          screen: SCREENS.spLoginScreen,
+        });
+       
+      } else {
+        // navigation.push(SCREENS.drawerNavigator, {
+        //   screen: SCREENS.dashboardScreen,
+        // });
+        navigation.push(SCREENS.authStack, {
+          screen: SCREENS.loginScreen,
+        });
+      }
     }
   };
 
