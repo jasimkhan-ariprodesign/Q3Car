@@ -14,7 +14,8 @@ const SplashScreen = () => {
   const _handleRoute = async () => {
     try {
       const user_credentials = await getUserData();
-      const { userType } = user_credentials?.data?.user || {};
+      // const { userType } = user_credentials?.data?.user || {};
+      const { userType } = {};
       // logger.log('user_credentials : ', JSON.stringify(user_credentials, null, 2));
       if (user_credentials && userType && userType === 'Customer') {
         return navigation.replace(SCREENS.drawerNavigator, {
@@ -32,9 +33,6 @@ const SplashScreen = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // navigation.replace(SCREENS.welcomeStack, {
-      //   screen: SCREENS.onboardingScreen,
-      // });
       _handleRoute();
     }, 1000);
 

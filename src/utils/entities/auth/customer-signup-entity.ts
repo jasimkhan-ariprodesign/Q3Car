@@ -1,4 +1,4 @@
-export interface SignUpInitialValuesEntity {
+export interface CustomerSignUpInitialEntity {
   fullName: string;
   email: string;
   countryCode: string;

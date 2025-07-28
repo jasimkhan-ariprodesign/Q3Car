@@ -1,3 +1,4 @@
-import {_signupSchema} from './schemas';
+import { _signupSchema } from './schemas';
+import { CustomerSignupSchema } from './schemas';
 
-export {_signupSchema};
+export { _signupSchema, CustomerSignupSchema };

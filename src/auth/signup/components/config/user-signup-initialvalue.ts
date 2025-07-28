@@ -1,6 +1,6 @@
-import { SignUpInitialValuesEntity } from '../entities/user-signup-entity';
+import { CustomerSignUpInitialEntity } from '../../../../utils/entities/auth/customer-signup-entity';
 
-export const UserSignupIntialValues: SignUpInitialValuesEntity = {
+export const UserSignupIntialValues: CustomerSignUpInitialEntity = {
   fullName: '',
   email: '',
   countryCode: '+1',

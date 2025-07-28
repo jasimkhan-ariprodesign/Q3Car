@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { AxiosError } from 'axios';
 import { getDefaultUiState, getInitialLoadingState, UiState } from '../../../utils/uiState/ui-state';
-import { SignUpInitialValuesEntity } from '../entities/user-signup-entity';
 import { postRequest } from '../../../app';
 import { showApiErrorMessage, showToast, storeUserData } from '../../../utils';
 import { AUTH_ENDPOINTS } from '../../../app/api/endpoints';
+import { SignUpInitialValuesEntity } from '../../../utils/entities/auth/customer-signup-entity';
 
 export const useCustomerSignupAction = () => {
   const defaultSignupState: UiState<any> = getDefaultUiState();

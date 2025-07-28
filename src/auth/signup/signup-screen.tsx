@@ -6,22 +6,23 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { OTPBox } from '../components';
 import { ICONS, FONTS } from '../../assets';
+import { CustomerSignupSchema } from '../validations';
 import { SecondaryLoader } from '../../common/loaders';
 import { RootStackParamList } from '../../navigation/types/types';
-import { SignupSchema, UserSignupIntialValues } from './config';
+import { UserSignupIntialValues } from './components/config';
 import { privacyPolicyURL, termsOfServiceURL } from '../../constant';
-import { SignUpInitialValuesEntity } from './entities/user-signup-entity';
 import { COLORS, COMMON_STYLES, MS, MVS, isIOS, SCREENS } from '../../misc';
 import { useCustomerSignupAction, useVerifyEmailAction, useVerifyPhoneAction } from './hooks';
 import { _hanldeOpenUrlFunc, logger, appAlert, useCountDownTimer, showToast } from '../../utils';
 import { SafeAreaWrapper, PrimaryHeader, TextButton, PrimaryButton, CountryCodePicker } from '../../presentation/components';
+import { CustomerSignUpInitialEntity } from '../../utils/entities/auth/customer-signup-entity';
 
 const authFieldHeight = MS(36);
 
 const SignupScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const formikRef = useRef<FormikProps<SignUpInitialValuesEntity>>(null);
+  const formikRef = useRef<FormikProps<CustomerSignUpInitialEntity>>(null);
   const otpRef = useRef<any>(null);
 
   const [showOtpBox, setShowOtpBox] = useState({
@@ -46,10 +47,10 @@ const SignupScreen = () => {
   // logger.log('verifyPhoneUiState PHONE -------<> ', JSON.stringify(verifyPhoneUiState, null, 4));
   // logger.log('signupUiState  -------<> ', JSON.stringify(signupUiState, null, 4));
 
-  const _handleSendOtpToEmail = async (values: SignUpInitialValuesEntity, validateField: any, setFieldTouched: any) => {
+  const _handleSendOtpToEmail = async (values: CustomerSignUpInitialEntity, validateField: any, setFieldTouched: any) => {
     await setFieldTouched('email', true);
     await validateField('email');
-    const emailOnlySchema = SignupSchema.pick(['email']);
+    const emailOnlySchema = CustomerSignupSchema.pick(['email']);
     const email = values.email;
 
     const isValidEmail = await emailOnlySchema.isValid({ email });
@@ -78,10 +79,10 @@ const SignupScreen = () => {
     setOtpManager(prev => ({ ...prev, emailOtp: otp }));
   };
 
-  const _handleSendOtpToPhone = async (values: SignUpInitialValuesEntity, validateField: any, setFieldTouched: any) => {
+  const _handleSendOtpToPhone = async (values: CustomerSignUpInitialEntity, validateField: any, setFieldTouched: any) => {
     await setFieldTouched('phone', true);
     await validateField('phone');
-    const phoneOnlySchema = SignupSchema.pick(['phone']);
+    const phoneOnlySchema = CustomerSignupSchema.pick(['phone']);
     const phone = values.phone;
 
     const isValidPhone = await phoneOnlySchema.isValid({ phone });
@@ -118,7 +119,7 @@ const SignupScreen = () => {
     }
   }, [otpManager]);
 
-  const _handleSignup = async (value: SignUpInitialValuesEntity) => {
+  const _handleSignup = async (value: CustomerSignUpInitialEntity) => {
     const { success } = await registerUser(value);
 
     if (success) {
@@ -170,7 +171,7 @@ const SignupScreen = () => {
       <Formik
         innerRef={formikRef}
         initialValues={UserSignupIntialValues}
-        validationSchema={SignupSchema}
+        validationSchema={CustomerSignupSchema}
         onSubmit={_handleSignup}
       >
         {({
