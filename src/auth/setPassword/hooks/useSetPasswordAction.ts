@@ -24,7 +24,7 @@ export const useSetPasswordAction = () => {
     const body = { phone, password };
 
     try {
-      const response = await postRequest(AUTH_ENDPOINTS.SETPASSWORD_CUSTOMER, body);
+      const response = await postRequest(AUTH_ENDPOINTS.SETPASSWORD, body);
 
       if (response) {
         response.message && showToast({ text1: response.message });

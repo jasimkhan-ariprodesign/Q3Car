@@ -4,9 +4,9 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
 import { FONTS, ICONS } from '../../assets';
-import { logger, resetNestedNavigation } from '../../utils';
-import { _loginSchema } from '../validations/schemas';
+import { LoginSchema } from '../validations';
 import { SecondaryLoader } from '../../common/loaders';
+import { logger, resetNestedNavigation } from '../../utils';
 import { MS, COLORS, MVS, isIOS, COMMON_STYLES, SCREENS } from '../../misc';
 import { AuthStackParamList, RootStackParamList } from '../../navigation/types/types';
 import { SafeAreaWrapper, PrimaryHeader, TextButton, IconButton, PrimaryButton } from '../../presentation/components';
@@ -89,7 +89,7 @@ const LoginScreen = () => {
 
   const _renderFormik = () => {
     return (
-      <Formik initialValues={initialValues} validationSchema={_loginSchema} onSubmit={_handleSignIn}>
+      <Formik initialValues={initialValues} validationSchema={LoginSchema} onSubmit={_handleSignIn}>
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => {
           return (
             <View style={styles.formCont}>

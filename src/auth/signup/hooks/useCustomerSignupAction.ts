@@ -4,14 +4,14 @@ import { getDefaultUiState, getInitialLoadingState, UiState } from '../../../uti
 import { postRequest } from '../../../app';
 import { showApiErrorMessage, showToast, storeUserData } from '../../../utils';
 import { AUTH_ENDPOINTS } from '../../../app/api/endpoints';
-import { SignUpInitialValuesEntity } from '../../../utils/entities/auth/customer-signup-entity';
+import { CustomerSignUpInitialEntity } from '../../../utils/entities/auth/customer-signup-entity';
 
 export const useCustomerSignupAction = () => {
   const defaultSignupState: UiState<any> = getDefaultUiState();
 
   const [signupUiState, setSignupUiState] = useState<UiState<any>>(defaultSignupState);
 
-  const registerUser = async (values: SignUpInitialValuesEntity) => {
+  const registerCustomer = async (values: CustomerSignUpInitialEntity) => {
     setSignupUiState(getInitialLoadingState());
 
     const body = {
@@ -50,6 +50,6 @@ export const useCustomerSignupAction = () => {
 
   return {
     signupUiState,
-    registerUser,
+    registerCustomer,
   };
 };

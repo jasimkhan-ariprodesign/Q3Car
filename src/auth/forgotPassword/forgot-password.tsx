@@ -1,16 +1,16 @@
-import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
-import React, {useState} from 'react';
-import {COMMON_STYLES, isIOS, COLORS, MS, MVS, SCREENS} from '../../misc';
-import {SafeAreaWrapper, PrimaryHeader, PrimaryButton} from '../../presentation/components';
-import {FONTS} from '../../assets';
-import {Formik} from 'formik';
-import {_forgotPasswordSchema} from '../validations/schemas';
-import {logger} from '../../utils';
-import {OTPBox} from '../components';
-import {SecondaryLoader} from '../../common/loaders';
-import {useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../../navigation/types/types';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { FONTS } from '../../assets';
+import { Formik } from 'formik';
+import { logger } from '../../utils';
+import { OTPBox } from '../components';
+import { SecondaryLoader } from '../../common/loaders';
+import { ForgotPasswordSchema } from '../validations';
+import { RootStackParamList } from '../../navigation/types/types';
+import { COMMON_STYLES, isIOS, COLORS, MS, MVS, SCREENS } from '../../misc';
+import { SafeAreaWrapper, PrimaryHeader, PrimaryButton } from '../../presentation/components';
 
 const ForgotPassword = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
@@ -37,11 +37,8 @@ const ForgotPassword = () => {
           <Text style={styles.labelTxt}>Email or Phone Number</Text>
         </View>
 
-        <Formik
-          initialValues={{email: ''}}
-          validationSchema={_forgotPasswordSchema}
-          onSubmit={_handleSubmitClick}>
-          {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
+        <Formik initialValues={{ email: '' }} validationSchema={ForgotPasswordSchema} onSubmit={_handleSubmitClick}>
+          {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => {
             // logger.log('values ->', values);
 
             return (
@@ -96,9 +93,7 @@ const ForgotPassword = () => {
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
         <View style={COMMON_STYLES.flex}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.contentContainerStyle}>
+          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainerStyle}>
             {/* email Or Phone input && otp input com  */}
             {currentStep === 'emailOrPhone' ? _renderEmailOrPhoneInputCom() : _renderOTPInputCom()}
           </ScrollView>
@@ -117,7 +112,7 @@ const bdrWidth = 1.2;
 const authFieldHeight = MS(36);
 
 const styles = StyleSheet.create({
-  headerStyle: {paddingHorizontal: MS(18)},
+  headerStyle: { paddingHorizontal: MS(18) },
   contentContainerStyle: {
     rowGap: gapAndMargin,
     paddingHorizontal: MS(18),
@@ -157,5 +152,5 @@ const styles = StyleSheet.create({
     fontSize: MS(10),
     includeFontPadding: false,
   },
-  otpBoxCont: {marginTop: gapAndMargin},
+  otpBoxCont: { marginTop: gapAndMargin },
 });

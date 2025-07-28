@@ -37,7 +37,7 @@ export const postRequest = async (
     const headers = { ...commonHeader, ...restHeaders };
     const config = {
       headers,
-      requiresAuth: requiresAuth ?? true,
+      requiresAuth: requiresAuth ?? false,
     };
 
     const response = await ApiService.api.post(endpoint, body, config as any);
@@ -142,7 +142,7 @@ export const postMultipartFormData = async (
 
     const config = {
       headers,
-      requiresAuth: requiresAuth ?? true,
+      requiresAuth: requiresAuth ?? false,
     };
 
     const response = await ApiService.api.post(endpoint, formData, config);

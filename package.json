@@ -11,7 +11,9 @@
     "xcode": "open ios/Q3Car.xcworkspace/",
     "pod": "npx pod-install ios",
     "podclean": "cd ios && pod cache clean --all",
-    "aclean": "cd android && ./gradlew clean && cd .."
+    "aclean": "cd android && ./gradlew clean && cd ..",
+    "iphone16pro": "npx react-native run-ios --simulator=\"iPhone 16 Pro\""
+
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^5",

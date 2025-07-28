@@ -7,7 +7,7 @@ import { logger } from '../../utils';
 import { FONTS, ICONS } from '../../assets';
 import { useSetPasswordAction } from './hooks';
 import { SecondaryLoader } from '../../common';
-import { _setPasswordSchema } from '../validations/schemas';
+import { SetPasswordSchema } from '../validations/schemas';
 import { COMMON_STYLES, isIOS, COLORS, MS, MVS, SCREENS } from '../../misc';
 import { AuthStackParamList, RootStackParamList } from '../../navigation/types/types';
 import { SafeAreaWrapper, PrimaryHeader, IconButton, PrimaryButton } from '../../presentation/components';
@@ -42,10 +42,9 @@ const SetPassword = () => {
         // navigation.push(SCREENS.SPDrawerNavigator, {
         //   screen: SCREENS.SPDashboardScreen,
         // });
-         navigation.push(SCREENS.authStack, {
+        navigation.push(SCREENS.authStack, {
           screen: SCREENS.spLoginScreen,
         });
-       
       } else {
         // navigation.push(SCREENS.drawerNavigator, {
         //   screen: SCREENS.dashboardScreen,
@@ -84,7 +83,7 @@ const SetPassword = () => {
             {/* Form Section */}
             <Formik
               initialValues={{ password: '', confirmPassword: '' }}
-              validationSchema={_setPasswordSchema}
+              validationSchema={SetPasswordSchema}
               onSubmit={_handleRegister}
             >
               {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (

@@ -9,32 +9,36 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useRef, useState } from 'react';
-import { Formik } from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
+import { Formik, FormikProps } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { ICONS, FONTS, IMAGES } from '../../assets';
 import { OTPBox } from '../components';
-import { _signupSchema } from '../validations';
-import { _hanldeOpenUrlFunc, logger } from '../../utils';
+import { SPSignupSchema } from '../validations';
+import { _hanldeOpenUrlFunc, launchCameraUtil, launchGalleryUtil, logger, showToast, useCountDownTimer } from '../../utils';
 import { SecondaryLoader } from '../../common/loaders';
 import { privacyPolicyURL, termsOfServiceURL } from '../../constant';
 import { COLORS, COMMON_STYLES, MS, MVS, isIOS, SCREENS } from '../../misc';
 import { RootStackParamList } from '../../navigation/types/types';
 import { SafeAreaWrapper, PrimaryHeader, TextButton, PrimaryButton, CountryCodePicker } from '../../presentation/components';
 import { SPSignupInitialValues } from '../login/components/config';
+import { SPSignUpInitialEntity } from '../../utils/entities/auth/sp-signup-entity';
+import { useServiceProviderSignupAction } from './hooks/serviceProvider';
+import { useVerifyEmailAction, useVerifyPhoneAction } from './hooks';
+import { useCloudinaryUpload } from '../../utils/cloudinary/upload-image-to-cloudinary';
+import { CameraOrGalleryPopup } from '../../common';
 
 const authFieldHeight = MS(36);
 
 const SPSignupScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const otpRef = useRef<any>(null);
+  const formikRef = useRef<FormikProps<SPSignUpInitialEntity>>(null);
 
-  const [verificationStatus, setVerificationStatus] = useState({
-    emailVerified: false,
-    phoneVerified: false,
-  });
+  const { startTimer, timeLeft, resetTimer } = useCountDownTimer(60);
 
   const [showOtpBox, setShowOtpBox] = useState({
     email: false,
@@ -49,29 +53,129 @@ const SPSignupScreen = () => {
     dial_code: '',
   });
 
-  logger.log('verificationStatus ->', verificationStatus);
+  const [showCameraGalleryPopup, setShowCameraGalleryPopup] = useState<boolean>(false);
 
-  const _handleEmailVerify = () => {
-    setVerificationStatus(prev => ({ ...prev, emailVerified: true }));
+  const { serviceProviderSignupUiState, registerServiceProvider } = useServiceProviderSignupAction();
+  const { verifyEmailUiState, verifyEmail, verifyEmailOtp } = useVerifyEmailAction();
+  const { verifyPhoneUiState, verifyPhoneNumber, verifyPhoneNumOtp } = useVerifyPhoneAction();
+
+  const { uploadUiState, uploadToCloudinary } = useCloudinaryUpload();
+
+  const _handleUploadClick = () => {
+    setShowCameraGalleryPopup(prev => !prev);
   };
 
-  const _handlePhoneVerify = () => {
-    setVerificationStatus(prev => ({ ...prev, phoneVerified: true }));
+  const _handleInsurancePictureSelect = async (type: 'Camera' | 'Gallery') => {
+    try {
+      const launchFn = type === 'Camera' ? launchCameraUtil : launchGalleryUtil;
+      const selectedImageURI = await launchFn();
+
+      if (!selectedImageURI) {
+        logger.log('No image was selected or captured');
+        return;
+      }
+      logger.warn('SELECTED IMAGE: ', selectedImageURI);
+      // formikRef.current?.setFieldValue?.('profileAvatar', selectedImageURI);
+    } catch (error) {
+      logger.log('handleProfileSelect Error', error);
+    } finally {
+      _handleUploadClick();
+    }
+  };
+
+  // logger.log('verifyEmailUiState EMAIL -------<> ', JSON.stringify(verifyEmailUiState));
+  // logger.log('verifyPhoneUiState PHONE -------<> ', JSON.stringify(verifyPhoneUiState, null, 4));
+  // logger.log('serviceProviderSignupUiState -:>', JSON.stringify(serviceProviderSignupUiState, null, 1));
+  logger.log('uploadUiState -:>', JSON.stringify(uploadUiState, null, 1));
+
+  const _handleSendOtpToEmail = async (values: SPSignUpInitialEntity, validateField: any, setFieldTouched: any) => {
+    await setFieldTouched('email', true);
+    await validateField('email');
+    const emailOnlySchema = SPSignupSchema.pick(['email']);
+    const email = values.email;
+
+    const isValidEmail = await emailOnlySchema.isValid({ email });
+
+    if (isValidEmail) {
+      await verifyEmail(values.email);
+      startTimer();
+      setShowOtpBox(prev => ({ ...prev, email: true }));
+    }
+  };
+
+  const _handleVerifyEmailOtp = async (email: string) => {
+    if (otpManager.emailOtp.length < 5) {
+      return showToast({ text1: 'invalid otp', type: 'error' });
+    }
+    const { success } = await verifyEmailOtp(email, otpManager.emailOtp);
+    setOtpManager(prev => ({ ...prev, emailOtp: '' }));
+    otpRef.current?.clear();
+    if (success) {
+      setShowOtpBox(prev => ({ ...prev, email: false }));
+      formikRef.current?.setFieldValue('isEmailVerified', true);
+      resetTimer();
+    }
+  };
+
+  const handleEmailOptInput = (otp: string) => {
+    setOtpManager(prev => ({ ...prev, emailOtp: otp }));
   };
 
   const _showCountryCodePicker = () => {
     bottomSheetModalRef.current?.present();
   };
 
-  const _handleSignup = () => {
-    // const _handleSignup = (value: any) => {
-    // _logger.log('_handleSignup --: ', value);
-    navigation.push(SCREENS.authStack, {
-      screen: SCREENS.setPassword,
-      params: {
-        userType: 'service provider',
-      },
-    });
+  const handlePhoneOptInput = (otp: string) => {
+    setOtpManager(prev => ({ ...prev, phoneOtp: otp }));
+  };
+
+  const _handleSendOtpToPhone = async (values: SPSignUpInitialEntity, validateField: any, setFieldTouched: any) => {
+    await setFieldTouched('phone', true);
+    await validateField('phone');
+    const phoneOnlySchema = SPSignupSchema.pick(['phone']);
+    const phone = values.phone;
+
+    const isValidPhone = await phoneOnlySchema.isValid({ phone });
+
+    if (isValidPhone) {
+      await verifyPhoneNumber(values.phone, values.countryCode);
+      setShowOtpBox(prev => ({ ...prev, phone: true }));
+      startTimer();
+    }
+  };
+
+  const _handeVerifyPhoneOtp = async (phone: string) => {
+    if (otpManager.phoneOtp.length < 5) {
+      return showToast({ text1: 'invalid otp', type: 'error' });
+    }
+    const { success } = await verifyPhoneNumOtp(phone, otpManager.phoneOtp);
+    setOtpManager(prev => ({ ...prev, phoneOtp: '' }));
+    otpRef.current?.clear();
+    if (success) {
+      setShowOtpBox(prev => ({ ...prev, phone: false }));
+      formikRef.current?.setFieldValue('isPhoneVerified', true);
+      resetTimer();
+    }
+  };
+
+  useEffect(() => {
+    if (otpManager.emailOtp.length === 5) {
+      _handleVerifyEmailOtp(otpManager.email);
+    }
+    if (otpManager.phoneOtp.length === 5) {
+      _handeVerifyPhoneOtp(`${otpManager.dial_code}${otpManager.phone}`);
+    }
+  }, [otpManager]);
+
+  const _handleSignup = async (values: SPSignUpInitialEntity) => {
+    const { success } = await registerServiceProvider(values);
+    logger.log('success ==========> ', success);
+    // navigation.push(SCREENS.authStack, {
+    //   screen: SCREENS.setPassword,
+    //   params: {
+    //     userType: 'service provider',
+    //   },
+    // });
   };
 
   const _handleSignInClick = () => {
@@ -106,9 +210,25 @@ const SPSignupScreen = () => {
 
   const _renderFormik = () => {
     return (
-      <Formik initialValues={SPSignupInitialValues} validationSchema={_signupSchema} onSubmit={_handleSignup}>
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => {
-          // logger.log('values ->', values);
+      <Formik
+        innerRef={formikRef}
+        initialValues={SPSignupInitialValues}
+        validationSchema={SPSignupSchema}
+        onSubmit={_handleSignup}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          setFieldValue,
+          validateField,
+          setFieldTouched,
+        }) => {
+          // logger.log('SPSignupScreen values ->', JSON.stringify(values, null, 2));
+
           const setDialCode = (dial_code: string) => {
             setFieldValue('countryCode', dial_code);
             setOtpManager(prev => ({ ...prev, dial_code: dial_code }));
@@ -126,6 +246,7 @@ const SPSignupScreen = () => {
                   onBlur={handleBlur('fullName')}
                   style={styles.fullNameInput}
                   autoCorrect={false}
+                  autoCapitalize="words"
                 />
                 {errors.fullName && touched.fullName && typeof errors.fullName === 'string' && (
                   <Text style={styles.errorString}>{errors.fullName}</Text>
@@ -140,32 +261,59 @@ const SPSignupScreen = () => {
                       placeholder="Email"
                       placeholderTextColor={COLORS.textPrimary}
                       value={values.email}
-                      onChangeText={handleChange('email')}
+                      onChangeText={text => {
+                        handleChange('email')(text);
+                        setOtpManager(prev => ({ ...prev, email: text }));
+                      }}
                       onBlur={handleBlur('email')}
                       style={styles.emailInput}
                       autoCorrect={false}
-                      autoCapitalize='none'
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                      editable={!values.isEmailVerified}
                     />
-                    {verificationStatus.emailVerified && (
+                    {values.isEmailVerified && (
                       <Image source={ICONS.checkGreen} style={COMMON_STYLES.size16} resizeMode="contain" />
                     )}
                   </View>
 
-                  <TextButton title="Verify" textStyle={styles.verify} onPress={_handleEmailVerify} disabled={false} />
+                  <TextButton
+                    title="Verify"
+                    textStyle={styles.verify}
+                    onPress={() => _handleSendOtpToEmail(values, validateField, setFieldTouched)}
+                    disabled={values.isEmailVerified}
+                  />
                 </View>
-                {errors.email && touched.email && typeof errors.email === 'string' && (
-                  <Text style={styles.errorString}>{errors.email}</Text>
+                {touched.email && (
+                  <>
+                    {errors.email && typeof errors.email === 'string' && (
+                      <Text style={styles.errorString}>{errors.email}</Text>
+                    )}
+                    {!errors.email && errors.isEmailVerified && typeof errors.isEmailVerified === 'string' && (
+                      <Text style={styles.errorString}>{errors.isEmailVerified}</Text>
+                    )}
+                  </>
                 )}
-                <View style={styles.otpBoxCont}>
-                  <OTPBox otpInpHeight={authFieldHeight} />
-                </View>
+
+                {showOtpBox.email && (
+                  <View style={styles.otpBoxCont}>
+                    <OTPBox
+                      otpInpHeight={authFieldHeight}
+                      handleOptInput={handleEmailOptInput}
+                      timeLeft={timeLeft}
+                      resendFunction={() => _handleSendOtpToEmail(values, validateField, setFieldTouched)}
+                      sendFunction={() => _handleVerifyEmailOtp(values.email)}
+                      otpRef={otpRef}
+                    />
+                  </View>
+                )}
               </View>
 
               {/* phone number */}
               <View>
                 <View style={styles.sendOTPCont}>
                   <TouchableOpacity onPress={_showCountryCodePicker} style={styles.countryCodeBTN}>
-                    <Text style={styles.countryCodeString}>+1</Text>
+                    <Text style={styles.countryCodeString}>{values.countryCode}</Text>
                     <Image source={ICONS.angleLeftDark} style={styles.downArrow} resizeMode="contain" />
                   </TouchableOpacity>
                   <View style={styles.emailCont}>
@@ -173,22 +321,50 @@ const SPSignupScreen = () => {
                       placeholder="000 000 0000"
                       placeholderTextColor={COLORS.textPrimary}
                       value={values.phone}
-                      onChangeText={handleChange('phone')}
+                      onChangeText={text => {
+                        handleChange('phone')(text);
+                        setOtpManager(prev => ({ ...prev, phone: text }));
+                      }}
                       onBlur={handleBlur('phone')}
                       style={styles.emailInput}
+                      editable={!values.isPhoneVerified}
                     />
-                    {verificationStatus.phoneVerified && (
+                    {values.isPhoneVerified && (
                       <Image source={ICONS.checkGreen} style={COMMON_STYLES.size16} resizeMode="contain" />
                     )}
                   </View>
-                  <TextButton title="Send OTP" textStyle={styles.verify} onPress={_handlePhoneVerify} disabled={false} />
+
+                  <TextButton
+                    title="Send OTP"
+                    textStyle={styles.verify}
+                    onPress={() => _handleSendOtpToPhone(values, validateField, setFieldTouched)}
+                    disabled={values.isPhoneVerified}
+                  />
                 </View>
-                {errors.phone && touched.phone && typeof errors.phone === 'string' && (
-                  <Text style={styles.errorString}>{errors.phone}</Text>
+
+                {touched.phone && (
+                  <>
+                    {errors.phone && typeof errors.phone === 'string' && (
+                      <Text style={styles.errorString}>{errors.phone}</Text>
+                    )}
+                    {!errors.phone && errors.isPhoneVerified && typeof errors.isPhoneVerified === 'string' && (
+                      <Text style={styles.errorString}>{errors.isPhoneVerified}</Text>
+                    )}
+                  </>
                 )}
-                <View style={styles.otpBoxCont}>
-                  <OTPBox otpInpHeight={authFieldHeight} />
-                </View>
+
+                {showOtpBox.phone && (
+                  <View style={styles.otpBoxCont}>
+                    <OTPBox
+                      otpInpHeight={authFieldHeight}
+                      handleOptInput={handlePhoneOptInput}
+                      timeLeft={timeLeft}
+                      resendFunction={() => _handleSendOtpToPhone(values, validateField, setFieldTouched)}
+                      sendFunction={() => _handeVerifyPhoneOtp(values.phone)}
+                      otpRef={otpRef}
+                    />
+                  </View>
+                )}
               </View>
 
               {/* driver licence input */}
@@ -196,30 +372,37 @@ const SPSignupScreen = () => {
                 <TextInput
                   placeholder="Driver licence"
                   placeholderTextColor={COLORS.textPrimary}
-                  value={values.fullName}
-                  onChangeText={handleChange('fullName')}
-                  onBlur={handleBlur('fullName')}
+                  value={values.driverLicense}
+                  onChangeText={handleChange('driverLicense')}
+                  onBlur={handleBlur('driverLicense')}
                   style={styles.fullNameInput}
                   autoCorrect={false}
                 />
-                {errors.fullName && touched.fullName && typeof errors.fullName === 'string' && (
-                  <Text style={styles.errorString}>{errors.fullName}</Text>
+                {errors.driverLicense && touched.driverLicense && typeof errors.driverLicense === 'string' && (
+                  <Text style={styles.errorString}>{errors.driverLicense}</Text>
                 )}
               </View>
 
               {/* driver licence picture */}
-              <View style={styles.sendOTPCont}>
-                <View style={styles.pictureContView}>
-                  {/* <Image
+              <View>
+                <View style={styles.sendOTPCont}>
+                  <View style={styles.pictureContView}>
+                    {/* <Image
                     source={IMAGES.spWelcomeScreen}
                     style={styles.pictureImage}
                     resizeMode="cover"
-                  /> */}
-                  <Text style={[styles.countryCodeString, { marginLeft: MS(12) }]}>Picture of Driver's License</Text>
+                    /> */}
+                    <Text style={[styles.countryCodeString, { marginLeft: MS(12) }]}>Picture of Driver's License</Text>
+                  </View>
+                  <TouchableOpacity onPress={_handleUploadClick} style={styles.countryCodeBTN}>
+                    <Text style={styles.countryCodeString}>Upload</Text>
+                  </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.countryCodeBTN}>
-                  <Text style={styles.countryCodeString}>Upload</Text>
-                </TouchableOpacity>
+                {errors.driverLicenseImage &&
+                  touched.driverLicenseImage &&
+                  typeof errors.driverLicenseImage === 'string' && (
+                    <Text style={styles.errorString}>{errors.driverLicenseImage}</Text>
+                  )}
               </View>
 
               {/* insurance input */}
@@ -227,67 +410,77 @@ const SPSignupScreen = () => {
                 <TextInput
                   placeholder="Insurance"
                   placeholderTextColor={COLORS.textPrimary}
-                  value={values.fullName}
-                  onChangeText={handleChange('fullName')}
-                  onBlur={handleBlur('fullName')}
+                  value={values.insuranceNumber}
+                  onChangeText={handleChange('insuranceNumber')}
+                  onBlur={handleBlur('insuranceNumber')}
                   style={styles.fullNameInput}
                   autoCorrect={false}
                 />
-                {errors.fullName && touched.fullName && typeof errors.fullName === 'string' && (
-                  <Text style={styles.errorString}>{errors.fullName}</Text>
+                {errors.insuranceNumber && touched.insuranceNumber && typeof errors.insuranceNumber === 'string' && (
+                  <Text style={styles.errorString}>{errors.insuranceNumber}</Text>
                 )}
               </View>
 
               {/* insurance picture */}
-              <View style={styles.sendOTPCont}>
-                <View style={styles.pictureContView}>
-                  {/* <Image
+              <View>
+                <View style={styles.sendOTPCont}>
+                  <View style={styles.pictureContView}>
+                    {/* <Image
                     source={_images.spWelcomeScreen}
                     style={styles.pictureImage}
                     resizeMode="cover"
-                  /> */}
-                  <Text style={[styles.countryCodeString, { marginLeft: MS(12) }]}>Picture of proof of insurance</Text>
+                    /> */}
+                    <Text style={[styles.countryCodeString, { marginLeft: MS(12) }]}>Picture of proof of insurance</Text>
+                  </View>
+                  <TouchableOpacity style={styles.countryCodeBTN}>
+                    <Text style={styles.countryCodeString}>Upload</Text>
+                  </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.countryCodeBTN}>
-                  <Text style={styles.countryCodeString}>Upload</Text>
-                </TouchableOpacity>
+                {errors.insuranceImage && touched.insuranceImage && typeof errors.insuranceImage === 'string' && (
+                  <Text style={styles.errorString}>{errors.insuranceImage}</Text>
+                )}
               </View>
 
               {/* signup button */}
               <PrimaryButton
-                // onPress={handleSubmit}
-                onPress={_handleSignup}
+                onPress={handleSubmit}
+                // onPress={_handleSignup}
                 title="Sign up"
                 buttonStyle={true ? styles.SignupBTN : undefined}
                 textStyle={true ? styles.SignupString : undefined}
               />
 
               {/* term of service - privacy policy */}
-              <View style={styles.privacyPolicyCont}>
-                <TouchableOpacity
-                  activeOpacity={0.7}
-                  onPress={() => setFieldValue('agreeToTerms', !values.agreeToTerms)}
-                  style={styles.checkCont}
-                >
-                  {values.agreeToTerms && (
-                    <Image source={ICONS.check} style={COMMON_STYLES.size10} tintColor={COLORS.black} />
-                  )}
-                </TouchableOpacity>
-                <View style={styles.privacyPolicyStringCont}>
-                  <Text style={styles.termOfServiceString}>By signing up. you agree to the </Text>
+              <View>
+                <View style={styles.privacyPolicyCont}>
                   <TouchableOpacity
-                    onPress={() => {
-                      _hanldeOpenUrlFunc(termsOfServiceURL);
-                    }}
+                    activeOpacity={0.7}
+                    onPress={() => setFieldValue('agreeToTerms', !values.agreeToTerms)}
+                    style={styles.checkCont}
                   >
-                    <Text style={[styles.termOfServiceString, styles.blueTxt]}>Terms of service </Text>
+                    {values.agreeToTerms && (
+                      <Image source={ICONS.check} style={COMMON_STYLES.size10} tintColor={COLORS.black} />
+                    )}
                   </TouchableOpacity>
+                  <View style={styles.privacyPolicyStringCont}>
+                    <Text style={styles.termOfServiceString}>By signing up. you agree to the </Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        _hanldeOpenUrlFunc(termsOfServiceURL);
+                      }}
+                    >
+                      <Text style={[styles.termOfServiceString, styles.blueTxt]}>Terms of service </Text>
+                    </TouchableOpacity>
 
-                  <Text style={styles.termOfServiceString}>and </Text>
-                  <TouchableOpacity onPress={() => _hanldeOpenUrlFunc(privacyPolicyURL)}>
-                    <Text style={[styles.termOfServiceString, styles.blueTxt]}>Privacy policy.</Text>
-                  </TouchableOpacity>
+                    <Text style={styles.termOfServiceString}>and </Text>
+                    <TouchableOpacity onPress={() => _hanldeOpenUrlFunc(privacyPolicyURL)}>
+                      <Text style={[styles.termOfServiceString, styles.blueTxt]}>Privacy policy.</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
+                {errors.agreeToTerms && typeof errors.agreeToTerms === 'string' && (
+                  <Text style={styles.errorString}>{errors.agreeToTerms}</Text>
+                )}
               </View>
 
               <CountryCodePicker bottomSheetModalRef={bottomSheetModalRef} setDialCode={setDialCode} />
@@ -296,6 +489,26 @@ const SPSignupScreen = () => {
         }}
       </Formik>
     );
+  };
+
+  const _renderCameraOrGalleryPopup = () => {
+    return (
+      <>
+        <CameraOrGalleryPopup closePopupFunc={_handleUploadClick} onSelectImageType={_handleInsurancePictureSelect} />
+      </>
+    );
+  };
+
+  const _renderLoader = () => {
+    if (
+      serviceProviderSignupUiState.isLoading ||
+      verifyEmailUiState.isLoading ||
+      verifyPhoneUiState.isLoading ||
+      uploadUiState.isLoading
+    ) {
+      return <SecondaryLoader />;
+    }
+    return null;
   };
 
   // main View
@@ -325,7 +538,10 @@ const SPSignupScreen = () => {
             {_renderSignInButton()}
           </ScrollView>
           {/* loader */}
-          {/* <SecondaryLoader /> */}
+          {_renderLoader()}
+
+          {/* Camera Gallery Popup  */}
+          {showCameraGalleryPopup && _renderCameraOrGalleryPopup()}
         </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>

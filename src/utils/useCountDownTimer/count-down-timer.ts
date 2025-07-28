@@ -23,5 +23,10 @@ export const useCountDownTimer = (seconds: number) => {
     }
   };
 
-  return { timeLeft, startTimer };
+  const resetTimer = () => {
+    setIsActive(false);
+    setTimeLeft(0);
+  };
+
+  return { timeLeft, startTimer, resetTimer, isActive };
 };

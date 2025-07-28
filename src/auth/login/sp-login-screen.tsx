@@ -1,36 +1,22 @@
-import {
-  KeyboardAvoidingView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {useState} from 'react';
-import {FONTS, ICONS} from '../../assets';
-import {MS, COLORS, MVS, isIOS, COMMON_STYLES, SCREENS} from '../../misc';
-import {
-  SafeAreaWrapper,
-  PrimaryHeader,
-  TextButton,
-  IconButton,
-  PrimaryButton,
-} from '../../presentation/components';
-import {Formik} from 'formik';
-import {logger} from '../../utils';
-import {_loginSchema} from '../validations/schemas';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {AuthStackParamList, RootStackParamList} from '../../navigation/types/types';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {SecondaryLoader} from '../../common/loaders';
+import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+import { FONTS, ICONS } from '../../assets';
+import { MS, COLORS, MVS, isIOS, COMMON_STYLES, SCREENS } from '../../misc';
+import { SafeAreaWrapper, PrimaryHeader, TextButton, IconButton, PrimaryButton } from '../../presentation/components';
+import { Formik } from 'formik';
+import { logger } from '../../utils';
+import { LoginSchema } from '../validations/schemas';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { AuthStackParamList, RootStackParamList } from '../../navigation/types/types';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { SecondaryLoader } from '../../common/loaders';
 
 const authFieldHeight = MS(36);
 // CREATE SP LOGIN SEPARATE BECAUSE DESIGN IS DIFFERENT IN FIGMA BUT KEPPING SAME FOR NOW..
 const SPLoginScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<AuthStackParamList, 'LoginScreen'>>();
-  const {fromScreen} = route?.params || {};
+  const { fromScreen } = route?.params || {};
 
   const [formData, setFormData] = useState({
     showPasswrod: true,
@@ -42,7 +28,7 @@ const SPLoginScreen = () => {
   };
 
   const _handleShowPassword = () => {
-    setFormData(prev => ({...prev, showPasswrod: !formData.showPasswrod}));
+    setFormData(prev => ({ ...prev, showPasswrod: !formData.showPasswrod }));
   };
 
   const _handleSignUpClick = () => {
@@ -91,11 +77,8 @@ const SPLoginScreen = () => {
 
   const _renderFormik = () => {
     return (
-      <Formik
-        initialValues={initialValues}
-        validationSchema={_loginSchema}
-        onSubmit={_handleSignIn}>
-        {({values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue}) => {
+      <Formik initialValues={initialValues} validationSchema={LoginSchema} onSubmit={_handleSignIn}>
+        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => {
           // logger.log('values ->', values);
 
           return (
@@ -168,9 +151,7 @@ const SPLoginScreen = () => {
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
         <View style={COMMON_STYLES.flex}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.contentContainerStyle}>
+          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainerStyle}>
             <View>
               <Text style={styles.title}>
                 Hello!{'\n'}Sign in to{'\n'}get started
@@ -200,7 +181,7 @@ const gapAndMargin = MVS(20);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  headerStyle: {paddingHorizontal: MS(18)},
+  headerStyle: { paddingHorizontal: MS(18) },
   contentContainerStyle: {
     rowGap: gapAndMargin,
     paddingHorizontal: MS(18),

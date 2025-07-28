@@ -38,12 +38,12 @@ const SignupScreen = () => {
     dial_code: '',
   });
 
-  const { startTimer, timeLeft } = useCountDownTimer(60);
+  const { startTimer, timeLeft, resetTimer } = useCountDownTimer(60);
 
-  const { signupUiState, registerUser } = useCustomerSignupAction();
+  const { signupUiState, registerCustomer } = useCustomerSignupAction();
   const { verifyEmailUiState, verifyEmail, verifyEmailOtp } = useVerifyEmailAction();
   const { verifyPhoneUiState, verifyPhoneNumber, verifyPhoneNumOtp } = useVerifyPhoneAction();
-  // logger.debug('verifyEmailUiState EMAIL -------<> ', JSON.stringify(verifyEmailUiState));
+  // logger.log('verifyEmailUiState EMAIL -------<> ', JSON.stringify(verifyEmailUiState));
   // logger.log('verifyPhoneUiState PHONE -------<> ', JSON.stringify(verifyPhoneUiState, null, 4));
   // logger.log('signupUiState  -------<> ', JSON.stringify(signupUiState, null, 4));
 
@@ -72,6 +72,7 @@ const SignupScreen = () => {
     if (success) {
       setShowOtpBox(prev => ({ ...prev, email: false }));
       formikRef.current?.setFieldValue('isEmailVerified', true);
+      resetTimer();
     }
   };
 
@@ -90,6 +91,7 @@ const SignupScreen = () => {
     if (isValidPhone) {
       await verifyPhoneNumber(values.phone, values.countryCode);
       setShowOtpBox(prev => ({ ...prev, phone: true }));
+      startTimer();
     }
   };
 
@@ -107,6 +109,7 @@ const SignupScreen = () => {
     if (success) {
       setShowOtpBox(prev => ({ ...prev, phone: false }));
       formikRef.current?.setFieldValue('isPhoneVerified', true);
+      resetTimer();
     }
   };
 
@@ -120,7 +123,7 @@ const SignupScreen = () => {
   }, [otpManager]);
 
   const _handleSignup = async (value: CustomerSignUpInitialEntity) => {
-    const { success } = await registerUser(value);
+    const { success } = await registerCustomer(value);
 
     if (success) {
       navigation.push(SCREENS.authStack, {
@@ -227,6 +230,7 @@ const SignupScreen = () => {
                       autoCorrect={false}
                       keyboardType="email-address"
                       autoCapitalize="none"
+                      editable={!values.isEmailVerified}
                     />
                     {values.isEmailVerified && (
                       <Image source={ICONS.checkGreen} style={COMMON_STYLES.size16} resizeMode="contain" />
