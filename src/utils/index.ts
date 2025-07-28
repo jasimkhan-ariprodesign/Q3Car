@@ -10,6 +10,10 @@ import { logAxiosError } from './logAxiosError/log-axios-error';
 import { appAlert } from './appAlert/app-alert';
 import { showToast } from './toast/toast';
 import { useCountDownTimer } from './useCountDownTimer/count-down-timer';
+import { showApiErrorMessage } from './showApiErrorMessage/show-api-error-message';
+import { storeUserData } from './authStorage/auth-storage';
+import { getUserData } from './authStorage/auth-storage';
+import { resetUserData } from './authStorage/auth-storage';
 // import
 
 export {
@@ -22,6 +26,9 @@ export {
   showToast,
   appAlert,
   useCountDownTimer,
+  showApiErrorMessage,
 };
+
+export { storeUserData, getUserData, resetUserData };
 
 export { getDefaultUiState, getInitialLoadingState };

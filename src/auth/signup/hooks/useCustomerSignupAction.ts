@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import { getDefaultUiState, getInitialLoadingState, UiState } from '../../../utils/uiState/ui-state';
 import { SignUpInitialValuesEntity } from '../entities/user-signup-entity';
 import { postRequest } from '../../../app';
-import { logAxiosError, logger } from '../../../utils';
+import { showApiErrorMessage, showToast, storeUserData } from '../../../utils';
 import { AUTH_ENDPOINTS } from '../../../app/api/endpoints';
 
 export const useCustomerSignupAction = () => {
@@ -20,26 +20,31 @@ export const useCustomerSignupAction = () => {
       avatar: values.avatar,
       userType: values.userType,
     };
-    // _logger.warn('body', JSON.stringify(body, null, 1));
-    try {
-      const result = await postRequest(AUTH_ENDPOINTS.REGISTER_CUSTOMER, body);
-      logger.log('registerUser response: ', result);
 
-      if (result) {
+    try {
+      const response = await postRequest(AUTH_ENDPOINTS.REGISTER_CUSTOMER, body);
+
+      if (response?.success) {
+        response.message && showToast({ text1: response.message });
+
         setSignupUiState({
           isLoading: false,
-          data: result,
+          data: response,
           error: undefined,
         });
+
+        return { success: true };
       }
     } catch (error: AxiosError | any) {
-      logAxiosError('registerUser error: ', error);
+      showApiErrorMessage(error);
       setSignupUiState({
         isLoading: false,
         data: undefined,
         error: error,
       });
+      return { success: false };
     }
+    return { success: false };
   };
 
   return {

@@ -1,4 +1,4 @@
-import {NavigatorScreenParams} from '@react-navigation/native';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
 export type WelcomeStackParamList = {
   SplashScreen: undefined;
@@ -10,10 +10,10 @@ export type WelcomeStackParamList = {
 
 export type AuthStackParamList = {
   SignupScreen: undefined;
-  LoginScreen: {fromScreen?: string} | undefined;
+  LoginScreen: { fromScreen?: string } | undefined;
   SPSignupScreen: undefined;
   ForgotPassword: undefined;
-  SetPassword: {userType?: 'customer' | 'service provider'} | undefined;
+  SetPassword: { userType?: 'customer' | 'service provider'; phone?: string } | undefined;
   SPLoginScreen: undefined;
 };
 
@@ -25,7 +25,7 @@ export type DrawerNavigatorParamList = {
 export type AppStackParamList = {
   // HomeScreen: undefined;
   ProfileScreen: undefined;
-  SuccessScreen: {successMsg?: string} | undefined;
+  SuccessScreen: { successMsg?: string } | undefined;
   ModalStack: undefined;
   SearchScreen: undefined;
   SelectCarType: undefined;

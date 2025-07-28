@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { AxiosError } from 'axios';
-import { getDefaultUiState, getInitialLoadingState, UiState } from '../../../utils/uiState/ui-state';
-import { logger, showToast } from '../../../utils';
 import { postRequest } from '../../../app';
 import { AUTH_ENDPOINTS } from '../../../app/api/endpoints';
+import { showApiErrorMessage, showToast } from '../../../utils';
+import { getDefaultUiState, getInitialLoadingState, UiState } from '../../../utils/uiState/ui-state';
 
 type VerifyOtpResponse<T = any> = {
   success: boolean;
@@ -38,6 +38,7 @@ export const useVerifyEmailAction = () => {
         });
       }
     } catch (error: AxiosError | any) {
+      showApiErrorMessage(error);
       setVerifyEmailUiState({
         isLoading: false,
         data: undefined,
@@ -73,9 +74,7 @@ export const useVerifyEmailAction = () => {
         };
       }
     } catch (error: AxiosError | any) {
-      showToast({ text1: error?.data?.error || 'Something went wrong', type: 'error' });
-      logger.log('---------', error?.response);
-      logger.log('---------', error.data);
+      showApiErrorMessage(error);
       setVerifyEmailUiState({
         isLoading: false,
         data: undefined,

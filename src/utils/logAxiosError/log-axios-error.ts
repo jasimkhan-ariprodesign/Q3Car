@@ -6,6 +6,6 @@ export const logAxiosError = (prefix: string, error: AxiosError | any) => {
     const { status, data } = error.response;
     logger.log(`${prefix} [${status}]:`, data?.messag || data);
   } else {
-    logger.log(`${prefix} -: `, error?.message || error?.response);
+    logger.log(`${prefix} -: `, error?.message || error);
   }
 };

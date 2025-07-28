@@ -12,8 +12,8 @@ import { SignupSchema, UserSignupIntialValues } from './config';
 import { privacyPolicyURL, termsOfServiceURL } from '../../constant';
 import { SignUpInitialValuesEntity } from './entities/user-signup-entity';
 import { COLORS, COMMON_STYLES, MS, MVS, isIOS, SCREENS } from '../../misc';
-import { _hanldeOpenUrlFunc, logger, appAlert, useCountDownTimer, showToast } from '../../utils';
 import { useCustomerSignupAction, useVerifyEmailAction, useVerifyPhoneAction } from './hooks';
+import { _hanldeOpenUrlFunc, logger, appAlert, useCountDownTimer, showToast } from '../../utils';
 import { SafeAreaWrapper, PrimaryHeader, TextButton, PrimaryButton, CountryCodePicker } from '../../presentation/components';
 
 const authFieldHeight = MS(36);
@@ -33,15 +33,18 @@ const SignupScreen = () => {
     emailOtp: '',
     phoneOtp: '',
     email: '',
+    phone: '',
+    dial_code: '',
   });
 
   const { startTimer, timeLeft } = useCountDownTimer(60);
 
   const { signupUiState, registerUser } = useCustomerSignupAction();
   const { verifyEmailUiState, verifyEmail, verifyEmailOtp } = useVerifyEmailAction();
-  const { verifyPhoneUiState, verifyPhoneNumber } = useVerifyPhoneAction();
-  // logger.log('verifyEmailUiState EMAIL -------<> ', JSON.stringify(verifyEmailUiState));
-  logger.log('verifyPhoneUiState PHONE -------<> ', JSON.stringify(verifyPhoneUiState, null, 4));
+  const { verifyPhoneUiState, verifyPhoneNumber, verifyPhoneNumOtp } = useVerifyPhoneAction();
+  // logger.debug('verifyEmailUiState EMAIL -------<> ', JSON.stringify(verifyEmailUiState));
+  // logger.log('verifyPhoneUiState PHONE -------<> ', JSON.stringify(verifyPhoneUiState, null, 4));
+  logger.log('signupUiState  -------<> ', JSON.stringify(signupUiState, null, 4));
 
   const _handleSendOtpToEmail = async (values: SignUpInitialValuesEntity, validateField: any, setFieldTouched: any) => {
     await setFieldTouched('email', true);
@@ -58,7 +61,7 @@ const SignupScreen = () => {
     }
   };
 
-  const _handeverifyEmailOtp = async (email: string) => {
+  const _handleVerifyEmailOtp = async (email: string) => {
     if (otpManager.emailOtp.length < 5) {
       return showToast({ text1: 'invalid otp', type: 'error' });
     }
@@ -70,12 +73,6 @@ const SignupScreen = () => {
       formikRef.current?.setFieldValue('isEmailVerified', true);
     }
   };
-
-  useEffect(() => {
-    if (otpManager.emailOtp.length === 5) {
-      _handeverifyEmailOtp(otpManager.email);
-    }
-  }, [otpManager.emailOtp]);
 
   const handleEmailOptInput = (otp: string) => {
     setOtpManager(prev => ({ ...prev, emailOtp: otp }));
@@ -95,12 +92,42 @@ const SignupScreen = () => {
     }
   };
 
-  const _handleSignup = (value: SignUpInitialValuesEntity) => {
-    // logger.log('_handleSignup --: ', value);
-    // navigation.push(SCREENS.authStack, {
-    //   screen: SCREENS.setPassword,
-    // });
-    registerUser(value);
+  const handlePhoneOptInput = (otp: string) => {
+    setOtpManager(prev => ({ ...prev, phoneOtp: otp }));
+  };
+
+  const _handeVerifyPhoneOtp = async (phone: string) => {
+    if (otpManager.phoneOtp.length < 5) {
+      return showToast({ text1: 'invalid otp', type: 'error' });
+    }
+    const { success } = await verifyPhoneNumOtp(phone, otpManager.phoneOtp);
+    setOtpManager(prev => ({ ...prev, phoneOtp: '' }));
+    otpRef.current?.clear();
+    if (success) {
+      setShowOtpBox(prev => ({ ...prev, phone: false }));
+      formikRef.current?.setFieldValue('isPhoneVerified', true);
+    }
+  };
+
+  useEffect(() => {
+    if (otpManager.emailOtp.length === 5) {
+      _handleVerifyEmailOtp(otpManager.email);
+    }
+    if (otpManager.phoneOtp.length === 5) {
+      _handeVerifyPhoneOtp(`${otpManager.dial_code}${otpManager.phone}`);
+    }
+  }, [otpManager]);
+
+  const _handleSignup = async (value: SignUpInitialValuesEntity) => {
+    const { success } = await registerUser(value);
+    if (success) {
+      navigation.push(SCREENS.authStack, {
+        screen: SCREENS.setPassword,
+        params: {
+          phone: `${otpManager.dial_code}${otpManager.phone}`,
+        },
+      });
+    }
   };
 
   const _showCountryCodePicker = () => {
@@ -158,6 +185,7 @@ const SignupScreen = () => {
         }) => {
           const setDialCode = (dial_code: string) => {
             setFieldValue('countryCode', dial_code);
+            setOtpManager(prev => ({ ...prev, dial_code: dial_code }));
             bottomSheetModalRef.current?.close();
           };
 
@@ -227,7 +255,7 @@ const SignupScreen = () => {
                       handleOptInput={handleEmailOptInput}
                       timeLeft={timeLeft}
                       resendFunction={() => _handleSendOtpToEmail(values, validateField, setFieldTouched)}
-                      sendFunction={() => _handeverifyEmailOtp(values.email)}
+                      sendFunction={() => _handleVerifyEmailOtp(values.email)}
                       otpRef={otpRef}
                     />
                   </View>
@@ -247,7 +275,10 @@ const SignupScreen = () => {
                       placeholder="000 000 0000"
                       placeholderTextColor={COLORS.textPrimary}
                       value={values.phone}
-                      onChangeText={handleChange('phone')}
+                      onChangeText={text => {
+                        handleChange('phone')(text);
+                        setOtpManager(prev => ({ ...prev, phone: text }));
+                      }}
                       onBlur={handleBlur('phone')}
                       style={styles.emailInput}
                     />
@@ -278,7 +309,14 @@ const SignupScreen = () => {
 
                 {showOtpBox.phone && (
                   <View style={styles.otpBoxCont}>
-                    <OTPBox otpInpHeight={authFieldHeight} />
+                    <OTPBox
+                      otpInpHeight={authFieldHeight}
+                      handleOptInput={handlePhoneOptInput}
+                      timeLeft={timeLeft}
+                      resendFunction={() => _handleSendOtpToPhone(values, validateField, setFieldTouched)}
+                      sendFunction={() => _handeVerifyPhoneOtp(values.phone)}
+                      otpRef={otpRef}
+                    />
                   </View>
                 )}
               </View>
@@ -286,7 +324,6 @@ const SignupScreen = () => {
               {/* signup button */}
               <PrimaryButton
                 onPress={handleSubmit}
-                // onPress={_handleSignup}
                 title="Sign up"
                 buttonStyle={true ? styles.SignupBTN : undefined}
                 textStyle={true ? styles.SignupString : undefined}

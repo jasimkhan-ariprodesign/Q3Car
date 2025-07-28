@@ -1,60 +1,68 @@
-import {KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
-import React, {useState} from 'react';
-import {Formik} from 'formik';
-import {COMMON_STYLES, isIOS, COLORS, MS, MVS, SCREENS} from '../../misc';
-import {
-  SafeAreaWrapper,
-  PrimaryHeader,
-  IconButton,
-  PrimaryButton,
-} from '../../presentation/components';
-import {FONTS, ICONS} from '../../assets';
-import {_setPasswordSchema} from '../validations/schemas';
-import {SecondaryLoader} from '../../common';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {AuthStackParamList, RootStackParamList} from '../../navigation/types/types';
-import {logger} from '../../utils';
+import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, { useState } from 'react';
+import { Formik } from 'formik';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { logger } from '../../utils';
+import { FONTS, ICONS } from '../../assets';
+import { useSetPasswordAction } from './hooks';
+import { SecondaryLoader } from '../../common';
+import { COMMON_STYLES, isIOS, COLORS, MS, MVS, SCREENS } from '../../misc';
+import { _setPasswordSchema } from '../validations/schemas';
+import { AuthStackParamList, RootStackParamList } from '../../navigation/types/types';
+import { SafeAreaWrapper, PrimaryHeader, IconButton, PrimaryButton } from '../../presentation/components';
 
 const authFieldHeight = MS(36);
 
 const SetPassword = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<AuthStackParamList, 'SetPassword'>>();
-  const {userType} = route?.params || {};
-
-  // logger.log('userType --)--->', userType);
+  const { userType, phone } = route?.params || {};
 
   const [formData, setFormData] = useState({
     showPasswrod: true,
     showConfirmPassword: true,
   });
 
+  const { setpasswordUiState, setPasswordFunc } = useSetPasswordAction();
+
+  logger.warn('userType --)--->', userType);
+  logger.warn('phone --)--->', phone);
+  logger.log('setpasswordUiState --::', setpasswordUiState);
+
   const _handleShowPassword = (keyName: string) => {
     if (keyName === 'password') {
-      setFormData(prev => ({...prev, showPasswrod: !formData.showPasswrod}));
+      setFormData(prev => ({ ...prev, showPasswrod: !formData.showPasswrod }));
     }
     if (keyName === 'confirmPassword') {
-      setFormData(prev => ({...prev, showConfirmPassword: !formData.showConfirmPassword}));
+      setFormData(prev => ({ ...prev, showConfirmPassword: !formData.showConfirmPassword }));
     }
   };
 
-  const _handleRegister = (values?: any) => {
-    // In a real application, you would send this to your backend
-    // Alert.alert('Success', `Password set: ${values.password}`);
-    // console.log('Form submitted:', values);
-
-    if (userType === 'service provider') {
-      navigation.push(SCREENS.SPDrawerNavigator, {
-        screen: SCREENS.SPDashboardScreen,
-      });
-    } else {
-      navigation.push(SCREENS.drawerNavigator, {
-        screen: SCREENS.dashboardScreen,
-      });
+  const _handleRegister = async (values: any) => {
+    const { success } = await setPasswordFunc(values?.password, phone || '');
+    logger.log('---------------------', success);
+    if (success) {
+      // if (userType === 'service provider') {
+      //   navigation.push(SCREENS.SPDrawerNavigator, {
+      //     screen: SCREENS.SPDashboardScreen,
+      //   });
+      // } else {
+      //   navigation.push(SCREENS.drawerNavigator, {
+      //     screen: SCREENS.dashboardScreen,
+      //   });
+      // }
     }
   };
 
+  const _renderLoader = () => {
+    if (setpasswordUiState.isLoading) {
+      return <SecondaryLoader />;
+    }
+    return null;
+  };
+
+  // main view
   return (
     <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
@@ -63,7 +71,8 @@ const SetPassword = () => {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.contentContainerStyle}
-            keyboardShouldPersistTaps={'handled'}>
+            keyboardShouldPersistTaps={'handled'}
+          >
             {/* Title Section */}
             <View>
               <Text style={styles.title}>Set Password</Text>
@@ -72,10 +81,11 @@ const SetPassword = () => {
 
             {/* Form Section */}
             <Formik
-              initialValues={{password: '', confirmPassword: ''}}
+              initialValues={{ password: '', confirmPassword: '' }}
               validationSchema={_setPasswordSchema}
-              onSubmit={_handleRegister}>
-              {({handleChange, handleBlur, handleSubmit, values, errors, touched}) => (
+              onSubmit={_handleRegister}
+            >
+              {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                 <View style={styles.formCont}>
                   <View>
                     <View style={styles.pwdCont}>
@@ -119,30 +129,22 @@ const SetPassword = () => {
                         disabled={false}
                       />
                     </View>
-                    {errors.confirmPassword &&
-                      touched.confirmPassword &&
-                      typeof errors.confirmPassword === 'string' && (
-                        <Text style={styles.errorString}>{errors.confirmPassword}</Text>
-                      )}
+                    {errors.confirmPassword && touched.confirmPassword && typeof errors.confirmPassword === 'string' && (
+                      <Text style={styles.errorString}>{errors.confirmPassword}</Text>
+                    )}
                     {/* password suggestion string */}
-                    <Text style={styles.pwdSuggestionString}>
-                      Atleast 1 number or a special character
-                    </Text>
+                    <Text style={styles.pwdSuggestionString}>Atleast 1 number or a special character</Text>
                   </View>
 
                   {/* Register Button */}
-                  <PrimaryButton
-                    title="Register"
-                    //  onPress={handleSubmit}
-                    onPress={_handleRegister}
-                  />
+                  <PrimaryButton title="Register" onPress={handleSubmit} />
                 </View>
               )}
             </Formik>
           </ScrollView>
 
           {/* loader */}
-          {/* <SecondaryLoader /> */}
+          {_renderLoader()}
         </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
@@ -155,7 +157,7 @@ const gapAndMargin = MVS(16);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  headerStyle: {paddingHorizontal: MS(18)},
+  headerStyle: { paddingHorizontal: MS(18) },
   contentContainerStyle: {
     rowGap: gapAndMargin,
     paddingHorizontal: MS(20),
