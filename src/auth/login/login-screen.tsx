@@ -29,7 +29,21 @@ const LoginScreen = () => {
   };
 
   const { loginUiState, loginUser } = useLoginAction();
-  logger.log('loginUiState : ', loginUiState);
+
+  const _handleSignIn = async (value: any) => {
+    const phoneOrEmail = value.email;
+    const password = value?.password;
+
+    const { success } = await loginUser({ phoneOrEmail, password });
+
+    if (success) {
+      resetNestedNavigation({
+        navigation,
+        parentRouteName: SCREENS.drawerNavigator,
+        targetRouteName: SCREENS.dashboardScreen,
+      });
+    }
+  };
 
   const _handleShowPassword = () => {
     setFormData(prev => ({ ...prev, showPasswrod: !formData.showPasswrod }));
@@ -49,21 +63,6 @@ const LoginScreen = () => {
     navigation.push(SCREENS.authStack, {
       screen: SCREENS.forgotPassword,
     });
-  };
-
-  const _handleSignIn = async (value: any) => {
-    const phoneOrEmail = value.email;
-    const password = value?.password;
-
-    const { success } = await loginUser({ phoneOrEmail, password });
-
-    if (success) {
-      resetNestedNavigation({
-        navigation,
-        parentRouteName: SCREENS.drawerNavigator,
-        targetRouteName: SCREENS.dashboardScreen,
-      });
-    }
   };
 
   const _renderOrView = () => {

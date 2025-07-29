@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { logger } from '../../utils';
 import { FONTS, ICONS } from '../../assets';
 import { useSetPasswordAction } from './hooks';
 import { SecondaryLoader } from '../../common';
@@ -42,14 +41,14 @@ const SetPassword = () => {
         // navigation.push(SCREENS.SPDrawerNavigator, {
         //   screen: SCREENS.SPDashboardScreen,
         // });
-        navigation.push(SCREENS.authStack, {
+        navigation.replace(SCREENS.authStack, {
           screen: SCREENS.spLoginScreen,
         });
       } else {
         // navigation.push(SCREENS.drawerNavigator, {
         //   screen: SCREENS.dashboardScreen,
         // });
-        navigation.push(SCREENS.authStack, {
+        navigation.replace(SCREENS.authStack, {
           screen: SCREENS.loginScreen,
         });
       }

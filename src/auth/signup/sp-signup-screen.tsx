@@ -14,21 +14,21 @@ import { Formik, FormikProps } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { ICONS, FONTS, IMAGES } from '../../assets';
 import { OTPBox } from '../components';
+import { ICONS, FONTS } from '../../assets';
 import { SPSignupSchema } from '../validations';
-import { _hanldeOpenUrlFunc, launchCameraUtil, launchGalleryUtil, logger, showToast, useCountDownTimer } from '../../utils';
 import { SecondaryLoader } from '../../common/loaders';
+import { CameraOrGalleryPopup } from '../../common';
+import { RootStackParamList } from '../../navigation/types/types';
+import { SPSignupInitialValues } from '../login/components/config';
+import { useVerifyEmailAction, useVerifyPhoneAction } from './hooks';
 import { privacyPolicyURL, termsOfServiceURL } from '../../constant';
 import { COLORS, COMMON_STYLES, MS, MVS, isIOS, SCREENS } from '../../misc';
-import { RootStackParamList } from '../../navigation/types/types';
-import { SafeAreaWrapper, PrimaryHeader, TextButton, PrimaryButton, CountryCodePicker } from '../../presentation/components';
-import { SPSignupInitialValues } from '../login/components/config';
 import { SPSignUpInitialEntity } from '../../utils/entities/auth/sp-signup-entity';
-import { useServiceProviderSignupAction } from './hooks/serviceProvider';
-import { useVerifyEmailAction, useVerifyPhoneAction } from './hooks';
+import { _hanldeOpenUrlFunc, logger, showToast, useCountDownTimer } from '../../utils';
+import { useImagePicker, useServiceProviderSignupAction } from './hooks/serviceProvider';
 import { useCloudinaryUpload } from '../../utils/cloudinary/upload-image-to-cloudinary';
-import { CameraOrGalleryPopup } from '../../common';
+import { SafeAreaWrapper, PrimaryHeader, TextButton, PrimaryButton, CountryCodePicker } from '../../presentation/components';
 
 const authFieldHeight = MS(36);
 
@@ -53,40 +53,37 @@ const SPSignupScreen = () => {
     dial_code: '',
   });
 
-  const [showCameraGalleryPopup, setShowCameraGalleryPopup] = useState<boolean>(false);
+  const [activeImageField, setActiveImageField] = useState<'driverLicenseImage' | 'insuranceImage' | null>(null);
 
   const { serviceProviderSignupUiState, registerServiceProvider } = useServiceProviderSignupAction();
   const { verifyEmailUiState, verifyEmail, verifyEmailOtp } = useVerifyEmailAction();
   const { verifyPhoneUiState, verifyPhoneNumber, verifyPhoneNumOtp } = useVerifyPhoneAction();
 
+  const { pickImage } = useImagePicker();
   const { uploadUiState, uploadToCloudinary } = useCloudinaryUpload();
 
-  const _handleUploadClick = () => {
-    setShowCameraGalleryPopup(prev => !prev);
+  const _handleUploadClick = (fieldName?: 'driverLicenseImage' | 'insuranceImage') => {
+    if (fieldName) {
+      return setActiveImageField(fieldName);
+    }
+    setActiveImageField(null);
   };
 
-  const _handleInsurancePictureSelect = async (type: 'Camera' | 'Gallery') => {
+  const _handleUploadPictures = async (type: 'Camera' | 'Gallery') => {
     try {
-      const launchFn = type === 'Camera' ? launchCameraUtil : launchGalleryUtil;
-      const selectedImageURI = await launchFn();
-
-      if (!selectedImageURI) {
-        logger.log('No image was selected or captured');
-        return;
+      const uri = await pickImage(type);
+      if (uri) {
+        const { success, url } = await uploadToCloudinary({ uri: uri });
+        if (success && url) {
+          activeImageField && formikRef.current?.setFieldValue(activeImageField, url);
+        }
       }
-      logger.warn('SELECTED IMAGE: ', selectedImageURI);
-      // formikRef.current?.setFieldValue?.('profileAvatar', selectedImageURI);
     } catch (error) {
       logger.log('handleProfileSelect Error', error);
     } finally {
       _handleUploadClick();
     }
   };
-
-  // logger.log('verifyEmailUiState EMAIL -------<> ', JSON.stringify(verifyEmailUiState));
-  // logger.log('verifyPhoneUiState PHONE -------<> ', JSON.stringify(verifyPhoneUiState, null, 4));
-  // logger.log('serviceProviderSignupUiState -:>', JSON.stringify(serviceProviderSignupUiState, null, 1));
-  logger.log('uploadUiState -:>', JSON.stringify(uploadUiState, null, 1));
 
   const _handleSendOtpToEmail = async (values: SPSignUpInitialEntity, validateField: any, setFieldTouched: any) => {
     await setFieldTouched('email', true);
@@ -169,13 +166,16 @@ const SPSignupScreen = () => {
 
   const _handleSignup = async (values: SPSignUpInitialEntity) => {
     const { success } = await registerServiceProvider(values);
-    logger.log('success ==========> ', success);
-    // navigation.push(SCREENS.authStack, {
-    //   screen: SCREENS.setPassword,
-    //   params: {
-    //     userType: 'service provider',
-    //   },
-    // });
+
+    if (success) {
+      navigation.push(SCREENS.authStack, {
+        screen: SCREENS.setPassword,
+        params: {
+          userType: 'service provider',
+          phone: `${otpManager.dial_code}${otpManager.phone}`,
+        },
+      });
+    }
   };
 
   const _handleSignInClick = () => {
@@ -227,13 +227,12 @@ const SPSignupScreen = () => {
           validateField,
           setFieldTouched,
         }) => {
-          // logger.log('SPSignupScreen values ->', JSON.stringify(values, null, 2));
-
           const setDialCode = (dial_code: string) => {
             setFieldValue('countryCode', dial_code);
             setOtpManager(prev => ({ ...prev, dial_code: dial_code }));
             bottomSheetModalRef.current?.close();
           };
+
           return (
             <View style={styles.formCont}>
               {/* full name */}
@@ -387,14 +386,13 @@ const SPSignupScreen = () => {
               <View>
                 <View style={styles.sendOTPCont}>
                   <View style={styles.pictureContView}>
-                    {/* <Image
-                    source={IMAGES.spWelcomeScreen}
-                    style={styles.pictureImage}
-                    resizeMode="cover"
-                    /> */}
-                    <Text style={[styles.countryCodeString, { marginLeft: MS(12) }]}>Picture of Driver's License</Text>
+                    {values.driverLicenseImage ? (
+                      <Image source={{ uri: values.driverLicenseImage }} style={styles.pictureImage} resizeMode="cover" />
+                    ) : (
+                      <Text style={[styles.countryCodeString, { marginLeft: MS(12) }]}>Picture of Driver's License</Text>
+                    )}
                   </View>
-                  <TouchableOpacity onPress={_handleUploadClick} style={styles.countryCodeBTN}>
+                  <TouchableOpacity onPress={() => _handleUploadClick('driverLicenseImage')} style={styles.countryCodeBTN}>
                     <Text style={styles.countryCodeString}>Upload</Text>
                   </TouchableOpacity>
                 </View>
@@ -425,14 +423,13 @@ const SPSignupScreen = () => {
               <View>
                 <View style={styles.sendOTPCont}>
                   <View style={styles.pictureContView}>
-                    {/* <Image
-                    source={_images.spWelcomeScreen}
-                    style={styles.pictureImage}
-                    resizeMode="cover"
-                    /> */}
-                    <Text style={[styles.countryCodeString, { marginLeft: MS(12) }]}>Picture of proof of insurance</Text>
+                    {values.insuranceImage ? (
+                      <Image source={{ uri: values.insuranceImage }} style={styles.pictureImage} resizeMode="cover" />
+                    ) : (
+                      <Text style={[styles.countryCodeString, { marginLeft: MS(12) }]}>Picture of proof of insurance</Text>
+                    )}
                   </View>
-                  <TouchableOpacity style={styles.countryCodeBTN}>
+                  <TouchableOpacity onPress={() => _handleUploadClick('insuranceImage')} style={styles.countryCodeBTN}>
                     <Text style={styles.countryCodeString}>Upload</Text>
                   </TouchableOpacity>
                 </View>
@@ -494,7 +491,7 @@ const SPSignupScreen = () => {
   const _renderCameraOrGalleryPopup = () => {
     return (
       <>
-        <CameraOrGalleryPopup closePopupFunc={_handleUploadClick} onSelectImageType={_handleInsurancePictureSelect} />
+        <CameraOrGalleryPopup closePopupFunc={_handleUploadClick} onSelectImageType={_handleUploadPictures} />
       </>
     );
   };
@@ -541,7 +538,7 @@ const SPSignupScreen = () => {
           {_renderLoader()}
 
           {/* Camera Gallery Popup  */}
-          {showCameraGalleryPopup && _renderCameraOrGalleryPopup()}
+          {activeImageField && _renderCameraOrGalleryPopup()}
         </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>

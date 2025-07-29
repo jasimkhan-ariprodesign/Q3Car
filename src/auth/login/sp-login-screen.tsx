@@ -4,12 +4,13 @@ import { FONTS, ICONS } from '../../assets';
 import { MS, COLORS, MVS, isIOS, COMMON_STYLES, SCREENS } from '../../misc';
 import { SafeAreaWrapper, PrimaryHeader, TextButton, IconButton, PrimaryButton } from '../../presentation/components';
 import { Formik } from 'formik';
-import { logger } from '../../utils';
+import { logger, resetNestedNavigation } from '../../utils';
 import { LoginSchema } from '../validations/schemas';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { AuthStackParamList, RootStackParamList } from '../../navigation/types/types';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SecondaryLoader } from '../../common/loaders';
+import { useLoginAction } from './hooks';
 
 const authFieldHeight = MS(36);
 // CREATE SP LOGIN SEPARATE BECAUSE DESIGN IS DIFFERENT IN FIGMA BUT KEPPING SAME FOR NOW..
@@ -25,6 +26,24 @@ const SPLoginScreen = () => {
   const initialValues = {
     email: '',
     password: '',
+  };
+
+  const { loginUiState, loginUser } = useLoginAction();
+  logger.log('loginUiState : ', loginUiState);
+
+  const _handleSignIn = async (value: any) => {
+    const phoneOrEmail = value.email;
+    const password = value?.password;
+
+    const { success } = await loginUser({ phoneOrEmail, password });
+
+    if (success) {
+      resetNestedNavigation({
+        navigation,
+        parentRouteName: SCREENS.SPDrawerNavigator,
+        targetRouteName: SCREENS.SPDashboardScreen,
+      });
+    }
   };
 
   const _handleShowPassword = () => {
@@ -47,12 +66,12 @@ const SPLoginScreen = () => {
     });
   };
 
-  const _handleSignIn = (value?: any) => {
-    // logger.log('_handleSignup --: ', value);
-    navigation.push(SCREENS.SPDrawerNavigator, {
-      screen: SCREENS.SPDashboardScreen,
-    });
-  };
+  // const _handleSignIn = (value?: any) => {
+  //   // logger.log('_handleSignup --: ', value);
+  //   navigation.push(SCREENS.SPDrawerNavigator, {
+  //     screen: SCREENS.SPDashboardScreen,
+  //   });
+  // };
 
   const _renderOrView = () => {
     return (
@@ -78,9 +97,7 @@ const SPLoginScreen = () => {
   const _renderFormik = () => {
     return (
       <Formik initialValues={initialValues} validationSchema={LoginSchema} onSubmit={_handleSignIn}>
-        {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => {
-          // logger.log('values ->', values);
-
+        {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => {
           return (
             <View style={styles.formCont}>
               {/* email */}
@@ -134,11 +151,7 @@ const SPLoginScreen = () => {
               </View>
 
               {/* sign in button */}
-              <PrimaryButton
-                title="Sign in"
-                // onPress={handleSubmit}
-                onPress={_handleSignIn}
-              />
+              <PrimaryButton title="Sign in" onPress={handleSubmit} />
             </View>
           );
         }}

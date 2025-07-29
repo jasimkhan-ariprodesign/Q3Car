@@ -1,3 +1,4 @@
 import { useServiceProviderSignupAction } from './useServiceProviderSignupAction';
+import { useImagePicker } from './useImagePicker';
 
-export { useServiceProviderSignupAction };
+export { useServiceProviderSignupAction, useImagePicker };

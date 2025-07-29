@@ -23,6 +23,12 @@ const SplashScreen = () => {
         });
       }
 
+      if (user_credentials && userType && userType === 'ServiceProvider') {
+        return navigation.replace(SCREENS.SPDrawerNavigator, {
+          screen: SCREENS.SPDashboardScreen,
+        });
+      }
+
       navigation.replace(SCREENS.welcomeStack, {
         screen: SCREENS.onboardingScreen,
       });
