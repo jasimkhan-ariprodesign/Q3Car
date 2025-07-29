@@ -1,11 +1,13 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
-import {COLORS, MS, MVS, SCREENS, COMMON_STYLES} from '../../../misc';
-import {FONTS, IMAGES} from '../../../assets';
-import {CustomBottomShitModal, PrimaryButton, SafeAreaWrapper} from '../../components';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { COLORS, MS, MVS, SCREENS, COMMON_STYLES } from '../../../misc';
+import { FONTS, IMAGES } from '../../../assets';
+import { CustomBottomShitModal, PrimaryButton, SafeAreaWrapper } from '../../components';
 import LocationPermissionPopup from './components/location-permission-popup';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../../../navigation/types/types';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../../navigation/types/types';
+import { locationPermission } from '../../../utils/permissions';
+import { logger } from '../../../utils';
 
 const SPWelcomeScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -21,6 +23,18 @@ const SPWelcomeScreen = () => {
     navigation.navigate(SCREENS.authStack, {
       screen: SCREENS.spLoginScreen,
     });
+  };
+
+  const _handleLocationPermission = async () => {
+    const permission = await locationPermission();
+    logger.log('permission: ', permission);
+    if (permission) {
+      _handleShowBottomShit();
+    }
+  };
+
+  const _handleShowBottomShit = () => {
+    setShowBottomShit(prev => !prev);
   };
 
   return (
@@ -53,7 +67,7 @@ const SPWelcomeScreen = () => {
 
       {showBottomShit && (
         <CustomBottomShitModal animationValue={0}>
-          <LocationPermissionPopup onPress={() => setShowBottomShit(false)} />
+          <LocationPermissionPopup skip={_handleShowBottomShit} useMyLocation={_handleLocationPermission} />
         </CustomBottomShitModal>
       )}
     </SafeAreaWrapper>

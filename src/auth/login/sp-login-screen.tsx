@@ -1,4 +1,13 @@
-import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, { useState } from 'react';
 import { FONTS, ICONS } from '../../assets';
 import { MS, COLORS, MVS, isIOS, COMMON_STYLES, SCREENS } from '../../misc';
@@ -29,7 +38,6 @@ const SPLoginScreen = () => {
   };
 
   const { loginUiState, loginUser } = useLoginAction();
-  logger.log('loginUiState : ', loginUiState);
 
   const _handleSignIn = async (value: any) => {
     const phoneOrEmail = value.email;
@@ -38,6 +46,7 @@ const SPLoginScreen = () => {
     const { success } = await loginUser({ phoneOrEmail, password });
 
     if (success) {
+      Keyboard.dismiss();
       resetNestedNavigation({
         navigation,
         parentRouteName: SCREENS.SPDrawerNavigator,
@@ -65,13 +74,6 @@ const SPLoginScreen = () => {
       screen: SCREENS.forgotPassword,
     });
   };
-
-  // const _handleSignIn = (value?: any) => {
-  //   // logger.log('_handleSignup --: ', value);
-  //   navigation.push(SCREENS.SPDrawerNavigator, {
-  //     screen: SCREENS.SPDashboardScreen,
-  //   });
-  // };
 
   const _renderOrView = () => {
     return (
@@ -110,6 +112,8 @@ const SPLoginScreen = () => {
                   onBlur={handleBlur('email')}
                   style={styles.emailInput}
                   autoCorrect={false}
+                  autoCapitalize="none"
+                  autoFocus
                 />
                 {errors.email && touched.email && typeof errors.email === 'string' && (
                   <Text style={styles.errorString}>{errors.email}</Text>
@@ -159,6 +163,14 @@ const SPLoginScreen = () => {
     );
   };
 
+  const _renderLoader = () => {
+    if (loginUiState.isLoading) {
+      return <SecondaryLoader />;
+    }
+    return null;
+  };
+
+  // main view
   return (
     <KeyboardAvoidingView style={COMMON_STYLES.flex} behavior={isIOS() ? 'padding' : 'height'}>
       <SafeAreaWrapper>
@@ -182,7 +194,7 @@ const SPLoginScreen = () => {
           </ScrollView>
 
           {/* loader */}
-          {/* <SecondaryLoader /> */}
+          {_renderLoader()}
         </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
@@ -251,7 +263,6 @@ const styles = StyleSheet.create({
   },
   forgotPWDBTN: {
     alignItems: 'flex-end',
-    // marginTop: -gapAndMargin / 2,
   },
   forgotPasswordString: {
     color: COLORS.red,
@@ -263,7 +274,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     columnGap: MS(12),
-    // backgroundColor: _color.yellow,
   },
   horizontalView: {
     height: 1,

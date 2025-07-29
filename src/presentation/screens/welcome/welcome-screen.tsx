@@ -1,11 +1,13 @@
-import {ImageBackground, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
-import {COLORS, MS, MVS, SCREENS, COMMON_STYLES, WINDOW_WIDTH} from '../../../misc';
-import {FONTS, IMAGES} from '../../../assets';
-import {CustomBottomShitModal, PrimaryButton, SafeAreaWrapper} from '../../components';
+import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { COLORS, MS, MVS, SCREENS, COMMON_STYLES, WINDOW_WIDTH } from '../../../misc';
+import { FONTS, IMAGES } from '../../../assets';
+import { CustomBottomShitModal, PrimaryButton, SafeAreaWrapper } from '../../components';
 import LocationPermissionPopup from './components/location-permission-popup';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../../../navigation/types/types';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../../navigation/types/types';
+import { locationPermission } from '../../../utils/permissions';
+import { logger } from '../../../utils';
 
 const WelcomeScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -21,6 +23,18 @@ const WelcomeScreen = () => {
     navigation.navigate(SCREENS.authStack, {
       screen: SCREENS.loginScreen,
     });
+  };
+
+  const _handleLocationPermission = async () => {
+    const permission = await locationPermission();
+    logger.log('permission: ', permission);
+    if (permission) {
+      _handleShowBottomShit();
+    }
+  };
+
+  const _handleShowBottomShit = () => {
+    setShowBottomShit(prev => !prev);
   };
 
   return (
@@ -44,7 +58,7 @@ const WelcomeScreen = () => {
 
       {showBottomShit && (
         <CustomBottomShitModal animationValue={0}>
-          <LocationPermissionPopup onPress={() => setShowBottomShit(false)} />
+          <LocationPermissionPopup skip={_handleShowBottomShit} useMyLocation={_handleLocationPermission} />
         </CustomBottomShitModal>
       )}
     </SafeAreaWrapper>

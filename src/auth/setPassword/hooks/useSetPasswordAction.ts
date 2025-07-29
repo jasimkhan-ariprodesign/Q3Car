@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import { postRequest } from '../../../app';
 import { AUTH_ENDPOINTS } from '../../../app/api/endpoints';
 import { UiState } from '../../../utils/uiState/ui-state';
-import { CommonSuccessReturnType } from '../../../utils/extra/commonEntities/common-entities';
+import { CommonSuccessReturnType } from '../../../utils/entities/commonEntities/common-entities';
 import { getDefaultUiState, getInitialLoadingState, showToast, showApiErrorMessage } from '../../../utils';
 
 export const useSetPasswordAction = () => {

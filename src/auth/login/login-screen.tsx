@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Formik } from 'formik';
@@ -37,6 +46,7 @@ const LoginScreen = () => {
     const { success } = await loginUser({ phoneOrEmail, password });
 
     if (success) {
+      Keyboard.dismiss();
       resetNestedNavigation({
         navigation,
         parentRouteName: SCREENS.drawerNavigator,
@@ -252,7 +262,6 @@ const styles = StyleSheet.create({
   },
   forgotPWDBTN: {
     alignItems: 'flex-end',
-    // marginTop: -gapAndMargin / 2,
   },
   forgotPasswordString: {
     color: COLORS.red,
@@ -264,7 +273,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     columnGap: MS(12),
-    // backgroundColor: _color.yellow,
   },
   horizontalView: {
     height: 1,

@@ -3,7 +3,7 @@ import { postRequest } from '../../../app';
 import { AUTH_ENDPOINTS } from '../../../app/api/endpoints';
 import { getInitialLoadingState, UiState } from '../../../utils/uiState/ui-state';
 import { getDefaultUiState, showApiErrorMessage, showToast, storeUserData } from '../../../utils';
-import { CommonSuccessReturnType } from '../../../utils/extra/commonEntities/common-entities';
+import { CommonSuccessReturnType } from '../../../utils/entities/commonEntities/common-entities';
 
 type LoginUserParams = {
   phoneOrEmail: string;

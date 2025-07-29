@@ -1,11 +1,11 @@
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import React, { useEffect } from 'react';
-import { _getStatusBarHeight, WINDOW_HEIGHT, SCREENS, COMMON_STYLES, WINDOW_WIDTH } from '../../../misc';
-import { _images } from '../../../assets/images';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../../navigation/types/types';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { IMAGES } from '../../../assets';
 import { getUserData, logger } from '../../../utils';
+import { RootStackParamList } from '../../../navigation/types/types';
+import { _getStatusBarHeight, WINDOW_HEIGHT, SCREENS, COMMON_STYLES, WINDOW_WIDTH } from '../../../misc';
 
 const statusBarHeight = _getStatusBarHeight();
 const SplashScreen = () => {
@@ -16,7 +16,7 @@ const SplashScreen = () => {
       const user_credentials = await getUserData();
       // const { userType } = user_credentials?.data?.user || {};
       const { userType } = {};
-      // logger.log('user_credentials : ', JSON.stringify(user_credentials, null, 2));
+      logger.log('user_credentials : ', JSON.stringify(user_credentials, null, 2));
       if (user_credentials && userType && userType === 'Customer') {
         return navigation.replace(SCREENS.drawerNavigator, {
           screen: SCREENS.dashboardScreen,
@@ -47,7 +47,7 @@ const SplashScreen = () => {
 
   return (
     <View style={COMMON_STYLES.flex}>
-      <ImageBackground source={_images.splash} style={styles.bgImg} />
+      <ImageBackground source={IMAGES.splash} style={styles.bgImg} />
     </View>
   );
 };
