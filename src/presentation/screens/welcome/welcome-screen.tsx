@@ -11,7 +11,7 @@ import { logger } from '../../../utils';
 
 const WelcomeScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [showBottomShit, setShowBottomShit] = useState(true);
+  const [showBottomShit, setShowBottomShit] = useState(false);
 
   const _handleCreateAccountClick = () => {
     navigation.navigate(SCREENS.authStack, {

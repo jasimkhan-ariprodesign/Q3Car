@@ -25,7 +25,7 @@ export const useLoginAction = () => {
     }
 
     const body = {
-      email: phoneOrEmail,
+      phone: phoneOrEmail,
       password: password,
     };
 

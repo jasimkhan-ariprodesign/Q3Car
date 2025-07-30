@@ -12,7 +12,7 @@
     "pod": "npx pod-install ios",
     "podclean": "cd ios && pod cache clean --all",
     "aclean": "cd android && ./gradlew clean && cd ..",
-    "iphone": "npx react-native run-ios --simulator=\"iPhone 16 Pro\""
+    "16pro": "npx react-native run-ios --simulator=\"iPhone 16 Pro\""
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^5",
