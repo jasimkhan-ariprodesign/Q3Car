@@ -1,16 +1,28 @@
-import {Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {_isIOS} from '../../../misc/platform';
-import {SafeAreaWrapper, PrimaryHeader} from '../../components';
-import {COLORS, COMMON_STYLES, MS, MVS, SCREENS} from '../../../misc';
-import {FONTS, ICONS} from '../../../assets';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from '../../../navigation/types/types';
-import {SecondaryLoader} from '../../../common';
+import { Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { _isIOS } from '../../../misc/platform';
+import { SafeAreaWrapper, PrimaryHeader } from '../../components';
+import { COLORS, COMMON_STYLES, MS, MVS, SCREENS } from '../../../misc';
+import { FONTS, ICONS } from '../../../assets';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../navigation/types/types';
+import { SecondaryLoader } from '../../../common';
+import { useFetchUser } from '../profile/hooks/useFetchUser';
 
 const SPProfileScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const { fetchUserUiState, fetchUser } = useFetchUser();
+
+  const user = fetchUserUiState?.data?.data?.[0] || {};
+  const { fullName = '', email = '', phone = '', avatar = '', dob = '' } = user || {};
+
+  useEffect(() => {
+    const getUserData = async () => {
+      await fetchUser();
+    };
+    getUserData();
+  }, []);
 
   const _handleEditClick = () => {
     navigation.push(SCREENS.SPStack, {
@@ -22,23 +34,16 @@ const SPProfileScreen = () => {
     return (
       <View style={styles.profileCont}>
         <View style={styles.profilePicCont}>
-          <Image
-            source={{
-              uri: 'https://i.pinimg.com/736x/b8/99/00/b8990034ff80c63eb42d27cdff0f7f24.jpg',
-            }}
-            style={styles.profilePic}
-            resizeMode="cover"
-          />
+          <Image source={avatar ? { uri: avatar } : ICONS.profilePicture} style={styles.profilePic} resizeMode="cover" />
         </View>
 
-        <Text style={styles.nameString}>Martha Banks</Text>
-        <Text style={styles.memberShipString}>Gold Member</Text>
+        <Text style={styles.nameString}>{fullName}</Text>
       </View>
     );
   };
 
   // _renderInfoCont - child 👇🏻
-  const _renderCommonView = ({label, value}: {label: string; value: string}) => {
+  const _renderCommonView = ({ label, value }: { label: string; value: string }) => {
     return (
       <View style={styles.commonViewOne}>
         <Text style={styles.comTextOne}>{label || ''}</Text>
@@ -56,11 +61,11 @@ const SPProfileScreen = () => {
     return (
       <>
         <Text style={styles.InformationsString}>Informations</Text>
-        {_renderCommonView({label: 'Username', value: 'Martha Banks'})}
-        {_renderCommonView({label: 'Phone number', value: '584-490-9153'})}
-        {_renderCommonView({label: 'Email', value: 'freeslab88@gmail.com'})}
-        {_renderCommonView({label: 'Gender', value: 'Female'})}
-        {_renderCommonView({label: 'Birthday', value: 'April 16, 1988'})}
+        {_renderCommonView({ label: 'Username', value: fullName })}
+        {_renderCommonView({ label: 'Phone number', value: phone })}
+        {_renderCommonView({ label: 'Email', value: email })}
+        {/* {_renderCommonView({ label: 'Gender', value: 'Female' })} */}
+        {_renderCommonView({ label: 'Birthday', value: dob })}
       </>
     );
   };
@@ -94,9 +99,7 @@ const SPProfileScreen = () => {
         {/* header */}
         {_renderHeader()}
         <View style={COMMON_STYLES.flex}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.contentContainerStyle}>
+          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainerStyle}>
             <>
               {/* profile */}
               {_renderProfile()}
@@ -154,12 +157,6 @@ const styles = StyleSheet.create({
     fontSize: MS(16),
     includeFontPadding: false,
     marginTop: MVS(8),
-  },
-  memberShipString: {
-    color: COLORS.textPrimary,
-    fontFamily: FONTS.workSansRegular,
-    fontSize: MS(14),
-    includeFontPadding: false,
   },
   horiLine: {
     height: 1,

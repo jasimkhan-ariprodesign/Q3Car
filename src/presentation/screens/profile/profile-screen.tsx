@@ -10,27 +10,34 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
-import {COMMON_STYLES, isIOS, MVS, MS, COLORS} from '../../../misc';
-import {SafeAreaWrapper, SecondaryHeader} from '../../components';
-import {SecondaryLoader} from '../../../common';
-import {FONTS, ICONS} from '../../../assets';
+import React, { useEffect, useState } from 'react';
+import { COMMON_STYLES, isIOS, MVS, MS, COLORS } from '../../../misc';
+import { SafeAreaWrapper, SecondaryHeader } from '../../components';
+import { SecondaryLoader } from '../../../common';
+import { FONTS, ICONS } from '../../../assets';
+import { useFetchUser } from './hooks/useFetchUser';
+import { logger } from '../../../utils';
 
 const ProfileScreen = () => {
   const [receiveReceiptEmails, setReceiveReceiptEmails] = useState(false);
+  const { fetchUserUiState, fetchUser } = useFetchUser();
+  const user = fetchUserUiState?.data?.data?.[0] || {};
+  const { fullName = '', email = '', phone = '', avatar = '' } = user || {};
+  const firstName = fullName?.split(' ')[0] || '';
+
+  useEffect(() => {
+    const getUserData = async () => {
+      await fetchUser();
+    };
+    getUserData();
+  }, []);
 
   const _renderUserNameAndProfileCont = () => {
     return (
       <View style={styles.headerStyle}>
-        <Text style={styles.nameString}>Hey Dennis !</Text>
+        <Text style={styles.nameString}>Hey {firstName} !</Text>
         <View style={styles.profileView}>
-          <Image
-            source={{
-              uri: 'https://i.pinimg.com/736x/b8/99/00/b8990034ff80c63eb42d27cdff0f7f24.jpg',
-            }}
-            style={styles.profile}
-            resizeMode="cover"
-          />
+          <Image source={avatar ? { uri: avatar } : ICONS.profilePicture} style={styles.profile} resizeMode="cover" />
         </View>
       </View>
     );
@@ -42,23 +49,19 @@ const ProfileScreen = () => {
         {/* name */}
         <View style={styles.inputCont}>
           <Text style={styles.labelString}>NAME</Text>
-          <TextInput style={styles.nameInputStyle} value={'Shane Mendoza'} editable={false} />
+          <TextInput style={styles.nameInputStyle} value={fullName} editable={false} />
         </View>
 
         {/* email */}
         <View style={styles.inputCont}>
           <Text style={styles.labelString}>EMAIL</Text>
-          <TextInput
-            style={styles.nameInputStyle}
-            value={'freeslab88@gmail.com'}
-            editable={false}
-          />
+          <TextInput style={styles.nameInputStyle} value={email} editable={false} />
         </View>
 
         {/* phone */}
         <View style={styles.inputCont}>
           <Text style={styles.labelString}>PHONE NUMBER</Text>
-          <TextInput style={styles.nameInputStyle} value={'470-499-4964'} editable={false} />
+          <TextInput style={styles.nameInputStyle} value={phone} editable={false} />
         </View>
       </>
     );
@@ -84,8 +87,7 @@ const ProfileScreen = () => {
             />
           </View>
           <Text style={styles.descString}>
-            Stay up to date with our news and cool{'\n'}promos and receive a more personalized
-            experience.
+            Stay up to date with our news and cool{'\n'}promos and receive a more personalized experience.
           </Text>
         </View>
       </View>
@@ -99,39 +101,38 @@ const ProfileScreen = () => {
 
         {/* facebook button */}
         <TouchableOpacity style={styles.socialBTN}>
-          <Image
-            source={ICONS.facebookWhite}
-            style={[COMMON_STYLES.size24, styles.socialIconStyle]}
-            resizeMode="contain"
-          />
+          <Image source={ICONS.facebookWhite} style={[COMMON_STYLES.size24, styles.socialIconStyle]} resizeMode="contain" />
           <Text style={styles.socialBTNString}>Connect with Facebook</Text>
         </TouchableOpacity>
 
         {/* google button */}
         <TouchableOpacity style={[styles.socialBTN, styles.googleBTN]}>
-          <Image
-            source={ICONS.google}
-            style={[COMMON_STYLES.size24, styles.socialIconStyle]}
-            resizeMode="contain"
-          />
-          <Text style={[styles.socialBTNString, {color: COLORS.black}]}>Connect with Google</Text>
+          <Image source={ICONS.google} style={[COMMON_STYLES.size24, styles.socialIconStyle]} resizeMode="contain" />
+          <Text style={[styles.socialBTNString, { color: COLORS.black }]}>Connect with Google</Text>
         </TouchableOpacity>
       </View>
     );
   };
 
+  const _renderLoader = () => {
+    if (fetchUserUiState.isLoading) {
+      return <SecondaryLoader />;
+    }
+    return null;
+  };
+
+  // main view
   return (
     <KeyboardAvoidingView
       style={[COMMON_STYLES.flex]}
       behavior={isIOS() ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.select({ios: MVS(8)})}>
+      keyboardVerticalOffset={Platform.select({ ios: MVS(8) })}
+    >
       <SafeAreaWrapper>
         <SecondaryHeader containerStyle={styles.backIconStyle} />
 
         <View style={COMMON_STYLES.flex}>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.contentContainerStyle}>
+          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainerStyle}>
             {/* user name & profile */}
             {_renderUserNameAndProfileCont()}
 
@@ -146,7 +147,7 @@ const ProfileScreen = () => {
           </ScrollView>
 
           {/* loader */}
-          {/* <SecondaryLoader /> */}
+          {_renderLoader()}
         </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
@@ -159,7 +160,7 @@ const authFieldHeight = MS(36);
 const bdrWidth = 1.2;
 
 const styles = StyleSheet.create({
-  backIconStyle: {paddingHorizontal: MS(18)},
+  backIconStyle: { paddingHorizontal: MS(18) },
   contentContainerStyle: {
     rowGap: MVS(18),
     paddingHorizontal: MS(20),
@@ -175,18 +176,18 @@ const styles = StyleSheet.create({
     width: MS(70),
     height: MS(70),
     borderRadius: MS(70),
-    borderWidth: 2,
-    borderColor: COLORS.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profile: {
+    width: '99%',
+    height: '99%',
+    borderRadius: MS(35),
   },
   nameString: {
     color: COLORS.textPrimary,
     fontFamily: FONTS.workSansBold,
     fontSize: MS(20),
-  },
-  profile: {
-    width: MS(70),
-    height: MS(70),
-    borderRadius: MS(70),
   },
   inputCont: {
     rowGap: MVS(4),

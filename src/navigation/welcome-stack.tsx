@@ -1,22 +1,16 @@
 import React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import { COLORS, SCREENS } from '../misc';
 import { OnboardingScreen, SplashScreen, SPWelcomeScreen, UserTypeSelectScreen, WelcomeScreen } from '../presentation';
-import { RootStackParamList, WelcomeStackParamList } from './types/types';
-import { logger } from '../utils';
+import { WelcomeStackParamList } from './types/types';
 
 const Stack = createStackNavigator<WelcomeStackParamList>();
 
 const WelcomeStack = () => {
-  // const route = useRoute<RouteProp<RootStackParamList, 'WelcomeStack'>>();
-  // const initialScreen = (route?.params?.screen as keyof WelcomeStackParamList) || SCREENS.onboardingScreen;
-  // logger.log('WelcomeStack ==-->', initialScreen);
   return (
     <Stack.Navigator
-      // initialRouteName={initialScreen}
-      initialRouteName={SCREENS.onboardingScreen}
-      // initialRouteName={SCREENS.splash}
+      initialRouteName={SCREENS.splash}
+      // initialRouteName={SCREENS.onboardingScreen}
       screenOptions={{
         headerShown: false,
         cardStyle: { backgroundColor: COLORS?.white },

@@ -1,6 +1,6 @@
 export const AUTH_ENDPOINTS = {
   REGISTER_CUSTOMER: '/auth/start-registration',
-  
+
   SETPASSWORD: '/auth/complete-registration', // common for both sp-customer
   LOGIN: '/auth/signin', // common for both sp-customer
 
@@ -11,4 +11,6 @@ export const AUTH_ENDPOINTS = {
   VERIFY_PHONE: '/auth/verify-otp',
 
   REGISTER_SERVICE_PROFIDER: '/auth/start-registration',
+
+  FETCH_SINGLE_USER: '/user/fetch-single-user',
 };

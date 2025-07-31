@@ -10,8 +10,8 @@ export interface InitialRouteInfo {
 export const loadStoredUserAndNavigate = async (): Promise<InitialRouteInfo> => {
   try {
     const user_credentials = await getUserData();
-    // const { userType } = user_credentials?.data?.user || {};
-    const { userType } = {};
+    const { userType } = user_credentials?.data?.user || {};
+    // const { userType } = {};
     // logger.log('user_credentials : ', JSON.stringify(user_credentials, null, 2));
     if (user_credentials && userType && userType === 'Customer') {
       return {

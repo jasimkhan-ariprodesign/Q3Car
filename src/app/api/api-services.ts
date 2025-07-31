@@ -6,25 +6,51 @@ type CustomHeaderType = Partial<Record<string, string>> & {
 };
 
 // === GET REQUEST ===
+
+// export const getRequest = async (
+//   endpoint: string,
+//   customHeaders: CustomHeaderType = {},
+// ) => {
+//   try {
+//     const { requiresAuth, ...restHeaders } = customHeaders;
+//     const headers = { ...commonHeader, ...restHeaders };
+//     const config = {
+//       headers,
+//       requiresAuth: requiresAuth ?? true,
+//     };
+
+//     const response = await ApiService.api.get(endpoint, config as any);
+//     return response.data;
+//   } catch (error: any) {
+//     // logger.log('GET Request Error:', error?.response || error);
+//     throw error?.response ?? error;
+//   }
+// };
+
+// Add `params` as an optional argument
 export const getRequest = async (
   endpoint: string,
   customHeaders: CustomHeaderType = {},
+  params?: Record<string, any>
 ) => {
   try {
     const { requiresAuth, ...restHeaders } = customHeaders;
+
     const headers = { ...commonHeader, ...restHeaders };
+
     const config = {
       headers,
-      requiresAuth: requiresAuth ?? true,
+      params, // ⬅️ query parameters go here
+      requiresAuth: requiresAuth ?? false,
     };
 
     const response = await ApiService.api.get(endpoint, config as any);
     return response.data;
   } catch (error: any) {
-    // logger.log('GET Request Error:', error?.response || error);
     throw error?.response ?? error;
   }
 };
+
 
 // === POST REQUEST ===
 export const postRequest = async (

@@ -31,20 +31,20 @@ const RootNavigator = () => {
     }
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchInitialRoute();
-    }, 1000);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     fetchInitialRoute();
+  //   }, 1000);
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
-  if (isLoading) return null;
+  // if (isLoading) return null;
 
   return (
     <Stack.Navigator
-      initialRouteName={initialRouteInfo?.name}
-      // initialRouteName={SCREENS.welcomeStack}
+      // initialRouteName={initialRouteInfo?.name}
+      initialRouteName={SCREENS.welcomeStack}
       screenOptions={{
         headerShown: false,
         cardStyle: styles.cardStyle,

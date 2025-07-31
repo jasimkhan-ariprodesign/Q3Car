@@ -1,4 +1,4 @@
-import {_drawerMenuIcons} from './drawer-menu-icons';
+import { _drawerMenuIcons } from './drawer-menu-icons';
 
 export const _icons = {
   q3Car: require('./q3Car.png'),
@@ -33,7 +33,8 @@ export const _icons = {
   arrowDownBlack: require('./arrow-down-black.png'),
   transactionFilter: require('./transaction-filter.png'),
   calenderBlack: require('./calender-black.png'),
+  profilePicture: require('./profile-picture.png'),
 };
 
 // drawer icons 👇🏻
-export {_drawerMenuIcons};
+export { _drawerMenuIcons };
