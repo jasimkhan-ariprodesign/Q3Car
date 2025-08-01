@@ -33,7 +33,6 @@ const SetPassword = () => {
       setFormData(prev => ({ ...prev, showConfirmPassword: !formData.showConfirmPassword }));
     }
   };
-  // const { success } = await setPasswordFunc(phone || '', values?.password);
 
   const _handleRegister = async (values: any) => {
     const payload = {

@@ -11,6 +11,7 @@ import { COLORS, SCREENS } from '../misc';
 import { RootStackParamList } from './types/types';
 import { loadStoredUserAndNavigate } from './hooks';
 import { InitialRouteInfo } from './hooks/load-stored-user-and-navigate';
+import { DashboardScreen } from '../presentation';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -42,22 +43,23 @@ const RootNavigator = () => {
   // if (isLoading) return null;
 
   return (
-    <Stack.Navigator
-      // initialRouteName={initialRouteInfo?.name}
-      initialRouteName={SCREENS.welcomeStack}
-      screenOptions={{
-        headerShown: false,
-        cardStyle: styles.cardStyle,
-        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-      }}
-    >
-      <Stack.Screen name={SCREENS.welcomeStack} component={WelcomeStack} />
-      <Stack.Screen name={SCREENS.authStack} component={AuthStack} />
-      <Stack.Screen name={SCREENS.appStack} component={AppStack} />
-      <Stack.Screen name={SCREENS.drawerNavigator} component={DrawerNavigator} />
-      <Stack.Screen name={SCREENS.SPDrawerNavigator} component={SPDrawerNavigator} />
-      <Stack.Screen name={SCREENS.SPStack} component={SPStack} />
-    </Stack.Navigator>
+    // <Stack.Navigator
+    //   // initialRouteName={initialRouteInfo?.name}
+    //   initialRouteName={SCREENS.welcomeStack}
+    //   screenOptions={{
+    //     headerShown: false,
+    //     cardStyle: styles.cardStyle,
+    //     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+    //   }}
+    // >
+    //   <Stack.Screen name={SCREENS.welcomeStack} component={WelcomeStack} />
+    //   <Stack.Screen name={SCREENS.authStack} component={AuthStack} />
+    //   <Stack.Screen name={SCREENS.appStack} component={AppStack} />
+    //   <Stack.Screen name={SCREENS.drawerNavigator} component={DrawerNavigator} />
+    //   <Stack.Screen name={SCREENS.SPDrawerNavigator} component={SPDrawerNavigator} />
+    //   <Stack.Screen name={SCREENS.SPStack} component={SPStack} />
+    // </Stack.Navigator>
+    <DashboardScreen />
   );
 };
 
