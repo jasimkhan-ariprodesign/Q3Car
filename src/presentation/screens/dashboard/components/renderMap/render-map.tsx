@@ -1,12 +1,11 @@
-import { Animated, Image, StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import React, { useRef } from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { GeolocationResponse } from '@react-native-community/geolocation';
 import { COLORS, COMMON_STYLES, MS } from '../../../../../misc';
-import { locationPermission } from '../../../../../utils/permissions';
-import { logger, useCurrentLocationAction } from '../../../../../utils';
+import { logger } from '../../../../../utils';
 import { PrimaryLoader } from '../../../../../common';
 import { FONTS, ICONS } from '../../../../../assets';
-import { GeolocationResponse } from '@react-native-community/geolocation';
 
 interface RenderMapProp {
   loader: boolean;
@@ -14,29 +13,15 @@ interface RenderMapProp {
 }
 
 const RenderMap = ({ loader, locData }: RenderMapProp) => {
-  logger.log('locData : ', JSON.stringify(locData?.coords, null, 2));
+  // logger.log('locData : ', JSON.stringify(locData?.coords, null, 2));
+
   const mapRef: any = useRef(null);
-  // const [loader, setLoader] = useState<boolean>(true);
-
-  // const { currentLocationUiState, getLocation } = useCurrentLocationAction();
-  // logger.info('currentLocationUiState : ', JSON.stringify(currentLocationUiState, null, 2));
-  // const _checkLocationPermission = async () => {
-  //   const permission = await locationPermission();
-  //   if (permission) {
-  //     await getLocation();
-  //     setLoader(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   _checkLocationPermission();
-  // }, []);
 
   if (loader) {
     return <PrimaryLoader />;
   }
 
-  if (!locData.coords) {
+  if (!locData?.coords) {
     return (
       <View style={[COMMON_STYLES.container, COMMON_STYLES.center]}>
         <Text style={styles.string}>Location not available</Text>

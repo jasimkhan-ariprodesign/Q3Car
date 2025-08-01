@@ -1,18 +1,37 @@
-import {KeyboardAvoidingView, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
-import {COLORS, COMMON_STYLES, isIOS} from '../../../misc';
-import {SafeAreaWrapper} from '../../components';
-import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../../../navigation/types/types';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { COLORS, COMMON_STYLES, isIOS } from '../../../misc';
+import { SafeAreaWrapper } from '../../components';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../../navigation/types/types';
 import SPDashboardHeader from './components/sp-dashboard-header';
 import RenderMap from './components/render-map';
 import OfflineMessageIndicator from './components/offline-message-indicator';
 import ContentCont from './components/content-cont';
+import { useCurrentLocationAction } from '../../../utils';
+import { locationPermission } from '../../../utils/permissions';
 
 const SPDashboardScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<RootStackParamList>>();
   const [netStatus, setNetStatus] = useState<'offline' | 'online'>('offline');
+
+  const [mapLoader, setMapLoader] = useState<boolean>(true);
+  const { currentLocationUiState, getLocation } = useCurrentLocationAction();
+
+  // logger.info('currentLocationUiState : ', JSON.stringify(currentLocationUiState, null, 2));
+
+  const _checkLocationPermission = async () => {
+    const permission = await locationPermission();
+    if (permission) {
+      // await getLocation();
+      setMapLoader(false);
+    }
+  };
+
+  useEffect(() => {
+    _checkLocationPermission();
+  }, []);
 
   const _handleOnlineSwitchClick = () => {
     if (netStatus === 'offline') {
@@ -41,7 +60,7 @@ const SPDashboardScreen = () => {
   const _renderMap = () => {
     return (
       <View style={styles.mapContainer}>
-        <RenderMap />
+        <RenderMap loader={mapLoader || currentLocationUiState.isLoading} locData={currentLocationUiState.data} />
       </View>
     );
   };

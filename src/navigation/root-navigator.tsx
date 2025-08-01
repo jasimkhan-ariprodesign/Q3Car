@@ -11,7 +11,7 @@ import { COLORS, SCREENS } from '../misc';
 import { RootStackParamList } from './types/types';
 import { loadStoredUserAndNavigate } from './hooks';
 import { InitialRouteInfo } from './hooks/load-stored-user-and-navigate';
-import { DashboardScreen } from '../presentation';
+import { DashboardScreen, SPDashboardScreen } from '../presentation';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -59,7 +59,8 @@ const RootNavigator = () => {
     //   <Stack.Screen name={SCREENS.SPDrawerNavigator} component={SPDrawerNavigator} />
     //   <Stack.Screen name={SCREENS.SPStack} component={SPStack} />
     // </Stack.Navigator>
-    <DashboardScreen />
+    // <DashboardScreen />
+    <SPDashboardScreen />
   );
 };
 
