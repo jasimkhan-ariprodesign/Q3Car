@@ -1,4 +1,4 @@
-import { Alert, Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { COLORS, MS, MVS, COMMON_STYLES } from '../../../../misc';
 import { FONTS, IMAGES } from '../../../../assets';

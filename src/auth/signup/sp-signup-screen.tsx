@@ -171,7 +171,7 @@ const SPSignupScreen = () => {
       navigation.push(SCREENS.authStack, {
         screen: SCREENS.setPassword,
         params: {
-          userType: 'service provider',
+          userType: 'ServiceProvider',
           phone: `${otpManager.dial_code}${otpManager.phone}`,
         },
       });

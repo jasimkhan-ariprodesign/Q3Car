@@ -33,11 +33,19 @@ const SetPassword = () => {
       setFormData(prev => ({ ...prev, showConfirmPassword: !formData.showConfirmPassword }));
     }
   };
+  // const { success } = await setPasswordFunc(phone || '', values?.password);
 
   const _handleRegister = async (values: any) => {
-    const { success } = await setPasswordFunc(phone || '', values?.password);
+    const payload = {
+      phone: phone || '',
+      password: values?.password || '',
+      userType: userType || '',
+    };
+
+    const { success } = await setPasswordFunc(payload);
+
     if (success) {
-      if (userType === 'service provider') {
+      if (userType === 'ServiceProvider') {
         // navigation.push(SCREENS.SPDrawerNavigator, {
         //   screen: SCREENS.SPDashboardScreen,
         // });

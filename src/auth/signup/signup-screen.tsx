@@ -130,6 +130,7 @@ const SignupScreen = () => {
         screen: SCREENS.setPassword,
         params: {
           phone: `${otpManager.dial_code}${otpManager.phone}`,
+          userType: 'Customer',
         },
       });
     }

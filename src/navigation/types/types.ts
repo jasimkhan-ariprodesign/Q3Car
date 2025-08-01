@@ -13,7 +13,7 @@ export type AuthStackParamList = {
   LoginScreen: { fromScreen?: string } | undefined;
   SPSignupScreen: undefined;
   ForgotPassword: undefined;
-  SetPassword: { userType?: 'customer' | 'service provider'; phone?: string } | undefined;
+  SetPassword: { userType?: 'Customer' | 'ServiceProvider'; phone?: string } | undefined;
   SPLoginScreen: undefined;
 };
 

@@ -6,12 +6,18 @@ import { UiState } from '../../../utils/uiState/ui-state';
 import { CommonSuccessReturnType } from '../../../utils/entities/commonEntities/common-entities';
 import { getDefaultUiState, getInitialLoadingState, showToast, showApiErrorMessage } from '../../../utils';
 
+interface setPasswordFuncProp {
+  phone: string;
+  password: string;
+  userType: string;
+}
+
 export const useSetPasswordAction = () => {
   const defaultSetPasswordState: UiState<any> = getDefaultUiState();
 
   const [setpasswordUiState, setSetPasswordUiState] = useState<UiState<any>>(defaultSetPasswordState);
 
-  const setPasswordFunc = async (phone: string, password: string): Promise<CommonSuccessReturnType> => {
+  const setPasswordFunc = async ({ phone, password, userType }: setPasswordFuncProp): Promise<CommonSuccessReturnType> => {
     if (!phone) return { success: false };
 
     if (!password) {

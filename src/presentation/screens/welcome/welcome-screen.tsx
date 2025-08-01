@@ -1,5 +1,5 @@
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { COLORS, MS, MVS, SCREENS, COMMON_STYLES, WINDOW_WIDTH } from '../../../misc';
 import { FONTS, IMAGES } from '../../../assets';
 import { CustomBottomShitModal, PrimaryButton, SafeAreaWrapper } from '../../components';
@@ -29,13 +29,26 @@ const WelcomeScreen = () => {
     const permission = await locationPermission();
     logger.log('permission: ', permission);
     if (permission) {
+      _handleHideBottomShit();
+    } else {
       _handleShowBottomShit();
     }
   };
 
   const _handleShowBottomShit = () => {
-    setShowBottomShit(prev => !prev);
+    setShowBottomShit(true);
   };
+
+  const _handleHideBottomShit = () => {
+    setShowBottomShit(false);
+  };
+
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      _handleLocationPermission();
+    }, 500);
+    return () => clearTimeout(delay);
+  }, []);
 
   return (
     <SafeAreaWrapper style={COMMON_STYLES.flex}>
@@ -58,7 +71,7 @@ const WelcomeScreen = () => {
 
       {showBottomShit && (
         <CustomBottomShitModal animationValue={0}>
-          <LocationPermissionPopup skip={_handleShowBottomShit} useMyLocation={_handleLocationPermission} />
+          <LocationPermissionPopup skip={_handleHideBottomShit} useMyLocation={_handleLocationPermission} />
         </CustomBottomShitModal>
       )}
     </SafeAreaWrapper>
