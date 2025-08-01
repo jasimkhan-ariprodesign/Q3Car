@@ -8,7 +8,6 @@ import { COLORS, MS, MVS, SCREENS, COMMON_STYLES } from '../../../misc';
 import { IconButton, SafeAreaWrapper } from '../../../presentation/components';
 import { FONTS, ICONS } from '../../../assets';
 import { DRAWER_MENU_LIST } from '../../../constant/drawer-menu-list';
-import { logger } from '../../../utils';
 import { AppStackParamList, RootStackParamList } from '../../types/types';
 import { RootState } from '../../../redux';
 

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "16": "npx react-native run-ios --simulator=\"iPhone 16\"",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
@@ -16,6 +17,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^5",
+    "@react-native-community/geolocation": "^3.4.0",
     "@react-native-masked-view/masked-view": "^0.3.2",
     "@react-native/new-app-screen": "0.80.1",
     "@react-navigation/drawer": "^7.5.3",
@@ -33,6 +35,7 @@
     "react-native-gesture-handler": "^2.27.2",
     "react-native-image-picker": "^8.2.1",
     "react-native-keychain": "^10.0.0",
+    "react-native-maps": "^1.24.13",
     "react-native-otp-entry": "^1.8.5",
     "react-native-permissions": "^5.4.2",
     "react-native-reanimated": "^3.18.0",

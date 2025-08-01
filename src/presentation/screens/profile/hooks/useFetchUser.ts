@@ -13,14 +13,13 @@ export const useFetchUser = () => {
     try {
       const user_data = await getUserData();
       const userId = user_data?.data?.user?._id || '';
-      // logger.info('user_data: ', JSON.stringify(user_data, null, 2));
 
       if (!userId) {
         throw new Error('User ID not found');
       }
 
       const response = await getRequest(AUTH_ENDPOINTS.FETCH_SINGLE_USER, {}, { userId });
-      // logger.log(JSON.stringify(response, undefined, 1));
+
       if (response) {
         response.message && showToast({ text1: response.message });
 

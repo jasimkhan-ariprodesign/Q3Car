@@ -1,6 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { BASE_URL } from './api';
-import { getTokenUtil, logger } from '../../utils';
+import { getUserData, logger } from '../../utils';
 
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   requiresAuth?: boolean;
@@ -28,7 +28,8 @@ api.interceptors.request.use(
     }
 
     // For all other requests, proceed with trying to attach the token.
-    const { accessToken } = await getTokenUtil();
+    const user_data = await getUserData();
+    const accessToken = user_data?.data?.user?.accessToken || '';
 
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;

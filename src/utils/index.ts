@@ -5,7 +5,6 @@ import { launchGalleryUtil } from './launchGalleryUtil/launch-gallery-util';
 import { getDefaultUiState } from './uiState/ui-state';
 import { getInitialLoadingState } from './uiState/ui-state';
 import { launchCameraUtil } from './launchCameraUtil/launch-camera-util';
-import { getTokenUtil } from './getTokenUtil/get-token-util';
 import { logAxiosError } from './logAxiosError/log-axios-error';
 import { appAlert } from './appAlert/app-alert';
 import { showToast } from './toast/toast';
@@ -22,7 +21,6 @@ export {
   _hanldeOpenUrlFunc,
   launchGalleryUtil,
   launchCameraUtil,
-  getTokenUtil,
   logAxiosError,
   showToast,
   appAlert,
