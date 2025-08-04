@@ -34,7 +34,8 @@ export const _icons = {
   transactionFilter: require('./transaction-filter.png'),
   calenderBlack: require('./calender-black.png'),
   profilePicture: require('./profile-picture.png'),
-  currentLocation: require('./current-location.png'),
+  curLocation: require('./current-location.png'),
+  goToMylocation: require('./go-to-mylocation.png'),
 };
 
 // drawer icons 👇🏻

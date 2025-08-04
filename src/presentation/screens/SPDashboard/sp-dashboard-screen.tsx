@@ -24,7 +24,7 @@ const SPDashboardScreen = () => {
   const _checkLocationPermission = async () => {
     const permission = await locationPermission();
     if (permission) {
-      // await getLocation();
+      await getLocation();
       setMapLoader(false);
     }
   };
@@ -100,6 +100,6 @@ export default SPDashboardScreen;
 const styles = StyleSheet.create({
   mapContainer: {
     flex: 1,
-    backgroundColor: COLORS.pink,
+    backgroundColor: COLORS.white,
   },
 });
