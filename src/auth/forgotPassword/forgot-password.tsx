@@ -17,6 +17,8 @@ const ForgotPassword = () => {
   const [currentStep, setCurrentStep] = useState<'emailOrPhone' | 'otp'>('emailOrPhone');
   const [otp, setOtp] = useState();
 
+  logger.error(' focused -');
+
   const _handleSubmitClick = (value: any) => {
     logger.log('_handleSubmitClick --: ', value);
     setCurrentStep('otp');

@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useRef } from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { GeolocationResponse } from '@react-native-community/geolocation';
-import { COLORS, COMMON_STYLES, MS } from '../../../../../misc';
+import { COLORS, COMMON_STYLES, isIOS, MS, MVS } from '../../../../../misc';
 import { logger } from '../../../../../utils';
 import { PrimaryLoader } from '../../../../../common';
 import { FONTS, ICONS } from '../../../../../assets';
@@ -77,22 +77,32 @@ const RenderMap = ({ loader, locData }: RenderMapProp) => {
               latitudeDelta: 0.006,
               longitudeDelta: 0.006,
             }}
+            mapPadding={{ top: 0, right: 0, left: 0, bottom: MVS(24) }}
             onPress={e => {
               const { latitude, longitude } = e.nativeEvent.coordinate;
               logger.warn('you pressed in map :', latitude, longitude);
             }}
           >
             {locData.coords && (
-              <Marker
-                coordinate={{
-                  latitude: locData.coords?.latitude,
-                  longitude: locData.coords?.longitude,
-                }}
-              >
-                <View>
-                  <Image source={ICONS.curLocation} style={styles.markerIcon} resizeMode="contain" />
-                </View>
-              </Marker>
+              <>
+                {isIOS() ? (
+                  <Marker
+                    coordinate={{
+                      latitude: locData.coords?.latitude,
+                      longitude: locData.coords?.longitude,
+                    }}
+                  >
+                    <Image source={ICONS.curLocation} style={styles.markerIcon} resizeMode="contain" />
+                  </Marker>
+                ) : (
+                  <Marker
+                    coordinate={{
+                      latitude: locData.coords?.latitude,
+                      longitude: locData.coords?.longitude,
+                    }}
+                  />
+                )}
+              </>
             )}
           </MapView>
 
@@ -131,7 +141,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     right: MS(20),
-    bottom: MS(20),
+    bottom: MS(40),
     elevation: 5,
     shadowColor: COLORS.black,
     shadowOffset: { width: 0, height: 2 },

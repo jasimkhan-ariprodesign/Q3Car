@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
+import { AppState, KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { COLORS, COMMON_STYLES, isIOS } from '../../../misc';
 import { SafeAreaWrapper } from '../../components';
@@ -9,28 +9,35 @@ import SPDashboardHeader from './components/sp-dashboard-header';
 import RenderMap from './components/render-map';
 import OfflineMessageIndicator from './components/offline-message-indicator';
 import ContentCont from './components/content-cont';
-import { useCurrentLocationAction } from '../../../utils';
+import { logger, useCurrentWatchLocationAction } from '../../../utils';
 import { locationPermission } from '../../../utils/permissions';
 
 const SPDashboardScreen = () => {
   const navigation = useNavigation<DrawerNavigationProp<RootStackParamList>>();
   const [netStatus, setNetStatus] = useState<'offline' | 'online'>('offline');
 
-  const [mapLoader, setMapLoader] = useState<boolean>(true);
-  const { currentLocationUiState, getLocation } = useCurrentLocationAction();
-
-  // logger.info('currentLocationUiState : ', JSON.stringify(currentLocationUiState, null, 2));
+  const { currentWatchPositionUiState, startWatching, stopWatching } = useCurrentWatchLocationAction();
+  logger.info('currentWatchPositionUiState : ', JSON.stringify(currentWatchPositionUiState, null, 2));
 
   const _checkLocationPermission = async () => {
     const permission = await locationPermission();
     if (permission) {
-      await getLocation();
-      setMapLoader(false);
+      startWatching();
     }
   };
 
   useEffect(() => {
-    _checkLocationPermission();
+    _checkLocationPermission(); // initial check when component mounts
+
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'active') {
+        _checkLocationPermission(); // recheck and start watch if coming back
+      } else {
+        stopWatching(); // pause watch in background
+      }
+    });
+
+    return () => subscription.remove();
   }, []);
 
   const _handleOnlineSwitchClick = () => {
@@ -60,7 +67,7 @@ const SPDashboardScreen = () => {
   const _renderMap = () => {
     return (
       <View style={styles.mapContainer}>
-        <RenderMap loader={mapLoader || currentLocationUiState.isLoading} locData={currentLocationUiState.data} />
+        <RenderMap loader={currentWatchPositionUiState.isLoading} locData={currentWatchPositionUiState?.data} />
       </View>
     );
   };

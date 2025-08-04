@@ -30,7 +30,11 @@ export const useCurrentLocationAction = () => {
         Geolocation.getCurrentPosition(
           pos => resolve(pos),
           err => reject(err),
-          { enableHighAccuracy, timeout: 30000, maximumAge: 60000 },
+          {
+            enableHighAccuracy,
+            timeout: 30000,
+            maximumAge: 60000, // 1 min
+          },
         );
       });
 

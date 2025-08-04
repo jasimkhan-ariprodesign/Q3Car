@@ -4,19 +4,19 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { GeolocationResponse } from '@react-native-community/geolocation';
 import { ICONS, FONTS } from '../../../../assets';
 import { PrimaryLoader } from '../../../../common';
-import { COMMON_STYLES, MS, COLORS } from '../../../../misc';
+import { COMMON_STYLES, MS, COLORS, isIOS } from '../../../../misc';
 import { logger } from '../../../../utils';
 
 interface RenderMapProp {
   loader: boolean;
-  locData: GeolocationResponse;
+  locData: GeolocationResponse | undefined;
 }
 
 const RenderMap = ({ loader, locData }: RenderMapProp) => {
   const latitudeDelta = 0.006;
   const longitudeDelta = 0.006;
 
-  logger.log('locData : ', JSON.stringify(locData, null, 2));
+  // logger.log('locData : ', JSON.stringify(locData, null, 2));
 
   const mapRef = useRef<MapView>(null);
   // logger.info('mapRef: ', mapRef);
@@ -85,14 +85,25 @@ const RenderMap = ({ loader, locData }: RenderMapProp) => {
             }}
           >
             {locData?.coords && (
-              <Marker
-                coordinate={{
-                  latitude: locData.coords?.latitude,
-                  longitude: locData.coords?.longitude,
-                }}
-              >
-                <Image source={ICONS.curLocation} style={styles.markerIcon} resizeMode="contain" />
-              </Marker>
+              <>
+                {isIOS() ? (
+                  <Marker
+                    coordinate={{
+                      latitude: locData.coords?.latitude,
+                      longitude: locData.coords?.longitude,
+                    }}
+                  >
+                    <Image source={ICONS.curLocation} style={styles.markerIcon} resizeMode="contain" />
+                  </Marker>
+                ) : (
+                  <Marker
+                    coordinate={{
+                      latitude: locData.coords?.latitude,
+                      longitude: locData.coords?.longitude,
+                    }}
+                  />
+                )}
+              </>
             )}
           </MapView>
 

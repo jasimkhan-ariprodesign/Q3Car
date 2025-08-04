@@ -15,6 +15,7 @@ import { getUserData } from './authStorage/auth-storage';
 import { resetUserData } from './authStorage/auth-storage';
 import { resetNestedNavigation } from './resetNestedNavigation/reset-nested-navigation';
 import { useCurrentLocationAction } from './useCurrentLocationAction/use-current-location-action';
+import { useCurrentWatchLocationAction } from './useCurrentWatchLocationAction/use-current-watch-location-action';
 // import
 
 export {
@@ -29,6 +30,7 @@ export {
   showApiErrorMessage,
   resetNestedNavigation,
   useCurrentLocationAction,
+  useCurrentWatchLocationAction,
 };
 
 export { storeUserData, getUserData, resetUserData };
