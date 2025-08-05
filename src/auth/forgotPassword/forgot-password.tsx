@@ -1,34 +1,82 @@
 import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useSelector } from 'react-redux';
 import { FONTS } from '../../assets';
 import { Formik } from 'formik';
-import { logger } from '../../utils';
+import { logger, showToast, useCountDownTimer } from '../../utils';
 import { OTPBox } from '../components';
 import { SecondaryLoader } from '../../common/loaders';
 import { ForgotPasswordSchema } from '../validations';
 import { RootStackParamList } from '../../navigation/types/types';
 import { COMMON_STYLES, isIOS, COLORS, MS, MVS, SCREENS } from '../../misc';
 import { SafeAreaWrapper, PrimaryHeader, PrimaryButton } from '../../presentation/components';
+import { RootState } from '../../redux';
+import { useForgotPasswordAction } from './hooks';
+import { useVerifyEmailAction, useVerifyPhoneAction } from '../signup/hooks';
+import { OtpInputRef } from 'react-native-otp-entry';
+
+const authFieldHeight = MS(36);
 
 const ForgotPassword = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const otpRef = useRef<OtpInputRef>(null);
+
   const [currentStep, setCurrentStep] = useState<'emailOrPhone' | 'otp'>('emailOrPhone');
-  const [otp, setOtp] = useState();
+  const [localStateHandler, setLocalStateHandler] = useState({
+    emailorPhone: '',
+    otp: '',
+    verificationType: '',
+  });
+  const { startTimer, timeLeft, resetTimer } = useCountDownTimer(60);
 
-  logger.error(' focused -');
+  const { userType } = useSelector((state: RootState) => state.userType);
+  const { forgotPasswordUiState, forgotPassword } = useForgotPasswordAction();
+  const { verifyEmailUiState, verifyEmailOtp } = useVerifyEmailAction();
+  const { verifyPhoneUiState, verifyPhoneNumOtp } = useVerifyPhoneAction();
+  // logger.info('verifyEmailUiState -', JSON.stringify(verifyEmailUiState, null, 1));
 
-  const _handleSubmitClick = (value: any) => {
-    logger.log('_handleSubmitClick --: ', value);
-    setCurrentStep('otp');
+  // based on forgotPassword, storing identifier like email or password
+  useEffect(() => {
+    if (forgotPasswordUiState?.data && forgotPasswordUiState.data?.data?.identifier) {
+      setLocalStateHandler(prev => ({ ...prev, verificationType: forgotPasswordUiState.data?.data?.identifier }));
+    }
+  }, [forgotPasswordUiState]);
+
+  const _handleSubmitClick = async () => {
+    resetTimer();
+    const { success } = await forgotPassword({ input: localStateHandler.emailorPhone, userType: userType ?? '' });
+    if (success) {
+      startTimer();
+      setCurrentStep('otp');
+    }
   };
 
-  const _handleVerifyOTPClick = () => {
-    logger.log('_handleVerifyOTPClick OTP:', otp);
-    navigation.push(SCREENS.appStack, {
-      screen: SCREENS.successScreen,
-    });
+  const _handleVerifyOTPClick = async () => {
+    if (localStateHandler.otp.length < 5) {
+      return showToast({ text1: 'invalid otp', type: 'error' });
+    }
+
+    if (localStateHandler.verificationType === 'email') {
+      const { success } = await verifyEmailOtp(localStateHandler.emailorPhone, localStateHandler.otp);
+      logger.log('_handleVerifyOTPClick Success: ', success);
+      otpRef?.current?.clear();
+      // if (success) {
+      //   navigation.push(SCREENS.appStack, {
+      //     screen: SCREENS.successScreen,
+      //   });
+      // }
+    } else if (localStateHandler.verificationType === 'phone') {
+      const { success } = await verifyPhoneNumOtp(localStateHandler.emailorPhone, localStateHandler.otp);
+      logger.log('_handleVerifyOTPClick Success: ', success);
+      otpRef?.current?.clear();
+      // if (success) {
+      //   navigation.push(SCREENS.appStack, {
+      //     screen: SCREENS.successScreen,
+      //   });
+      // }
+    }
   };
 
   const _renderEmailOrPhoneInputCom = () => {
@@ -41,17 +89,17 @@ const ForgotPassword = () => {
 
         <Formik initialValues={{ email: '' }} validationSchema={ForgotPasswordSchema} onSubmit={_handleSubmitClick}>
           {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => {
-            // logger.log('values ->', values);
-
             return (
               <View style={styles.formCont}>
-                {/* email */}
                 <View>
                   <TextInput
-                    placeholder="Email or Phone Number"
+                    placeholder="Email or Phone Number (with country code)"
                     placeholderTextColor={COLORS.textPrimary}
                     value={values.email}
-                    onChangeText={handleChange('email')}
+                    onChangeText={text => {
+                      handleChange('email')(text);
+                      setLocalStateHandler(prev => ({ ...prev, emailorPhone: text }));
+                    }}
                     onBlur={handleBlur('email')}
                     style={styles.emailInput}
                     autoCorrect={false}
@@ -80,13 +128,27 @@ const ForgotPassword = () => {
         </View>
 
         <View style={styles.otpBoxCont}>
-          <OTPBox otpInpHeight={authFieldHeight} />
+          <OTPBox
+            otpInpHeight={authFieldHeight}
+            handleOptInput={otp => setLocalStateHandler(prev => ({ ...prev, otp }))}
+            timeLeft={timeLeft}
+            otpRef={otpRef}
+            resendFunction={_handleSubmitClick}
+            sendFunction={_handleVerifyOTPClick}
+          />
         </View>
 
         {/* verify in button */}
         <PrimaryButton title="Verify" onPress={_handleVerifyOTPClick} />
       </View>
     );
+  };
+
+  const _renderLoader = () => {
+    if (forgotPasswordUiState.isLoading || verifyEmailUiState.isLoading || verifyPhoneUiState.isLoading) {
+      return <SecondaryLoader />;
+    }
+    return null;
   };
 
   // main com View
@@ -99,8 +161,9 @@ const ForgotPassword = () => {
             {/* email Or Phone input && otp input com  */}
             {currentStep === 'emailOrPhone' ? _renderEmailOrPhoneInputCom() : _renderOTPInputCom()}
           </ScrollView>
+
           {/* loader */}
-          {/* <SecondaryLoader /> */}
+          {_renderLoader()}
         </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
@@ -111,7 +174,6 @@ export default ForgotPassword;
 
 const gapAndMargin = MVS(20);
 const bdrWidth = 1.2;
-const authFieldHeight = MS(36);
 
 const styles = StyleSheet.create({
   headerStyle: { paddingHorizontal: MS(18) },

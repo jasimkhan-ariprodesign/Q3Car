@@ -11,6 +11,6 @@ export const AUTH_ENDPOINTS = {
   VERIFY_PHONE: '/auth/verify-otp',
 
   REGISTER_SERVICE_PROFIDER: '/auth/start-registration',
-
-  FETCH_SINGLE_USER: '/user/fetch-single-user',
+  
+  FORGOT_PASSWORD: '/auth/forget-password',
 };

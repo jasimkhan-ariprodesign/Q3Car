@@ -1,22 +1,27 @@
 import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { FONTS, IMAGES } from '../../../assets';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useDispatch } from 'react-redux';
+import { FONTS, IMAGES } from '../../../assets';
 import { PrimaryButton, SafeAreaWrapper } from '../../components';
 import { RootStackParamList } from '../../../navigation/types/types';
 import { COLORS, WINDOW_HEIGHT, MS, MVS, SCREENS } from '../../../misc';
+import { setUserType } from '../../../redux/slices';
 
 const UserTypeSelectScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const _handleFindTowService = () => {
+    dispatch(setUserType('Customer'));
     navigation.push(SCREENS.welcomeStack, {
       screen: SCREENS.welcomeScreen,
     });
   };
 
   const _handlePublishTowingService = () => {
+    dispatch(setUserType('ServiceProvider'));
     navigation.push(SCREENS.welcomeStack, {
       screen: SCREENS.spWelcomeScreen,
     });

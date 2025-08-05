@@ -1,4 +1,6 @@
-import { setUserData } from './userSlice';
-import { clearUserData } from './userSlice';
+import { setUserData, clearUserData } from './userSlice';
+import { setUserType, clearUserType } from './userTypeSlice';
 
 export { setUserData, clearUserData };
+
+export { setUserType, clearUserType };

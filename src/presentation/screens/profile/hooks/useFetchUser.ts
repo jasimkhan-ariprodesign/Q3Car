@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { getDefaultUiState, getUserData, logger, showApiErrorMessage, showToast } from '../../../../utils';
-import { UiState } from '../../../../utils/uiState/ui-state';
+import { getInitialLoadingState, UiState } from '../../../../utils/uiState/ui-state';
 import { getRequest } from '../../../../app';
-import { AUTH_ENDPOINTS } from '../../../../app/api/endpoints';
+import { COMMON_ENDPOINTS } from '../../../../app/api/endpoints';
 import { CommonSuccessReturnType } from '../../../../utils/entities/commonEntities/common-entities';
 
 export const useFetchUser = () => {
@@ -10,6 +10,7 @@ export const useFetchUser = () => {
   const [fetchUserUiState, setFetchUserUiState] = useState<UiState<any>>(defaultFetchUserUiState);
 
   const fetchUser = async (): Promise<CommonSuccessReturnType> => {
+    setFetchUserUiState(getInitialLoadingState());
     try {
       const user_data = await getUserData();
       const userId = user_data?.data?.user?._id || '';
@@ -18,7 +19,7 @@ export const useFetchUser = () => {
         throw new Error('User ID not found');
       }
 
-      const response = await getRequest(AUTH_ENDPOINTS.FETCH_SINGLE_USER, {}, { userId });
+      const response = await getRequest(COMMON_ENDPOINTS.FETCH_SINGLE_USER, {}, { userId });
 
       if (response) {
         response.message && showToast({ text1: response.message });

@@ -27,7 +27,7 @@ export const useSetPasswordAction = () => {
 
     setSetPasswordUiState(getInitialLoadingState());
 
-    const body = { phone, password };
+    const body = { phone, password, userType };
 
     try {
       const response = await postRequest(AUTH_ENDPOINTS.SETPASSWORD, body);
