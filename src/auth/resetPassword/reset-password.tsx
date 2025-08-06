@@ -3,27 +3,34 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import { FONTS, ICONS } from '../../assets';
-import { useSetPasswordAction } from './hooks';
 import { SecondaryLoader } from '../../common';
 import { SetPasswordSchema } from '../validations/schemas';
 import { COMMON_STYLES, isIOS, COLORS, MS, MVS, SCREENS } from '../../misc';
 import { AuthStackParamList, RootStackParamList } from '../../navigation/types/types';
 import { SafeAreaWrapper, PrimaryHeader, IconButton, PrimaryButton } from '../../presentation/components';
+import { RootState } from '../../redux';
+import { useResetPasswordAction } from './hooks';
+import { logger } from '../../utils';
 
 const authFieldHeight = MS(36);
 
-const SetPassword = () => {
+const ResetPassword = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const route = useRoute<RouteProp<AuthStackParamList, 'SetPassword'>>();
-  const { userType, phone } = route?.params || {};
+  const route = useRoute<RouteProp<AuthStackParamList, 'ResetPassword'>>();
+  const { input } = route?.params || {};
 
   const [formData, setFormData] = useState({
     showPasswrod: true,
     showConfirmPassword: true,
   });
 
-  const { setpasswordUiState, setPasswordFunc } = useSetPasswordAction();
+  const { userType } = useSelector((state: RootState) => state.userType);
+  const { resetPasswordUiState, resetUserPassword } = useResetPasswordAction();
+  //   logger.log('input---', input);
+  //   logger.log('userType---', userType);
+  //   logger.log('resetPasswordUiState: ', resetPasswordUiState);
 
   const _handleShowPassword = (keyName: string) => {
     if (keyName === 'password') {
@@ -34,36 +41,22 @@ const SetPassword = () => {
     }
   };
 
-  const _handleRegister = async (values: any) => {
+  const _handleSave = async (values: any) => {
     const payload = {
-      phone: phone || '',
+      input: input || '',
       password: values?.password || '',
       userType: userType || '',
     };
 
-    const { success } = await setPasswordFunc(payload);
+    const { success } = await resetUserPassword(payload);
 
     if (success) {
-      if (userType === 'ServiceProvider') {
-        // navigation.push(SCREENS.SPDrawerNavigator, {
-        //   screen: SCREENS.SPDashboardScreen,
-        // });
-        navigation.replace(SCREENS.authStack, {
-          screen: SCREENS.spLoginScreen,
-        });
-      } else {
-        // navigation.push(SCREENS.drawerNavigator, {
-        //   screen: SCREENS.dashboardScreen,
-        // });
-        navigation.replace(SCREENS.authStack, {
-          screen: SCREENS.loginScreen,
-        });
-      }
+      navigation.pop(2);
     }
   };
 
   const _renderLoader = () => {
-    if (setpasswordUiState.isLoading) {
+    if (resetPasswordUiState.isLoading) {
       return <SecondaryLoader />;
     }
     return null;
@@ -82,15 +75,14 @@ const SetPassword = () => {
           >
             {/* Title Section */}
             <View>
-              <Text style={styles.title}>Set Password</Text>
-              <Text style={styles.labelString}>Set Password</Text>
+              <Text style={styles.title}>Set New Password</Text>
             </View>
 
             {/* Form Section */}
             <Formik
               initialValues={{ password: '', confirmPassword: '' }}
               validationSchema={SetPasswordSchema}
-              onSubmit={_handleRegister}
+              onSubmit={_handleSave}
             >
               {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                 <View style={styles.formCont}>
@@ -104,6 +96,8 @@ const SetPassword = () => {
                         onBlur={handleBlur('password')}
                         style={styles.pwdInput}
                         secureTextEntry={formData.showPasswrod}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
                       />
                       <IconButton
                         icon={formData.showPasswrod ? ICONS.invisible : ICONS.visible}
@@ -144,7 +138,7 @@ const SetPassword = () => {
                   </View>
 
                   {/* Register Button */}
-                  <PrimaryButton title="Register" onPress={handleSubmit} />
+                  <PrimaryButton title="Save" onPress={handleSubmit} />
                 </View>
               )}
             </Formik>
@@ -158,7 +152,7 @@ const SetPassword = () => {
   );
 };
 
-export default SetPassword;
+export default ResetPassword;
 
 const gapAndMargin = MVS(16);
 const bdrWidth = 1.2;
@@ -178,13 +172,6 @@ const styles = StyleSheet.create({
     fontSize: MS(18),
     textAlign: 'center',
   },
-  labelString: {
-    color: COLORS.textSecondary,
-    fontSize: MS(14),
-    fontFamily: FONTS.workSansRegular,
-    textAlign: 'center',
-  },
-
   pwdCont: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -214,7 +201,6 @@ const styles = StyleSheet.create({
     fontSize: MS(10),
     includeFontPadding: false,
   },
-
   pwdSuggestionString: {
     color: COLORS.textDisabled,
     fontSize: MS(12),

@@ -8,13 +8,14 @@ import { CommonSuccessReturnType } from '../../../utils/entities/commonEntities/
 type LoginUserParams = {
   phoneOrEmail: string;
   password: string;
+  userType: string;
 };
 
 export const useLoginAction = () => {
   const defaultLoginUiState: UiState<any> = getDefaultUiState();
   const [loginUiState, setLoginUiState] = useState<UiState<any>>(defaultLoginUiState);
 
-  const loginUser = async ({ phoneOrEmail, password }: LoginUserParams): Promise<CommonSuccessReturnType> => {
+  const loginUser = async ({ phoneOrEmail, password, userType }: LoginUserParams): Promise<CommonSuccessReturnType> => {
     if (!phoneOrEmail) {
       showToast({ text1: 'phone or email not found', type: 'error' });
       return { success: false };
@@ -23,10 +24,15 @@ export const useLoginAction = () => {
       showToast({ text1: 'password not found', type: 'error' });
       return { success: false };
     }
+    if (!userType) {
+      showToast({ text1: 'user type is missing', type: 'error' });
+      return { success: false };
+    }
 
     const body = {
       phone: phoneOrEmail,
       password: password,
+      userType: userType,
     };
 
     setLoginUiState(getInitialLoadingState());

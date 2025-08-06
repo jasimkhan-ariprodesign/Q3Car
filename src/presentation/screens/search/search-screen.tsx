@@ -9,12 +9,12 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {COMMON_STYLES, isIOS, COLORS, MVS, MS, SCREENS} from '../../../misc';
 import {SafeAreaWrapper, PrimaryHeader, IconButton, TextButton} from '../../components';
 import {_inputFieldHeight} from '../../../misc/common-styles';
 import {FONTS, ICONS} from '../../../assets';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../navigation/types/types';
 import {_recentPlaces} from '../../../constant';
 

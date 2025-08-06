@@ -15,6 +15,7 @@ export type AuthStackParamList = {
   ForgotPassword: undefined;
   SetPassword: { userType?: 'Customer' | 'ServiceProvider'; phone?: string } | undefined;
   SPLoginScreen: undefined;
+  ResetPassword: {input: string} | undefined;
 };
 
 export type DrawerNavigatorParamList = {

@@ -14,6 +14,7 @@ interface OTPBoxProp {
   resendFunction?: () => void;
   sendFunction?: () => void;
   otpRef?: any;
+  verify?: string;
 }
 
 const OTPBox: React.FC<OTPBoxProp> = ({
@@ -25,6 +26,7 @@ const OTPBox: React.FC<OTPBoxProp> = ({
   resendFunction,
   sendFunction,
   otpRef,
+  verify = 'Verify',
 }) => {
   const styles = Styles(otpInpHeight);
   const resendVisible = timeLeft != undefined && timeLeft === 0;
@@ -48,7 +50,7 @@ const OTPBox: React.FC<OTPBoxProp> = ({
         }}
       />
 
-      <TextButton title="Verify" textStyle={styles.resendText} onPress={sendFunction} disabled={false} />
+      <TextButton title={verify} textStyle={styles.resendText} onPress={sendFunction} disabled={false} />
 
       <View style={[resendVisible ? styles.resendButtonContVisible : styles.resendButtonCont, resendContainerStyle]}>
         <Text style={styles.text}>{(timeLeft && timeLeft.toString()) || ''} Didn't receive code? </Text>

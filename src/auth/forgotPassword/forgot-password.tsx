@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useSelector } from 'react-redux';
+import { OtpInputRef } from 'react-native-otp-entry';
 import { FONTS } from '../../assets';
 import { Formik } from 'formik';
 import { logger, showToast, useCountDownTimer } from '../../utils';
@@ -15,7 +16,6 @@ import { SafeAreaWrapper, PrimaryHeader, PrimaryButton } from '../../presentatio
 import { RootState } from '../../redux';
 import { useForgotPasswordAction } from './hooks';
 import { useVerifyEmailAction, useVerifyPhoneAction } from '../signup/hooks';
-import { OtpInputRef } from 'react-native-otp-entry';
 
 const authFieldHeight = MS(36);
 
@@ -35,7 +35,10 @@ const ForgotPassword = () => {
   const { forgotPasswordUiState, forgotPassword } = useForgotPasswordAction();
   const { verifyEmailUiState, verifyEmailOtp } = useVerifyEmailAction();
   const { verifyPhoneUiState, verifyPhoneNumOtp } = useVerifyPhoneAction();
+
+  // logger.info('forgotPasswordUiState -', JSON.stringify(forgotPasswordUiState, null, 1));
   // logger.info('verifyEmailUiState -', JSON.stringify(verifyEmailUiState, null, 1));
+  // logger.info('verifyPhoneUiState -', JSON.stringify(verifyPhoneUiState, null, 1));
 
   // based on forgotPassword, storing identifier like email or password
   useEffect(() => {
@@ -62,20 +65,22 @@ const ForgotPassword = () => {
       const { success } = await verifyEmailOtp(localStateHandler.emailorPhone, localStateHandler.otp);
       logger.log('_handleVerifyOTPClick Success: ', success);
       otpRef?.current?.clear();
-      // if (success) {
-      //   navigation.push(SCREENS.appStack, {
-      //     screen: SCREENS.successScreen,
-      //   });
-      // }
+      if (success) {
+        navigation.push(SCREENS.authStack, {
+          screen: SCREENS.resetPassword,
+          params: { input: localStateHandler.emailorPhone },
+        });
+      }
     } else if (localStateHandler.verificationType === 'phone') {
       const { success } = await verifyPhoneNumOtp(localStateHandler.emailorPhone, localStateHandler.otp);
       logger.log('_handleVerifyOTPClick Success: ', success);
       otpRef?.current?.clear();
-      // if (success) {
-      //   navigation.push(SCREENS.appStack, {
-      //     screen: SCREENS.successScreen,
-      //   });
-      // }
+      if (success) {
+        navigation.push(SCREENS.authStack, {
+          screen: SCREENS.resetPassword,
+          params: { input: localStateHandler.emailorPhone },
+        });
+      }
     }
   };
 
@@ -84,7 +89,6 @@ const ForgotPassword = () => {
       <View style={styles.formCont}>
         <View>
           <Text style={styles.title}>Enter your phone number {'\n'}Or email address</Text>
-          <Text style={styles.labelTxt}>Email or Phone Number</Text>
         </View>
 
         <Formik initialValues={{ email: '' }} validationSchema={ForgotPasswordSchema} onSubmit={_handleSubmitClick}>
@@ -103,6 +107,8 @@ const ForgotPassword = () => {
                     onBlur={handleBlur('email')}
                     style={styles.emailInput}
                     autoCorrect={false}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
                   />
                   {errors.email && touched.email && typeof errors.email === 'string' && (
                     <Text style={styles.errorString}>{errors.email}</Text>
@@ -129,12 +135,12 @@ const ForgotPassword = () => {
 
         <View style={styles.otpBoxCont}>
           <OTPBox
+            verify=""
             otpInpHeight={authFieldHeight}
             handleOptInput={otp => setLocalStateHandler(prev => ({ ...prev, otp }))}
             timeLeft={timeLeft}
             otpRef={otpRef}
             resendFunction={_handleSubmitClick}
-            sendFunction={_handleVerifyOTPClick}
           />
         </View>
 

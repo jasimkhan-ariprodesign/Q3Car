@@ -13,4 +13,5 @@ export const AUTH_ENDPOINTS = {
   REGISTER_SERVICE_PROFIDER: '/auth/start-registration',
   
   FORGOT_PASSWORD: '/auth/forget-password',
+  RESET_PASSWORD: '/auth/reset-password',
 };

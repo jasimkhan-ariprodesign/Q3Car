@@ -20,6 +20,8 @@ import { MS, COLORS, MVS, isIOS, COMMON_STYLES, SCREENS } from '../../misc';
 import { AuthStackParamList, RootStackParamList } from '../../navigation/types/types';
 import { SafeAreaWrapper, PrimaryHeader, TextButton, IconButton, PrimaryButton } from '../../presentation/components';
 import { useLoginAction } from './hooks';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux';
 
 const authFieldHeight = MS(36);
 
@@ -32,18 +34,22 @@ const LoginScreen = () => {
     showPasswrod: true,
   });
 
+  const { userType } = useSelector((state: RootState) => state.userType);
+
   const initialValues = {
     email: '',
     password: '',
   };
 
   const { loginUiState, loginUser } = useLoginAction();
+  logger.log('loginUiState: ', loginUiState);
+  logger.log('userType: ', userType);
 
   const _handleSignIn = async (value: any) => {
     const phoneOrEmail = value.email;
     const password = value?.password;
 
-    const { success } = await loginUser({ phoneOrEmail, password });
+    const { success } = await loginUser({ phoneOrEmail, password, userType: userType ?? '' });
 
     if (success) {
       Keyboard.dismiss();

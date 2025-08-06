@@ -21,6 +21,7 @@ export const _screens = {
   forgotPassword: 'ForgotPassword',
   setPassword: 'SetPassword',
   spLoginScreen: 'SPLoginScreen',
+  resetPassword: 'ResetPassword',
 
   // app stack
   successScreen: 'SuccessScreen',
