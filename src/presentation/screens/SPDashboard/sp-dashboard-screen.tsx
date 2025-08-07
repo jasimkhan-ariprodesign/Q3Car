@@ -17,7 +17,7 @@ const SPDashboardScreen = () => {
   const [netStatus, setNetStatus] = useState<'offline' | 'online'>('offline');
 
   const { currentWatchPositionUiState, startWatching, stopWatching } = useCurrentWatchLocationAction();
-  logger.info('currentWatchPositionUiState : ', JSON.stringify(currentWatchPositionUiState, null, 2));
+  // logger.info('currentWatchPositionUiState : ', JSON.stringify(currentWatchPositionUiState, null, 2));
 
   const _checkLocationPermission = async () => {
     const permission = await locationPermission();

@@ -20,6 +20,8 @@ import { AuthStackParamList, RootStackParamList } from '../../navigation/types/t
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SecondaryLoader } from '../../common/loaders';
 import { useLoginAction } from './hooks';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux';
 
 const authFieldHeight = MS(36);
 // CREATE SP LOGIN SEPARATE BECAUSE DESIGN IS DIFFERENT IN FIGMA BUT KEPPING SAME FOR NOW..
@@ -32,6 +34,8 @@ const SPLoginScreen = () => {
     showPasswrod: true,
   });
 
+  const { userType } = useSelector((state: RootState) => state.userType);
+
   const initialValues = {
     email: '',
     password: '',
@@ -39,11 +43,14 @@ const SPLoginScreen = () => {
 
   const { loginUiState, loginUser } = useLoginAction();
 
+  logger.log('loginUiState: ', loginUiState);
+  logger.log('userType: ', userType);
+
   const _handleSignIn = async (value: any) => {
     const phoneOrEmail = value.email;
     const password = value?.password;
 
-    const { success } = await loginUser({ phoneOrEmail, password });
+    const { success } = await loginUser({ phoneOrEmail, password, userType: userType ?? '' });
 
     if (success) {
       Keyboard.dismiss();
@@ -105,7 +112,7 @@ const SPLoginScreen = () => {
               {/* email */}
               <View>
                 <TextInput
-                  placeholder="Email or Phone Number"
+                  placeholder="Email or Phone Number (with country code)"
                   placeholderTextColor={COLORS.textPrimary}
                   value={values.email}
                   onChangeText={handleChange('email')}
@@ -176,7 +183,11 @@ const SPLoginScreen = () => {
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
         <View style={COMMON_STYLES.flex}>
-          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainerStyle}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.contentContainerStyle}
+            keyboardShouldPersistTaps="handled"
+          >
             <View>
               <Text style={styles.title}>
                 Hello!{'\n'}Sign in to{'\n'}get started

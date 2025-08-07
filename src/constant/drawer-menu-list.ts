@@ -1,48 +1,43 @@
-import {_drawerMenuIcons} from '../assets/icons';
-import {SCREENS} from '../misc';
+import { ICONS } from '../assets';
+import { _drawerMenuIcons } from '../assets/icons';
+import { SCREENS } from '../misc';
 
 export const DRAWER_MENU_LIST = [
   {
     id: '1',
     title: 'My rides',
-    icon: _drawerMenuIcons.myRides, // replace with actual icon path
-    screenName: 'MyRidesScreen',
-    // routeName: 'MyRides',
+    icon: _drawerMenuIcons.myRides,
+    routeName: '',
   },
   {
     id: '2',
     title: 'Promotion',
     icon: _drawerMenuIcons.promotion,
-    screenName: 'PromotionScreen',
-    // routeName: 'Promotion',
+    routeName: '',
   },
   {
     id: '3',
     title: 'My favorites',
     icon: _drawerMenuIcons.myFavorites,
-    screenName: 'FavoritesScreen',
-    // routeName: 'MyFavorites',
+    routeName: '',
   },
   {
     id: '4',
     title: 'My payment',
     icon: _drawerMenuIcons.myPayment,
-    screenName: 'PaymentScreen',
-    // routeName: 'MyPayment',
+    routeName: '',
   },
   {
     id: '5',
     title: 'Notification',
     icon: _drawerMenuIcons.notification,
-    screenName: 'NotificationScreen',
-    // routeName: 'Notifications',
+    routeName: '',
   },
   {
     id: '6',
     title: 'Support',
     icon: _drawerMenuIcons.support,
-    screenName: 'SupportScreen',
-    // routeName: 'Support',
+    routeName: '',
   },
   {
     id: '7',
@@ -51,15 +46,20 @@ export const DRAWER_MENU_LIST = [
     screenName: 'HistoryScreen',
     routeName: SCREENS.historyScreen,
   },
+  {
+    id: '8',
+    title: 'Logout',
+    icon: ICONS.logOut,
+    routeName: 'Logout',
+  },
 ];
 
 export const SP_DRAWER_MENU_LIST = [
   {
     id: '1',
     title: 'Completed Trips',
-    icon: _drawerMenuIcons.myRides, // replace with actual icon path
+    icon: _drawerMenuIcons.myRides,
     screenName: 'MyRidesScreen',
-    // routeName: 'MyRides',
   },
   {
     id: '2',
@@ -73,6 +73,11 @@ export const SP_DRAWER_MENU_LIST = [
     title: 'Ratings & Feedback',
     icon: _drawerMenuIcons.myFavorites,
     screenName: 'FavoritesScreen',
-    // routeName: 'MyFavorites',
+  },
+  {
+    id: '4',
+    title: 'Logout',
+    icon: ICONS.logOut,
+    routeName: 'Logout',
   },
 ];

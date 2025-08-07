@@ -11,7 +11,7 @@ import { logger } from '../../../utils';
 
 const WelcomeScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [showBottomShit, setShowBottomShit] = useState(false);
+  const [showBottomShit, setShowBottomShit] = useState(true);
 
   const _handleCreateAccountClick = () => {
     navigation.navigate(SCREENS.authStack, {
@@ -30,25 +30,12 @@ const WelcomeScreen = () => {
     logger.log('permission: ', permission);
     if (permission) {
       _handleHideBottomShit();
-    } else {
-      _handleShowBottomShit();
     }
-  };
-
-  const _handleShowBottomShit = () => {
-    setShowBottomShit(true);
   };
 
   const _handleHideBottomShit = () => {
     setShowBottomShit(false);
   };
-
-  useEffect(() => {
-    const delay = setTimeout(() => {
-      _handleLocationPermission();
-    }, 500);
-    return () => clearTimeout(delay);
-  }, []);
 
   return (
     <SafeAreaWrapper style={COMMON_STYLES.flex}>

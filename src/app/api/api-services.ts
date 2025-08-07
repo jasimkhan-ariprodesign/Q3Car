@@ -7,32 +7,7 @@ type CustomHeaderType = Partial<Record<string, string>> & {
 
 // === GET REQUEST ===
 
-// export const getRequest = async (
-//   endpoint: string,
-//   customHeaders: CustomHeaderType = {},
-// ) => {
-//   try {
-//     const { requiresAuth, ...restHeaders } = customHeaders;
-//     const headers = { ...commonHeader, ...restHeaders };
-//     const config = {
-//       headers,
-//       requiresAuth: requiresAuth ?? true,
-//     };
-
-//     const response = await ApiService.api.get(endpoint, config as any);
-//     return response.data;
-//   } catch (error: any) {
-//     // logger.log('GET Request Error:', error?.response || error);
-//     throw error?.response ?? error;
-//   }
-// };
-
-// Add `params` as an optional argument
-export const getRequest = async (
-  endpoint: string,
-  customHeaders: CustomHeaderType = {},
-  params?: Record<string, any>
-) => {
+export const getRequest = async (endpoint: string, customHeaders: CustomHeaderType = {}, params?: Record<string, any>) => {
   try {
     const { requiresAuth, ...restHeaders } = customHeaders;
 
@@ -51,11 +26,12 @@ export const getRequest = async (
   }
 };
 
-
 // === POST REQUEST ===
+
 export const postRequest = async (
   endpoint: string,
   body: any,
+  params?: Record<string, any>,
   customHeaders: CustomHeaderType = {},
 ) => {
   try {
@@ -63,6 +39,7 @@ export const postRequest = async (
     const headers = { ...commonHeader, ...restHeaders };
     const config = {
       headers,
+      params,
       requiresAuth: requiresAuth ?? false,
     };
 
@@ -75,11 +52,7 @@ export const postRequest = async (
 };
 
 // === PUT REQUEST ===
-export const putRequest = async (
-  endpoint: string,
-  body: any,
-  customHeaders: CustomHeaderType = {},
-) => {
+export const putRequest = async (endpoint: string, body: any, customHeaders: CustomHeaderType = {}) => {
   try {
     const { requiresAuth, ...restHeaders } = customHeaders;
     const headers = { ...commonHeader, ...restHeaders };
@@ -98,10 +71,7 @@ export const putRequest = async (
 
 // === DELETE REQUEST ===
 
-export const deleteRequest = async (
-  endpoint: string,
-  customHeaders: CustomHeaderType = {},
-) => {
+export const deleteRequest = async (endpoint: string, customHeaders: CustomHeaderType = {}) => {
   try {
     const { requiresAuth, ...restHeaders } = customHeaders;
 
@@ -125,11 +95,7 @@ export const deleteRequest = async (
 
 // === PATCH REQUEST ===
 
-export const patchRequest = async (
-  endpoint: string,
-  body: any,
-  customHeaders: CustomHeaderType = {},
-) => {
+export const patchRequest = async (endpoint: string, body: any, customHeaders: CustomHeaderType = {}) => {
   try {
     const { requiresAuth, ...restHeaders } = customHeaders;
 
@@ -153,11 +119,7 @@ export const patchRequest = async (
 
 // === POST REQUEST ===
 
-export const postMultipartFormData = async (
-  endpoint: string,
-  formData: FormData,
-  customHeaders: CustomHeaderType = {},
-) => {
+export const postMultipartFormData = async (endpoint: string, formData: FormData, customHeaders: CustomHeaderType = {}) => {
   try {
     const { requiresAuth, ...restHeaders } = customHeaders;
 

@@ -4,6 +4,8 @@ import { AUTH_ENDPOINTS } from '../../../app/api/endpoints';
 import { getInitialLoadingState, UiState } from '../../../utils/uiState/ui-state';
 import { getDefaultUiState, showApiErrorMessage, showToast, storeUserData } from '../../../utils';
 import { CommonSuccessReturnType } from '../../../utils/entities/commonEntities/common-entities';
+import { store } from '../../../redux';
+import { setUserData } from '../../../redux/slices';
 
 type LoginUserParams = {
   phoneOrEmail: string;
@@ -17,22 +19,25 @@ export const useLoginAction = () => {
 
   const loginUser = async ({ phoneOrEmail, password, userType }: LoginUserParams): Promise<CommonSuccessReturnType> => {
     if (!phoneOrEmail) {
-      showToast({ text1: 'phone or email not found', type: 'error' });
+      showToast({ text1: 'Phone or email is required', type: 'error' });
       return { success: false };
     }
     if (!password) {
-      showToast({ text1: 'password not found', type: 'error' });
+      showToast({ text1: 'Password is required', type: 'error' });
       return { success: false };
     }
     if (!userType) {
-      showToast({ text1: 'user type is missing', type: 'error' });
+      showToast({ text1: 'User type is missing', type: 'error' });
       return { success: false };
     }
 
+    // Simple email check
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(phoneOrEmail.trim());
+
     const body = {
-      phone: phoneOrEmail,
-      password: password,
-      userType: userType,
+      password,
+      userType,
+      ...(isEmail ? { email: phoneOrEmail } : { phone: phoneOrEmail }),
     };
 
     setLoginUiState(getInitialLoadingState());
@@ -41,6 +46,7 @@ export const useLoginAction = () => {
 
       if (response) {
         response.message && showToast({ text1: response.message });
+        store.dispatch(setUserData(response));
         await storeUserData(response);
         setLoginUiState({
           isLoading: false,

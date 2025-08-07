@@ -143,7 +143,7 @@ const ProfileScreen = () => {
             {_renderPreferenceCont()}
 
             {/* social network */}
-            {_renderSocialNetwork()}
+            {/* {_renderSocialNetwork()} */}
           </ScrollView>
 
           {/* loader */}

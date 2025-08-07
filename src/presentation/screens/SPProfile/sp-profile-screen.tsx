@@ -9,13 +9,20 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigation/types/types';
 import { SecondaryLoader } from '../../../common';
 import { useFetchUser } from '../profile/hooks/useFetchUser';
+import { logger } from '../../../utils';
 
 const SPProfileScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { fetchUserUiState, fetchUser } = useFetchUser();
 
   const user = fetchUserUiState?.data?.data?.[0] || {};
+  const additionalData = fetchUserUiState?.data?.data?.[0]?.additionalInfo || {};
+
   const { fullName = '', email = '', phone = '', avatar = '', dob = '' } = user || {};
+  const { driverLicense = '', driverLicenseImage = '', insuranceNumber = '', insuranceImage = '' } = additionalData || {};
+
+  logger.info('additionalData: ', JSON.stringify(additionalData, null, 1));
+  // logger.log('driverLicense: ', driverLicense);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -57,6 +64,26 @@ const SPProfileScreen = () => {
     );
   };
 
+  // _renderInfoCont - child 👇🏻
+  const _renderCommonViewWithImage = ({ label, value, url }: { label: string; value: string; url: string }) => {
+    return (
+      <View style={styles.comViewForImage}>
+        <View style={[COMMON_STYLES.row, COMMON_STYLES.alignCenter]}>
+          <Text style={styles.comTextOne}>{label || ''}</Text>
+          <View style={styles.commonViewTwo}>
+            <Text style={[styles.comTextOne, styles.comTextTwo]}>{value || ''}</Text>
+            <Image source={ICONS.angleRightGrey} style={COMMON_STYLES.size12} resizeMode="contain" />
+          </View>
+        </View>
+        {url && (
+          <View style={styles.pictureCont}>
+            <Image source={{ uri: url }} style={styles.comPicStyle} resizeMode="cover" />
+          </View>
+        )}
+      </View>
+    );
+  };
+
   const _renderInfoCont = () => {
     return (
       <>
@@ -64,8 +91,9 @@ const SPProfileScreen = () => {
         {_renderCommonView({ label: 'Username', value: fullName })}
         {_renderCommonView({ label: 'Phone number', value: phone })}
         {_renderCommonView({ label: 'Email', value: email })}
-        {/* {_renderCommonView({ label: 'Gender', value: 'Female' })} */}
-        {_renderCommonView({ label: 'Birthday', value: dob })}
+
+        {_renderCommonViewWithImage({ label: 'Driver license', value: driverLicense, url: driverLicenseImage })}
+        {_renderCommonViewWithImage({ label: 'Insurance number', value: insuranceNumber, url: insuranceImage })}
       </>
     );
   };
@@ -85,11 +113,10 @@ const SPProfileScreen = () => {
   };
 
   const _renderLoader = () => {
-    return (
-      <>
-        <SecondaryLoader />
-      </>
-    );
+    if (fetchUserUiState.isLoading) {
+      return <SecondaryLoader />;
+    }
+    return null;
   };
 
   // main view
@@ -113,7 +140,7 @@ const SPProfileScreen = () => {
           </ScrollView>
 
           {/* loader  */}
-          {/* {_renderLoader()} */}
+          {_renderLoader()}
         </View>
       </SafeAreaWrapper>
     </KeyboardAvoidingView>
@@ -197,5 +224,24 @@ const styles = StyleSheet.create({
   comTextTwo: {
     color: COLORS.textPrimary,
     maxWidth: '85%',
+  },
+  comViewForImage: {
+    marginHorizontal: MS(8),
+    rowGap: MVS(12),
+  },
+  pictureCont: {
+    backgroundColor: COLORS.offWhite,
+    height: MVS(120),
+    borderRadius: 8,
+    marginHorizontal: MS(2),
+    borderWidth: 1,
+    borderColor: COLORS.offWhite,
+    elevation: 0.5,
+    shadowColor: COLORS.black,
+  },
+  comPicStyle: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 8,
   },
 });

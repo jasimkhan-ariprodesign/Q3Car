@@ -13,7 +13,7 @@ interface RenderMapProp {
 }
 
 const RenderMap = ({ loader, locData }: RenderMapProp) => {
-  logger.log('locData : ', JSON.stringify(locData, null, 2));
+  // logger.log('locData : ', JSON.stringify(locData, null, 2));
   const latitudeDelta = 0.006;
   const longitudeDelta = 0.006;
 

@@ -34,7 +34,7 @@ const SPWelcomeScreen = () => {
   };
 
   const _handleShowBottomShit = () => {
-    setShowBottomShit(prev => !prev);
+    setShowBottomShit(false);
   };
 
   return (

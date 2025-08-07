@@ -181,7 +181,11 @@ const LoginScreen = () => {
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
         <View style={COMMON_STYLES.flex}>
-          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainerStyle}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.contentContainerStyle}
+            keyboardShouldPersistTaps="handled"
+          >
             <View>
               <Text style={styles.title}>
                 Hello!{'\n'}Sign in to{'\n'}get started

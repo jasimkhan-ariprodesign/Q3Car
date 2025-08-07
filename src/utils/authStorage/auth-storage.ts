@@ -1,7 +1,7 @@
 import * as Keychain from 'react-native-keychain';
 import { logger } from '..';
 
-const SERVICE_KEY = 'user_login_data';
+export const SERVICE_KEY = 'user_login_data';
 
 export const storeUserData = async (userData: object) => {
   try {

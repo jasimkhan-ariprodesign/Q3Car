@@ -163,7 +163,11 @@ const ForgotPassword = () => {
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
         <View style={COMMON_STYLES.flex}>
-          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainerStyle}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.contentContainerStyle}
+            keyboardShouldPersistTaps="handled"
+          >
             {/* email Or Phone input && otp input com  */}
             {currentStep === 'emailOrPhone' ? _renderEmailOrPhoneInputCom() : _renderOTPInputCom()}
           </ScrollView>

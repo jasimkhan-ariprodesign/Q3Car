@@ -1,6 +1,6 @@
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import React from 'react';
-import {COLORS} from '../../misc';
+import { COLORS } from '../../misc';
 
 const SecondaryLoader = () => {
   return (
@@ -15,7 +15,7 @@ export default SecondaryLoader;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'rgba(0, 0, 0, 0.04)',
-    // backgroundColor: COLORS.transparentBlack1,
+    // backgroundColor: COLORS.transparentBlack9,
     position: 'absolute',
     top: 0,
     left: 0,
@@ -23,5 +23,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 1,
   },
 });

@@ -64,4 +64,7 @@ export const _color = {
   FB4A46: '#FB4A46',
   FF8C00: '#FF8C00',
   _979797: '#979797',
+
+  // drawer icon color
+  drawerIconColor: '#8F9BB3',
 };

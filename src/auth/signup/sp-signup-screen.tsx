@@ -456,7 +456,7 @@ const SPSignupScreen = () => {
                     style={styles.checkCont}
                   >
                     {values.agreeToTerms && (
-                      <Image source={ICONS.check} style={COMMON_STYLES.size10} tintColor={COLORS.black} />
+                      <Image source={ICONS.check} style={COMMON_STYLES.size10} tintColor={COLORS.white} />
                     )}
                   </TouchableOpacity>
                   <View style={styles.privacyPolicyStringCont}>
@@ -652,12 +652,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   checkCont: {
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.primary,
     width: MS(20),
     height: MS(20),
     borderRadius: MS(20),
-    borderWidth: 2,
-    borderColor: COLORS.black,
+    borderWidth: 1,
+    borderColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -1,20 +1,27 @@
 import { FlatList, Image, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { COLORS, MS, MVS, SCREENS, COMMON_STYLES } from '../../../misc';
 import { IconButton, SafeAreaWrapper } from '../../../presentation/components';
 import { FONTS, ICONS } from '../../../assets';
 import { DRAWER_MENU_LIST } from '../../../constant/drawer-menu-list';
 import { AppStackParamList, RootStackParamList } from '../../types/types';
 import { RootState } from '../../../redux';
+import { appAlert, logger } from '../../../utils';
+import { SecondaryLoader } from '../../../common';
+import { clearUserData, clearUserType } from '../../../redux/slices';
+import { resetUserData } from '../../../utils/authStorage/auth-storage';
 
 const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const dispatch = useDispatch();
   const userData = useSelector((state: RootState) => state.user.userData?.data?.user);
   const { fullName = 'Profile', phone = '', avatar = '' } = userData || {};
+  const [tempLoader, setTempLoader] = useState(false);
+  logger.log('tempLoader: ', tempLoader);
 
   const _handleProfileClick = () => {
     navigation.push(SCREENS.appStack, {
@@ -23,8 +30,50 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
     prop?.navigation?.closeDrawer();
   };
 
+  const _handleLogoutClick = async () => {
+    setTempLoader(true);
+    try {
+      const result = await resetUserData();
+      logger.log('Keychain reset success: ', result);
+
+      dispatch(clearUserData());
+      dispatch(clearUserType());
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: SCREENS.welcomeStack,
+            state: {
+              index: 0,
+              routes: [{ name: SCREENS.splash }],
+            },
+          },
+        ],
+      });
+    } catch (error) {
+      logger.info('_handleLogoutClick error: ', error);
+    } finally {
+      setTempLoader(false);
+    }
+  };
+
   const _handleDrawerBTNClick = (route: keyof AppStackParamList) => {
     if (route) {
+      if (route === ('Logout' as any)) {
+        appAlert.confirmWithOptions({
+          title: 'Logout',
+          message: 'Are you sure you want to logout?',
+          onCancel() {
+            prop?.navigation?.closeDrawer();
+          },
+          okText: 'Confirm',
+          onOk() {
+            _handleLogoutClick();
+          },
+        });
+        return;
+      }
+
       navigation.push(SCREENS.appStack, {
         screen: route,
       });
@@ -61,7 +110,12 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
           style={styles.drawerBTN}
         >
           <View style={styles.drawerBTNView}>
-            <Image source={item?.icon || ''} style={COMMON_STYLES.size16} resizeMode="contain" />
+            <Image
+              source={item?.icon || ''}
+              style={COMMON_STYLES.size16}
+              resizeMode="contain"
+              tintColor={COLORS.drawerIconColor}
+            />
             <Text style={styles.titleString}>{item.title || ''}</Text>
           </View>
         </TouchableHighlight>
@@ -81,6 +135,14 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
     );
   };
 
+  const _renderLoader = () => {
+    if (tempLoader) {
+      return <SecondaryLoader />;
+    }
+    return null;
+  };
+
+  // main view
   return (
     <View style={COMMON_STYLES.container}>
       <SafeAreaWrapper style={styles.profileCont}>
@@ -96,6 +158,9 @@ const CustomDrawerContent = (prop: DrawerContentComponentProps) => {
 
       {/* flatlist cont  */}
       <View style={styles.drawerBTNListCont}>{_renderDrawerMenuButtons()}</View>
+
+      {/* loader */}
+      {_renderLoader()}
     </View>
   );
 };
@@ -162,6 +227,7 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     fontSize: MS(14),
     fontFamily: FONTS.workSansSemiBold,
+    includeFontPadding: false,
   },
   contentContainerStyle: {
     rowGap: MVS(8),

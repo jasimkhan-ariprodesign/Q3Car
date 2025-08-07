@@ -36,6 +36,7 @@ export const _icons = {
   profilePicture: require('./profile-picture.png'),
   curLocation: require('./current-location.png'),
   goToMylocation: require('./go-to-mylocation.png'),
+  logOut: require('./log-out.png'),
 };
 
 // drawer icons 👇🏻

@@ -48,8 +48,8 @@ const SignupScreen = () => {
   // logger.log('signupUiState  -------<> ', JSON.stringify(signupUiState, null, 4));
 
   const _handleSendOtpToEmail = async (values: CustomerSignUpInitialEntity, validateField: any, setFieldTouched: any) => {
-    await setFieldTouched('email', true);
-    await validateField('email');
+    // await setFieldTouched('email', true);
+    // await validateField('email');
     const emailOnlySchema = CustomerSignupSchema.pick(['email']);
     const email = values.email;
 
@@ -81,8 +81,8 @@ const SignupScreen = () => {
   };
 
   const _handleSendOtpToPhone = async (values: CustomerSignUpInitialEntity, validateField: any, setFieldTouched: any) => {
-    await setFieldTouched('phone', true);
-    await validateField('phone');
+    // await setFieldTouched('phone', true);
+    // await validateField('phone');
     const phoneOnlySchema = CustomerSignupSchema.pick(['phone']);
     const phone = values.phone;
 
@@ -231,19 +231,21 @@ const SignupScreen = () => {
                       autoCorrect={false}
                       keyboardType="email-address"
                       autoCapitalize="none"
-                      editable={!values.isEmailVerified}
+                      editable={!values?.isEmailVerified}
                     />
                     {values.isEmailVerified && (
                       <Image source={ICONS.checkGreen} style={COMMON_STYLES.size16} resizeMode="contain" />
                     )}
                   </View>
 
-                  <TextButton
-                    title="Verify"
-                    textStyle={styles.verify}
-                    onPress={() => _handleSendOtpToEmail(values, validateField, setFieldTouched)}
-                    disabled={false}
-                  />
+                  {!values?.isEmailVerified && (
+                    <TextButton
+                      title="Verify"
+                      textStyle={styles.verify}
+                      onPress={() => _handleSendOtpToEmail(values, validateField, setFieldTouched)}
+                      disabled={false}
+                    />
+                  )}
                 </View>
 
                 {touched.email && (
@@ -290,6 +292,7 @@ const SignupScreen = () => {
                       }}
                       onBlur={handleBlur('phone')}
                       style={styles.emailInput}
+                      editable={!values?.isPhoneVerified}
                     />
 
                     {values.isPhoneVerified && (
@@ -297,12 +300,14 @@ const SignupScreen = () => {
                     )}
                   </View>
 
-                  <TextButton
-                    title="Send OTP"
-                    textStyle={styles.verify}
-                    onPress={() => _handleSendOtpToPhone(values, validateField, setFieldTouched)}
-                    disabled={false}
-                  />
+                  {!values?.isPhoneVerified && (
+                    <TextButton
+                      title="Send OTP"
+                      textStyle={styles.verify}
+                      onPress={() => _handleSendOtpToPhone(values, validateField, setFieldTouched)}
+                      disabled={false}
+                    />
+                  )}
                 </View>
 
                 {touched.phone && (
@@ -394,7 +399,11 @@ const SignupScreen = () => {
       <SafeAreaWrapper>
         <PrimaryHeader containerStyle={styles.headerStyle} />
         <View style={COMMON_STYLES.flex}>
-          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.contentContainerStyle}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.contentContainerStyle}
+            keyboardShouldPersistTaps="handled"
+          >
             <View>
               <Text style={styles.title}>
                 Hello!{'\n'}Signup to {'\n'}get started
